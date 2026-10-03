@@ -68,15 +68,15 @@ class notifications {
             $message->notification = 1;
             $message->contexturl = $a->url;
             $message->contexturlname = get_string('view_ticket', 'local_supportdesk');
-            try {message_send($message);} catch (\Throwable $e) {debugging('Supportdesk notification delivery failed', DEBUG_DEVELOPER);}
+            try {message_send($message);} catch (\Throwable $e) {debugging('Support Desk notification delivery failed', DEBUG_DEVELOPER);}
         }
         $fallback = self::fallback_address($ticket, $toowner);
         if ($fallback !== '') {
             try {
                 if (!static::deliver_fallback($fallback, $subject, $text)) {
-                    debugging('Supportdesk fallback email delivery failed', DEBUG_DEVELOPER);
+                    debugging('Support Desk fallback email delivery failed', DEBUG_DEVELOPER);
                 }
-            } catch (\Throwable $e) {debugging('Supportdesk fallback email delivery failed', DEBUG_DEVELOPER);}
+            } catch (\Throwable $e) {debugging('Support Desk fallback email delivery failed', DEBUG_DEVELOPER);}
         }
     }
 

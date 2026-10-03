@@ -19,7 +19,7 @@
  *
  * @package    local_supportdesk
  * @copyright  2026 learn-ix support@learn-ix.com
- * Modified 2026-10-03 by 108design: Supportdesk consolidation.
+ * Modified 2026-10-03 by 108design: Support Desk consolidation.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -195,7 +195,7 @@ $string['nopermission'] = 'دخول غير مصرح به';
 $string['nopermission_desc'] = 'عذراً، لا تملك الصلاحية لعرض هذه التذكرة.';
 $string['of'] = 'من أصل';
 $string['open_label'] = 'مفتوحة';
-$string['pluginname'] = 'نظام التذاكر الأكاديمية';
+$string['pluginname'] = 'Support Desk';
 $string['previous'] = 'السابق';
 $string['primary_color'] = 'اللون الأساسي';
 $string['primary_color_desc'] = 'اللون الرئيسي المستخدم للأزرار ، والهوية البصرية الأساسية.';

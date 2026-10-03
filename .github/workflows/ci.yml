@@ -1,4 +1,4 @@
-name: Supportdesk baseline
+name: Support Desk baseline
 
 on: [push, pull_request]
 
@@ -53,7 +53,7 @@ jobs:
           echo "$(pwd)/ci/vendor/bin" >> "$GITHUB_PATH"
           sudo locale-gen en_AU.UTF-8
           echo "NVM_DIR=$HOME/.nvm" >> "$GITHUB_ENV"
-      - name: Install fresh Moodle and Supportdesk
+      - name: Install fresh Moodle and Support Desk
         run: moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1
         env:
           DB: ${{ matrix.database }}

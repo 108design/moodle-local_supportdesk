@@ -19,7 +19,7 @@
  *
  * @package    local_supportdesk
  * @copyright  2026 learn-ix support@learn-ix.com
- * Modified 2026-10-03 by 108design: Supportdesk consolidation.
+ * Modified 2026-10-03 by 108design: Support Desk consolidation.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -101,7 +101,7 @@ $string['department_updated'] = 'Support department updated.';
 $string['description'] = 'Description';
 $string['description_optional'] = 'Description (optional)';
 $string['description_placeholder'] = 'Please explain the issue in detail...';
-$string['disabled'] = 'Supportdesk is disabled.';
+$string['disabled'] = 'Support Desk is disabled.';
 $string['drag_drop_hint'] = 'Drag and drop files here or click to upload';
 $string['edit_department'] = 'Edit support department';
 $string['email_confirm_body'] = '<p>Hello {$a->firstname},</p><p>We received your ticket #{$a->id} regarding {$a->title}.</p><p>Department: {$a->category}<br>Status: {$a->status}<br>Date: {$a->date}</p><p><a href="{$a->url}">View ticket</a></p><p>Your support team at {$a->site}</p>';
@@ -160,7 +160,7 @@ $string['nopermission_desc'] = 'You do not have permission to view this ticket.'
 $string['of'] = 'of';
 $string['open_label'] = 'Open';
 $string['pagination_label'] = 'Ticket pages';
-$string['pluginname'] = 'Supportdesk';
+$string['pluginname'] = 'Support Desk';
 $string['previous'] = 'Previous';
 $string['primary_color'] = 'Primary Color';
 $string['primary_color_desc'] = 'The main color used for buttons, headers, and primary branding.';
@@ -169,14 +169,14 @@ $string['priority_high'] = 'High';
 $string['priority_low'] = 'Low';
 $string['priority_medium'] = 'Medium';
 $string['priority_urgent'] = 'Urgent';
-$string['privacy:metadata:categories'] = 'Supportdesk categories data.';
-$string['privacy:metadata:comments'] = 'Supportdesk comments data.';
-$string['privacy:metadata:feedback'] = 'Supportdesk feedback data.';
+$string['privacy:metadata:categories'] = 'Support Desk categories data.';
+$string['privacy:metadata:comments'] = 'Support Desk comments data.';
+$string['privacy:metadata:feedback'] = 'Support Desk feedback data.';
 $string['privacy:metadata:field'] = 'Support ticket data associated with a user.';
 $string['privacy:metadata:files'] = 'Ticket and reply attachments.';
-$string['privacy:metadata:logs'] = 'Supportdesk logs data.';
-$string['privacy:metadata:replies'] = 'Supportdesk replies data.';
-$string['privacy:metadata:tickets'] = 'Supportdesk tickets data.';
+$string['privacy:metadata:logs'] = 'Support Desk logs data.';
+$string['privacy:metadata:replies'] = 'Support Desk replies data.';
+$string['privacy:metadata:tickets'] = 'Support Desk tickets data.';
 $string['privacy:metadata:tickets:content'] = 'Ticket content and description.';
 $string['privacy:metadata:tickets:created_at'] = 'Time of ticket creation.';
 $string['privacy:metadata:tickets:title'] = 'Ticket subject.';
@@ -286,7 +286,7 @@ $string['view_ticket'] = 'View Ticket';
 $string['viewticket'] = 'View Ticket';
 $string['visit_my_portfolio'] = 'View the licence';
 $string['we_are_working_hint'] = 'We are reviewing your request.';
-$string['welcome_message'] = 'Supportdesk';
+$string['welcome_message'] = 'Support Desk';
 $string['write_your_reply'] = 'Your reply';
 
 $string['badge_color'] = 'Badge colour';

@@ -19,7 +19,7 @@
  *
  * @package     local_supportdesk
  * @copyright   2025 learn-ix support@learn-ix.com
- * Modified 2026-10-03 by 108design: Supportdesk consolidation.
+ * Modified 2026-10-03 by 108design: Support Desk consolidation.
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -37,7 +37,7 @@ $functions = [
 ];
 
 $services = [
-    'Supportdesk API' => [
+    'Support Desk API' => [
         'functions' => array_keys($functions),
         'restrictedusers' => 0,
         'enabled' => 1,

@@ -1,4 +1,4 @@
-# Supportdesk for Moodle
+# Support Desk for Moodle
 
 Manage support requests inside Moodle. Users create tickets, follow their status
 and reply to the support team. Staff organise tickets by support area, assign them
@@ -29,12 +29,12 @@ access. It does not grant general Moodle administration rights. Support-area
 administration requires its separate management permission. The plugin settings
 let you select which support roles are available for ticket assignment.
 
-Supportdesk is installed separately from Academic Ticket System; existing tickets
+Support Desk is installed separately from Academic Ticket System; existing tickets
 from that plugin are not imported during installation.
 
 ## Creating and following tickets
 
-Sign in to Moodle and open Supportdesk. Create a ticket with a subject, support
+Sign in to Moodle and open Support Desk. Create a ticket with a subject, support
 area and description, and add any files that help explain the request. Screenshots
 pasted into the description or reply field join the attachment list. Files are
 uploaded when you submit the form; you can remove them before submitting.
@@ -47,7 +47,7 @@ across support areas. The same access rules apply to ticket and reply attachment
 
 ## Support teams and notifications
 
-Under **Supportdesk → Support areas → Edit**, select the active Support-role users
+Under **Support Desk → Support areas → Edit**, select the active Support-role users
 who belong to each team. New tickets, customer replies and tickets moved to a
 support area notify its active team.
 
@@ -62,7 +62,7 @@ notification routing, while the Support role controls ticket access.
 
 ## Site settings and display
 
-Administrators can enable or disable Supportdesk, select assignable support roles,
+Administrators can enable or disable Support Desk, select assignable support roles,
 and configure the support mailbox. Disabling the plugin prevents access to its
 ticket pages and services.
 
@@ -72,7 +72,7 @@ region, or appear below the main content when the theme provides no block region
 
 ## Maintainer and origin
 
-Supportdesk is an independently maintained derivative of
+Support Desk is an independently maintained derivative of
 [Academic Ticket System](https://github.com/abdelrhman2049/moodle-local_academic_ticket_system).
 Original work: © 2025–2026 learn-ix <support@learn-ix.com>; UI credits: Boghdady.
 Maintained by Andreas Giesen <andreas@108design.com> (108design).

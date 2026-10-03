@@ -144,16 +144,18 @@ final class baseline_test extends \core_privacy\tests\provider_testcase {
         $ticket = $this->ticket($owner->id);
         $this->attachment('attachment', $ticket->id, $owner->id);
         $context = \context_system::instance();
-        $this->assertContains($context->id, provider::get_contexts_for_userid($owner->id)->get_contextids());
+        // Database drivers may return numeric identifiers as strings.
+        $contextids = provider::get_contexts_for_userid($owner->id)->get_contextids();
+        $this->assertSame([(int)$context->id], array_map('intval', $contextids));
         $users = new userlist($context, 'local_supportdesk');
         provider::get_users_in_context($users);
-        $this->assertContains($owner->id, $users->get_userids());
+        $this->assertContains((int)$owner->id, array_map('intval', $users->get_userids()));
         $approved = new approved_contextlist($owner, 'local_supportdesk', [$context->id]);
         provider::export_user_data($approved);
         $export = writer::with_context($context);
-        $data = $export->get_data(['Supportdesk', 'tickets', (string)$ticket->id]);
+        $data = $export->get_data(['Support Desk', 'tickets', (string)$ticket->id]);
         $this->assertSame('Private subject', $data->title);
-        $this->assertNotEmpty($export->get_files(['Supportdesk', 'tickets', (string)$ticket->id]));
+        $this->assertNotEmpty($export->get_files(['Support Desk', 'tickets', (string)$ticket->id]));
     }
     public function test_privacy_erases_user_without_removing_other_contributions(): void {
         global $DB;
@@ -201,12 +203,12 @@ final class baseline_test extends \core_privacy\tests\provider_testcase {
             }
         }
     }
-    public function test_disabled_plugin_and_colour_injection(): void {
+    public function test_disabled_plugin_and_unused_legacy_colours(): void {
         $this->resetAfterTest();
         set_config('primary_color', '#fff;} body{display:none', 'local_supportdesk');
         $css = \local_supportdesk\local\presentation::colours();
-        $this->assertStringNotContainsString('body', $css);
-        $this->assertStringContainsString('.ats-container', $css);
+        // Legacy colour settings must not override Moodle theme styling.
+        $this->assertSame('', $css);
         set_config('enabled', '0', 'local_supportdesk');
         $this->expectException(\moodle_exception::class);
         access::require_enabled();

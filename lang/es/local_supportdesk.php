@@ -19,7 +19,7 @@
  *
  * @package    local_supportdesk
  * @copyright  2026 learn-ix support@learn-ix.com
- * Modified 2026-10-03 by 108design: Supportdesk consolidation.
+ * Modified 2026-10-03 by 108design: Support Desk consolidation.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -207,7 +207,7 @@ $string['nopermission'] = 'Acceso Denegado';
 $string['nopermission_desc'] = 'Lo sentimos, no tiene permiso para ver este ticket.';
 $string['of'] = 'de';
 $string['open_label'] = 'Abiertos';
-$string['pluginname'] = 'Sistema de Tickets Académicos';
+$string['pluginname'] = 'Support Desk';
 $string['previous'] = 'Anterior';
 $string['primary_color'] = 'Color Principal';
 $string['primary_color_desc'] = 'El color principal utilizado para botones, encabezados y la identidad visual primaria.';
