@@ -1,82 +1,84 @@
 # Supportdesk for Moodle
 
-A standalone customer support desk forked from learn-ix/Boghdady Academic Ticket System 3.2.1.
-Consolidated release: **0.6.1-beta**. Intended for Moodle 4.5–5.2; verified environments are recorded in the release notes.
+Manage support requests inside Moodle. Users create tickets, follow their status
+and reply to the support team. Staff organise tickets by support area, assign them
+to colleagues, and manage the conversation in one place.
 
-## Installation
+## Features
 
-Install this directory as `local/supportdesk` and run Moodle's normal plugin installation.
-The component is `local_supportdesk`. This is a new installation, not an in-place update or data migration from Academic Ticket System.
+- Private tickets with status, priority, assignment and conversation history.
+- Support areas with configurable teams and coloured badges.
+- File attachments, pasted screenshots and optional audio recording.
+- Email and Moodle notifications for customers and support staff.
+- Ticket statistics and filters for finding requests that need attention.
+- An interface that follows the installed Moodle theme.
 
-Installation creates a **Support** role (shortname `supportdeskagent`) with ticket management, assignment, reply,
-view and attachment permissions at system context. Assign this role to staff in Site administration → Users → Permissions.
-It grants no general Moodle administration permission. Department administration remains a separate manager permission.
-Settings select assignable support roles; only system-role holders with support permissions appear as assignees.
+The current release is **0.6.1-beta**, targeting Moodle 4.5–5.2. Try the ticket,
+attachment and notification workflows on a test site before production use.
 
-Authenticated customers can create and view their own tickets. The same ticket ownership/staff checks protect both
-original and reply attachments. Disabling Supportdesk disables its entry points and APIs.
+## Installation and staff access
 
-## Styling and assets
+1. Install the plugin as `local/supportdesk` below Moodle's plugin directory.
+2. Complete installation through **Site administration → Notifications**.
+3. Assign the **Support** system role to your support staff under
+   **Site administration → Users → Permissions → Assign system roles**.
+4. Configure the plugin settings and create the required support areas.
 
-The installed Moodle theme owns Bootstrap, typography, colours, icons and dialog styling.
-There is no Tailwind, additional Bootstrap bundle, icon font or SweetAlert dependency.
-The small readable `styles/style.css` is scoped to Supportdesk and contains scoped layout, upload and semantic badge rules.
-Statistics and ticket side panels are generated with Moodle's fake-block API, with no block plugin or
-editable HTML-block instance. If the theme has no block region, these panels render below the main content.
-Ticket status, description, conversation and reply remain in the main area.
+The Support role permits ticket management, assignment, replies and attachment
+access. It does not grant general Moodle administration rights. Support-area
+administration requires its separate management permission. The plugin settings
+let you select which support roles are available for ticket assignment.
 
-Build named Moodle AMD modules with `npm ci --ignore-scripts` and `npm run build`; verify with `npm run check`.
-`npm test` exercises recorder APIs and safe ticket-row navigation without requesting a microphone.
-Shared files/audio controls support create and reply forms. Recording uses a browser-supported audio MIME type,
-releases microphone tracks on stop/navigation and retains the same multipart backend fields.
-DE and EN language files have matching keys; no fixed English UI copy is required.
+Supportdesk is installed separately from Academic Ticket System; existing tickets
+from that plugin are not imported during installation.
 
-Department administration includes a colour picker for badges. Six-digit hex colours are validated;
-black or white text is selected for readable contrast. Priorities and states use fixed semantic colours/icons.
-Dates follow the user timezone and locale with abbreviated month, no weekday. Count pills use singular/plural labels.
-Ticket rows navigate only from noninteractive cells; actions, checkboxes and future bulk controls are excluded.
-Live Viewing and its transient presence table/API are removed. No ticket content or role data is removed.
-Author credits and the GPL text remain in source/distribution; the custom visible footer notice is removed.
+## Creating and following tickets
 
-## Optional visitor access and department teams
+Sign in to Moodle and open Supportdesk. Create a ticket with a subject, support
+area and description, and add any files that help explain the request. Screenshots
+pasted into the description or reply field join the attachment list. Files are
+uploaded when you submit the form; you can remove them before submitting.
 
-Visitor ticket entry is **off by default**, including when `auth_magiclink` is already installed. The administrator setting is temporarily hidden until 108design Magic Link is publicly available and activatable.
-The integration, setting implementation, translated availability hints and stored option remain in the code.
-For its later release, restore the showvisitoraccesssetting flag in settings.php; the option still requires an installed,
-enabled and usable Magic Link provider and allowed new-account creation.
-Disabling/removing the provider also disables the visitor route at runtime.
+Where supported by the browser, the audio control can record a message after you
+grant microphone permission. Review the recording before submitting it.
 
-Unauthenticated visitors enter through `/local/supportdesk/entry.php`, verify their email using Magic Link and then
-return to the ticket form or the requested ticket. Existing accounts keep their authentication method; new visitors
-receive a Moodle account through Magic Link without a password. There is no anonymous ticket or attachment access,
-second token system, bundled authentication plugin or Storefront integration. Standard login remains available.
+Users can view and reply to their own tickets. Support staff can manage tickets
+across support areas. The same access rules apply to ticket and reply attachments.
 
-Department administration lets administrators select multiple active users with the system **Support** role.
-Teams receive native Moodle notifications for new tickets, customer replies and tickets moved into their department.
-Without an active department team, the explicitly assigned active person on the ticket is notified. If neither
-exists, the configured support mailbox receives an email, with no extra copy when staff are assigned. The mailbox
-defaults to Moodle's configured support contact, otherwise blank; configuring one is recommended. It creates no
-user account and grants no ticket access. Staff replies still notify only the owner.
-Urgent-ticket UI alerts continue to follow department memberships. Revoked roles, suspended/deleted users and the triggering actor
-are excluded. Staff replies notify the ticket owner. Normal Moodle notification preferences still apply.
+## Support teams and notifications
 
-Membership controls notification routing only. Support staff can still manage tickets in other departments;
-customers can only access their own tickets. Existing departments start with empty teams, and no users are assigned
-roles automatically. Configure teams explicitly under Supportdesk > Support areas > Edit.
+Under **Supportdesk → Support areas → Edit**, select the active Support-role users
+who belong to each team. New tickets, customer replies and tickets moved to a
+support area notify its active team.
 
-Screenshots pasted into the description or reply field are added to the same attachment list as selected/dropped files. They are only uploaded when the form is submitted; no SideNotes dependency or immediate upload.
+If no active team is configured, notifications go to the ticket's assigned active
+staff member. If neither is available, they go to the configured support mailbox.
+Configure a fallback mailbox in the plugin settings so unassigned requests still
+reach someone. This email address does not itself grant access to tickets.
 
-## Licence and provenance
+Staff replies notify the ticket owner. Moodle notification preferences apply;
+users do not receive notifications for their own actions. Team membership controls
+notification routing, while the Support role controls ticket access.
 
-GNU GPL version 3 or later; see [LICENSE.md](LICENSE.md).
-Original Academic Ticket System: © 2025–2026 learn-ix, support@learn-ix.com; UI credits: Boghdady.
-Upstream: https://github.com/abdelrhman2049/moodle-local_academic_ticket_system
-Fork maintainer: Andreas Giesen <andreas@108design.com> (108design).
-Supportdesk is maintained and versioned independently of Academic Ticket System.
+## Site settings and display
 
-Modified 2026-10-03 by Andreas Giesen / 108design: independent component name, installation/role fixes,
-ticket-level attachment authorisation, actual-schema privacy export/erasure, validated actions and native Moodle UI.
-Distributed modifications remain under GPL v3 or later. No upstream endorsement is implied.
+Administrators can enable or disable Supportdesk, select assignable support roles,
+and configure the support mailbox. Disabling the plugin prevents access to its
+ticket pages and services.
 
-This program comes without warranty; see the GPL for the applicable terms. Third-party assets retain their own licences.
+Support-area colours can be chosen in their administration form. Ticket dates
+follow each user's timezone and language. Information panels use the theme's block
+region, or appear below the main content when the theme provides no block region.
 
+## Maintainer and origin
+
+Supportdesk is an independently maintained derivative of
+[Academic Ticket System](https://github.com/abdelrhman2049/moodle-local_academic_ticket_system).
+Original work: © 2025–2026 learn-ix <support@learn-ix.com>; UI credits: Boghdady.
+Maintained by Andreas Giesen <andreas@108design.com> (108design).
+Original authorship and copyright notices are retained.
+
+## License
+
+GNU General Public License version 3 or later. See [LICENSE.md](LICENSE.md) for the full terms.
+Third-party assets retain their own licences.
