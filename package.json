@@ -1,0 +1,14 @@
+{
+  "name": "moodle-local-supportdesk-assets",
+  "private": true,
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "check": "node tools/build.mjs --check",
+    "test": "node tools/verify-forms.mjs && node tools/verify-ticket-row.mjs && node tools/verify-files.mjs"
+  },
+  "devDependencies": {
+    "@babel/core": "7.28.0",
+    "@babel/plugin-transform-modules-amd": "7.27.1",
+    "terser": "5.43.1"
+  }
+}

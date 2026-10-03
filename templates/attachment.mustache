@@ -1,0 +1,6 @@
+{{! Derived from learn-ix Academic Ticket System; GPL-3.0-or-later. Modified 2026-10-03 by 108design: native Moodle UI. }}
+
+<li class="mb-2"><a href="{{url}}">{{#pix}}f/document, core{{/pix}}{{name}}</a>
+{{#is_image}}<button type="button" class="btn btn-link p-1" data-preview-image="{{url}}" data-preview-title="{{name}}">{{#str}}view, local_supportdesk{{/str}}</button>{{/is_image}}
+{{#is_audio}}<audio controls class="d-block mt-1" preload="none" src="{{url}}" aria-label="{{name}}"></audio>{{/is_audio}}
+</li>

@@ -1,0 +1,11 @@
+{{! Derived from learn-ix Academic Ticket System; GPL-3.0-or-later. Modified 2026-10-03 by 108design: native Moodle UI. }}
+
+<details class="supportdesk-voice mb-3" data-supportdesk-voice>
+<summary>{{#str}}record_voice_note, local_supportdesk{{/str}}</summary>
+<div class="mt-2"><button type="button" data-record="start" class="btn btn-outline-secondary supportdesk-record-button"><i class="fa fa-microphone" aria-hidden="true"></i> {{#str}}start_recording, local_supportdesk{{/str}}</button>
+<button type="button" data-record="stop" class="btn btn-outline-secondary supportdesk-record-button" hidden>{{#str}}stop_recording, local_supportdesk{{/str}}</button>
+<button type="button" data-record="clear" class="btn btn-link" hidden>{{#str}}remove_file, local_supportdesk{{/str}}</button>
+<p data-record="status" class="small mt-2" role="status" aria-live="polite">{{#str}}click_to_record, local_supportdesk{{/str}}</p>
+<audio data-record="preview" controls hidden aria-label="{{#str}}audio_preview, local_supportdesk{{/str}}"></audio>
+<input type="file" name="{{voice_field}}" data-record="file" hidden accept="audio/*">
+</div></details>

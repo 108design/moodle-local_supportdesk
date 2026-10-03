@@ -1,0 +1,4 @@
+{{! Derived from learn-ix Academic Ticket System; GPL-3.0-or-later. Modified 2026-10-03 by 108design: native Moodle UI. }}
+
+<div class="supportdesk">{{#internal_notes}}<article class="border-bottom mb-2 pb-2"><strong class="small">{{user_name}}</strong><p class="small text-muted mb-1">{{time}}</p><p class="mb-1">{{content}}</p></article>{{/internal_notes}}{{^internal_notes}}<p class="text-muted">{{#str}}no_internal_notes, local_supportdesk{{/str}}</p>{{/internal_notes}}
+<form method="post" action="view.php?id={{ticket.id}}&amp;action=add_internal_comment"><input type="hidden" name="sesskey" value="{{sesskey}}"><label for="supportdesk-note">{{#str}}internal_note_placeholder, local_supportdesk{{/str}}</label><textarea class="form-control mb-2" id="supportdesk-note" name="internal_note" rows="3" required></textarea><button type="submit" class="btn btn-secondary btn-sm">{{#str}}save_note, local_supportdesk{{/str}}</button></form></div>

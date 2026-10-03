@@ -1,0 +1,2 @@
+{{! Derived from learn-ix Academic Ticket System; GPL-3.0-or-later. Modified 2026-10-03 by 108design: native Moodle UI. }}
+<div class="supportdesk"><ul class="list-unstyled">{{#latest_tickets}}<li class="mb-2"><a href="view.php?id={{id}}">#{{id}} · {{title}}</a><div class="mt-1">{{#status_badge}}{{> local_supportdesk/badge}}{{/status_badge}}</div></li>{{/latest_tickets}}{{^latest_tickets}}<li>{{#str}}no_recent_tickets, local_supportdesk{{/str}}</li>{{/latest_tickets}}</ul></div>

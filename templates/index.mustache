@@ -1,0 +1,35 @@
+{{! Derived from learn-ix Academic Ticket System; GPL-3.0-or-later. Modified 2026-10-03 by 108design: native Moodle UI. }}
+
+<div class="supportdesk ats-container">
+    <div class="supportdesk-toolbar mb-3">
+        <h2 class="h4 mb-0">{{#has_manage_capability}}{{#str}}all_tickets, local_supportdesk{{/str}}{{/has_manage_capability}}{{^has_manage_capability}}{{#str}}my_tickets, local_supportdesk{{/str}}{{/has_manage_capability}}</h2>
+        <div><label class="sr-only visually-hidden" for="ticketSearch">{{#str}}search_placeholder, local_supportdesk{{/str}}</label><input type="search" id="ticketSearch" class="form-control" placeholder="{{#str}}search_placeholder, local_supportdesk{{/str}}"></div>
+    </div>
+    <p class="small text-muted">{{#str}}search_page_hint, local_supportdesk{{/str}}</p>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover" id="ticketsTable">
+            <caption class="sr-only visually-hidden">{{#str}}all_tickets, local_supportdesk{{/str}}</caption>
+            <thead><tr>
+                <th scope="col">{{#str}}id, local_supportdesk{{/str}}</th><th scope="col">{{#str}}title, local_supportdesk{{/str}}</th>
+                <th scope="col">{{#str}}status, local_supportdesk{{/str}}</th><th scope="col">{{#str}}department_column, local_supportdesk{{/str}}</th><th scope="col">{{#str}}priority, local_supportdesk{{/str}}</th>
+                {{#show_assignment_column}}<th scope="col">{{#str}}assignee_column, local_supportdesk{{/str}}</th>{{/show_assignment_column}}
+                <th scope="col" class="supportdesk-actions">{{#str}}actions, local_supportdesk{{/str}}</th>
+            </tr></thead><tbody>
+            {{#tickets}}<tr data-ticket-row>
+                <td class="text-nowrap">#{{id}}</td><td><a href="{{view_url}}" data-ticket-link>{{title}}</a><div class="small text-muted">{{created_at}}</div></td>
+                <td>{{#status_badge}}{{> local_supportdesk/badge}}{{/status_badge}}{{#is_action_needed}}<div class="small">{{#str}}action_needed_hint, local_supportdesk{{/str}}</div>{{/is_action_needed}}</td>
+                <td>{{#category_badge}}{{> local_supportdesk/badge}}{{/category_badge}}</td><td>{{#priority_badge}}{{> local_supportdesk/badge}}{{/priority_badge}}</td>{{#show_assignment_column}}<td>{{assigned_to}}</td>{{/show_assignment_column}}
+                <td class="supportdesk-actions" data-no-row-link><a href="{{view_url}}" class="supportdesk-action-link" title="{{#str}}view_ticket, local_supportdesk{{/str}}" aria-label="{{#str}}view_ticket, local_supportdesk{{/str}} #{{id}}"><i class="fa fa-sign-in" aria-hidden="true"></i></a></td>
+            </tr>{{/tickets}}
+            {{^tickets}}<tr><td colspan="{{#show_assignment_column}}7{{/show_assignment_column}}{{^show_assignment_column}}6{{/show_assignment_column}}">{{#str}}no_tickets, local_supportdesk{{/str}}</td></tr>{{/tickets}}
+            </tbody>
+        </table>
+    </div>
+    <p id="supportdesk-no-results" hidden role="status">{{#str}}no_search_results, local_supportdesk{{/str}}</p>
+    {{#has_pagination}}<nav aria-label="{{#str}}pagination_label, local_supportdesk{{/str}}"><ul class="pagination">
+        {{#prev_url}}<li class="page-item"><a class="page-link" href="{{prev_url}}">{{#str}}previous, local_supportdesk{{/str}}</a></li>{{/prev_url}}
+        {{#pagination}}<li class="page-item {{#active}}active{{/active}}"><a class="page-link" href="{{pagurl}}" {{#active}}aria-current="page"{{/active}}>{{pagnumber}}</a></li>{{/pagination}}
+        {{#next_url}}<li class="page-item"><a class="page-link" href="{{next_url}}">{{#str}}next, local_supportdesk{{/str}}</a></li>{{/next_url}}
+    </ul></nav>{{/has_pagination}}
+</div>
+{{#js}}require(['local_supportdesk/ticket_filter'], function(module) { module.init(); });{{/js}}

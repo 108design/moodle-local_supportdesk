@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/supportdesk/db" VERSION="20261003" COMMENT="XMLDB file for Moodle Ticket System"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+    <TABLES>
+        <TABLE NAME="local_supportdesk_members" COMMENT="Support role members receiving department notifications">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="categoryid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+                <KEY NAME="categoryid" TYPE="foreign" FIELDS="categoryid" REFTABLE="local_supportdesk_categories" REFFIELDS="id" />
+                <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" />
+            </KEYS>
+            <INDEXES><INDEX NAME="categoryuser" UNIQUE="true" FIELDS="categoryid, userid" /></INDEXES>
+        </TABLE>
+        <TABLE NAME="local_supportdesk_categories" COMMENT="Stores ticket categories">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="description" TYPE="text" NOTNULL="false" SEQUENCE="false" />
+                <FIELD NAME="color" TYPE="char" LENGTH="7" NOTNULL="true" DEFAULT="#64748b" SEQUENCE="false" />
+                <FIELD NAME="created_by" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+                <FIELD NAME="ip_address" TYPE="char" LENGTH="45" NOTNULL="false" SEQUENCE="false" />
+                <FIELD NAME="created_at" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+                <FIELD NAME="updated_at" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+
+        <TABLE NAME="local_supportdesk_tickets" COMMENT="Main tickets table">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+                <FIELD NAME="category_id" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+                <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="description" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="status" TYPE="char" LENGTH="30" NOTNULL="true" DEFAULT="open" SEQUENCE="false" />
+                <FIELD NAME="assigned_to" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" />
+                <FIELD NAME="created_at" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+                <FIELD NAME="updated_at" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+                <FIELD NAME="created_by" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+                <FIELD NAME="ip_address" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="attachment" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" />
+                <FIELD NAME="priority" TYPE="char" LENGTH="20" NOTNULL="false" DEFAULT="medium" SEQUENCE="false" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+
+        <TABLE NAME="local_supportdesk_replies" COMMENT="Ticket replies table">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="ticket_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="message" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="attachment" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" />
+                <FIELD NAME="created_at" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+
+        <TABLE NAME="local_supportdesk_logs" COMMENT="Logs for ticket actions">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="ticketid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="actionname" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="oldvalue" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" />
+                <FIELD NAME="newvalue" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" />
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+
+        <TABLE NAME="local_supportdesk_comments" COMMENT="Internal admin comments/notes">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="ticketid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="content" TYPE="text" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="created_at" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+
+        <TABLE NAME="local_supportdesk_feedback" COMMENT="Stores user feedback and ratings for tickets">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="ticketid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="rating" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="comment" TYPE="text" NOTNULL="false" SEQUENCE="false" />
+                <FIELD NAME="created_at" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+
+    </TABLES>
+</XMLDB>

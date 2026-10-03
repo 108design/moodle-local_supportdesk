@@ -1,0 +1,14 @@
+{{! Derived from learn-ix Academic Ticket System; GPL-3.0-or-later. Modified 2026-10-03 by 108design: native Moodle UI. }}
+
+<div class="supportdesk ats-container"><p>{{#str}}form_instruction, local_supportdesk{{/str}}</p>
+<form action="{{action_url}}" method="post" enctype="multipart/form-data" class="supportdesk-form">
+<input type="hidden" name="sesskey" value="{{sesskey}}">
+<div class="form-group mb-3"><label for="ticket_title">{{#str}}ticket_title_label, local_supportdesk{{/str}} *</label><input type="text" id="ticket_title" name="title" class="form-control" required maxlength="255"></div>
+<div class="form-group mb-3"><label for="ticket_category">{{#str}}ticket_department_label, local_supportdesk{{/str}} *</label><select id="ticket_category" name="category_id" class="form-control" required><option value="">{{#str}}select_department_hint, local_supportdesk{{/str}}</option>{{#categories}}<option value="{{id}}">{{title}}</option>{{/categories}}</select></div>
+<div class="form-group mb-3"><label for="ticket_priority">{{#str}}priority, local_supportdesk{{/str}} *</label><select id="ticket_priority" name="priority" class="form-control" required><option value="">{{#str}}select_priority_hint, local_supportdesk{{/str}}</option><option value="low">{{#str}}priority_low, local_supportdesk{{/str}}</option><option value="medium">{{#str}}priority_medium, local_supportdesk{{/str}}</option><option value="high">{{#str}}priority_high, local_supportdesk{{/str}}</option><option value="urgent">{{#str}}priority_urgent, local_supportdesk{{/str}}</option></select></div>
+<div class="form-group mb-3"><label for="ticket_description">{{#str}}ticket_description_label, local_supportdesk{{/str}} *</label><textarea id="ticket_description" data-supportdesk-paste aria-describedby="ticket_description-paste-hint" name="description" rows="6" class="form-control" required></textarea><p class="small text-muted mt-1 mb-0" id="ticket_description-paste-hint">{{#str}}paste_image_hint, local_supportdesk{{/str}}</p></div>
+{{> local_supportdesk/voice}}{{> local_supportdesk/files}}
+<p class="small text-muted">{{#str}}required_fields, local_supportdesk{{/str}}</p>
+<button type="submit" class="btn btn-primary">{{#str}}submit, local_supportdesk{{/str}}</button> <a href="{{return_url}}" class="btn btn-secondary">{{#str}}cancel, local_supportdesk{{/str}}</a>
+</form></div>
+{{#js}}require(['local_supportdesk/forms'], function(module) { module.init(); });{{/js}}

@@ -1,0 +1,5 @@
+{{! Derived from learn-ix Academic Ticket System; GPL-3.0-or-later. Modified 2026-10-03 by 108design. }}
+<div class="form-group mb-3" data-supportdesk-files><label for="{{file_id}}">{{#str}}attach_files_optional, local_supportdesk{{/str}}</label>
+<div class="supportdesk-dropzone" data-file-drop><input type="file" class="sr-only visually-hidden" id="{{file_id}}" name="{{file_field}}" multiple aria-describedby="{{file_id}}-hint">
+<label for="{{file_id}}" class="supportdesk-file-picker">{{#pix}}i/upload, core{{/pix}}<span>{{#str}}choose_files, local_supportdesk{{/str}}</span><span class="small text-muted" id="{{file_id}}-hint">{{#str}}drag_drop_hint, local_supportdesk{{/str}}</span></label></div>
+<ul data-file-list class="list-unstyled mt-2 mb-0" aria-live="polite"></ul></div>
