@@ -82,3 +82,10 @@ Original authorship and copyright notices are retained.
 
 GNU General Public License version 3 or later. See [LICENSE.md](LICENSE.md) for the full terms.
 Third-party assets retain their own licences.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+This program comes without warranty; see the GPL for the applicable terms.
