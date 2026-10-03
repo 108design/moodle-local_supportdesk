@@ -13,7 +13,7 @@ to colleagues, and manage the conversation in one place.
 - Ticket statistics and filters for finding requests that need attention.
 - An interface that follows the installed Moodle theme.
 
-The current release is **0.6.1-beta**, targeting Moodle 4.5–5.2. Try the ticket,
+The current release is **0.7.0-beta**, targeting Moodle 4.5–5.2. Try the ticket,
 attachment and notification workflows on a test site before production use.
 
 ## Installation and staff access
