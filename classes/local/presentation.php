@@ -10,7 +10,9 @@ class presentation {
         global $PAGE;
         $PAGE->set_pagelayout('standard');
         $PAGE->set_primary_active_tab('supportdesk_nav');
-        $PAGE->requires->css(new \moodle_url('/local/supportdesk/styles/style.css'));
+        // Static plugin assets need a release key as well as Moodle's theme/JS cache revision.
+        $PAGE->requires->css(new \moodle_url('/local/supportdesk/styles/style.css',
+            ['v' => (int)get_config('local_supportdesk', 'version')]));
         $PAGE->navbar->add(get_string('pluginname', 'local_supportdesk'), new \moodle_url('/local/supportdesk/index.php'));
         $current = basename($PAGE->url->get_path());
         if ($current !== 'index.php') {
