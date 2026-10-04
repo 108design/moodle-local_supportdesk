@@ -13,15 +13,14 @@ to colleagues, and manage the conversation in one place.
 - Ticket statistics and filters for finding requests that need attention.
 - An interface that follows the installed Moodle theme.
 
-The current release is **0.8.2-beta**, targeting Moodle 4.5â€“5.2. Try the ticket,
-attachment and notification workflows on a test site before production use.
+Support Desk requires Moodle 4.5–5.2.
 
 ## Installation and staff access
 
 1. Install the plugin as `local/supportdesk` below Moodle's plugin directory.
-2. Complete installation through **Site administration â†’ Notifications**.
+2. Complete installation through **Site administration → Notifications**.
 3. Assign the **Support** system role to your support staff under
-   **Site administration â†’ Users â†’ Permissions â†’ Assign system roles**.
+   **Site administration → Users → Permissions → Assign system roles**.
 4. Configure the plugin settings and create the required support areas.
 
 The Support role permits ticket management, assignment, replies and attachment
@@ -47,7 +46,7 @@ across support areas. The same access rules apply to ticket and reply attachment
 
 ## Support teams and notifications
 
-Under **Support Desk â†’ Support areas â†’ Edit**, select the active Support-role users
+Under **Support Desk → Support areas → Edit**, select the active Support-role users
 who belong to each team. New tickets, customer replies and tickets moved to a
 support area notify its active team.
 
@@ -77,7 +76,7 @@ region, or appear below the main content when the theme provides no block region
 
 Support Desk is an independently maintained derivative of
 [Academic Ticket System](https://github.com/abdelrhman2049/moodle-local_academic_ticket_system).
-Original work: Â© 2025â€“2026 learn-ix <support@learn-ix.com>; UI credits: Boghdady.
+Original work: © 2025–2026 learn-ix <support@learn-ix.com>; UI credits: Boghdady.
 Maintained by Andreas Giesen <andreas@108design.com> (108design).
 Original authorship and copyright notices are retained.
 

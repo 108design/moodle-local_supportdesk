@@ -1,3 +1,10 @@
+# 1.0.0 — 2026-10-04
+
+- First stable release, with the fixed product name Support Desk.
+- Conversation image galleries, optional voice messages and optional support-mailbox copies.
+- Verified ticket creation, replies, attachments, protected downloads, status changes and feedback on Moodle 4.5 and 5.2.
+- Voice messages and additional mailbox copies remain optional and disabled by default.
+
 # 0.6.1-beta — 2026-10-03
 
 - Temporarily hide the visitor setting pending public Magic Link availability/activation; retain code, hints and stored configuration.
