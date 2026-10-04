@@ -4,6 +4,48 @@ Manage support requests inside Moodle. Users create tickets, follow their status
 and reply to the support team. Staff organise tickets by support area, assign them
 to colleagues, and manage the conversation in one place.
 
+## Screenshots
+
+<details>
+<summary>View screenshots (6)</summary>
+
+Click a preview to open the full-size screenshot.
+
+<table>
+<tr>
+<td align="center" width="50%" valign="middle">
+<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-tickets.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-tickets.jpg" width="300" height="91" alt="Ticket overview and status"></a><br>
+<sub>Ticket overview and status</sub>
+</td>
+<td align="center" width="50%" valign="middle">
+<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-new-ticket.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-new-ticket.jpg" width="136" height="160" alt="Create a ticket with files or a voice message"></a><br>
+<sub>Create a ticket with files or a voice message</sub>
+</td>
+</tr>
+<tr>
+<td align="center" width="50%" valign="middle">
+<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-ticket01.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-ticket01.jpg" width="300" height="147" alt="Ticket details, assignment and conversation"></a><br>
+<sub>Ticket details, assignment and conversation</sub>
+</td>
+<td align="center" width="50%" valign="middle">
+<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-ticket02.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-ticket02.jpg" width="300" height="135" alt="Reply to a ticket and add attachments"></a><br>
+<sub>Reply to a ticket and add attachments</sub>
+</td>
+</tr>
+<tr>
+<td align="center" width="50%" valign="middle">
+<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-departments.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-departments.jpg" width="289" height="160" alt="Configure support departments and teams"></a><br>
+<sub>Configure support departments and teams</sub>
+</td>
+<td align="center" width="50%" valign="middle">
+<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-settings.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-settings.jpg" width="243" height="160" alt="Configure notifications, staff roles and voice messages"></a><br>
+<sub>Configure notifications, staff roles and voice messages</sub>
+</td>
+</tr>
+</table>
+
+</details>
+
 ## Features
 
 - Private tickets with status, priority, assignment and conversation history.
