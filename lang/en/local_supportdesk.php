@@ -248,7 +248,7 @@ $string['supportdesk:viewticket'] = 'Permission to view ticket details';
 $string['system_name'] = 'First Department Name';
 $string['system_name_desc'] = 'This is the default name for the first department. You can rename it or manage other departments later by clicking on the "Departments" section.';
 $string['ticket_department_label'] = 'Department';
-$string['ticket_description_label'] = 'Issue Description';
+$string['ticket_description_label'] = 'Issue';
 $string['ticket_details_heading'] = 'Ticket details';
 $string['ticket_id_label'] = 'Ticket ID';
 $string['ticket_information'] = 'Ticket information';
@@ -337,3 +337,10 @@ $string['privacy:metadata:members'] = 'Assignment of support users to notificati
 $string['privacy:metadata:messages'] = 'Ticket notifications through Moodle messaging.';
 
 $string['privacy:metadata:fallback_email'] = 'Ticket number, subject, area and ticket link are sent to the configured support contact when no staff recipient is assigned.';
+
+$string['image_gallery'] = 'Ticket images';
+$string['image_previous'] = 'Previous image';
+$string['image_next'] = 'Next image';
+$string['image_zoom'] = 'Zoom image';
+$string['image_error'] = 'The image could not be loaded.';
+$string['image_thumbnail'] = 'Show image {$a}';

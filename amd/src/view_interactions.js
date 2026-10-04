@@ -1,18 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later; 108design, 2026-10-03.
-import Modal from 'core/modal';
-import Notification from 'core/notification';
+import {init as initGallery} from 'local_supportdesk/attachment_gallery';
 export const init = () => {
-    document.querySelectorAll('[data-preview-image]').forEach(button => {
-        button.addEventListener('click', async () => {
-            try {
-                const image = document.createElement('img'); image.src = button.dataset.previewImage;
-                image.alt = button.dataset.previewTitle; image.className = 'supportdesk-image-preview';
-                const title = document.createElement('span'); title.textContent = button.dataset.previewTitle;
-                await Modal.create({title: title.innerHTML, body: image.outerHTML,
-                    show: true, removeOnClose: true});
-            } catch (error) { Notification.exception(error); }
-        });
-    });
+    initGallery();
     const search = document.querySelector('[data-filter-assignees]');
     const select = document.getElementById('supportdesk-assignee');
     if (search && select) {

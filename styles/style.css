@@ -13,7 +13,6 @@
 .supportdesk-message img { max-width: 100%; height: auto; }
 .supportdesk audio { max-width: 100%; }
 .supportdesk-dropzone[data-dragging] { outline: 2px solid currentColor; }
-.supportdesk-image-preview { display: block; max-width: 100%; max-height: 70vh; margin: auto; }
 .supportdesk-fallback { margin-top: 2rem; }
 
 .supportdesk-form label:not(.supportdesk-file-picker), .supportdesk-block label { font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; font-weight: 500; color: var(--bs-secondary-color, #62666b); margin-bottom: .35rem; }
@@ -50,3 +49,27 @@
 
 .supportdesk-form .supportdesk-field-label { font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; font-weight: 500; color: var(--bs-secondary-color, #62666b); }
 .supportdesk-form label.supportdesk-team-member { font-size: .875rem; text-transform: none; letter-spacing: normal; color: inherit; font-weight: 400; }
+
+/* Messages keep one continuous separator, with the same inset for both authors. */
+.supportdesk .supportdesk-issue, .supportdesk .supportdesk-reply, .supportdesk .supportdesk-compose { padding: 1rem; }
+.supportdesk .supportdesk-issue { background: #fff; }
+.supportdesk .supportdesk-reply { border-top: 1px solid var(--bs-border-color, #d4d4d8); }
+.supportdesk .supportdesk-reply:last-child { border-bottom: 1px solid var(--bs-border-color, #d4d4d8); }
+.supportdesk .supportdesk-reply-support { background: #eeebff; background: oklch(94% .03 294.59); }
+.supportdesk .supportdesk-compose { background: var(--bs-tertiary-bg, #f5f5f6); border-radius: .375rem; }
+.supportdesk .supportdesk-message > :last-child { margin-bottom: 0; }
+.supportdesk .supportdesk-attachments { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 0; }
+.supportdesk .supportdesk-attachment { min-width: 0; max-width: 100%; }
+.supportdesk .supportdesk-attachment:not(.supportdesk-attachment-image) { flex-basis: 100%; }
+.supportdesk .supportdesk-thumbnail { display: flex; flex-direction: column; gap: .3rem; width: 8rem; color: inherit; font-size: .75rem; text-decoration: none; }
+.supportdesk .supportdesk-thumbnail img { width: 100%; height: 5.5rem; object-fit: contain; border: 1px solid var(--bs-border-color, #d4d4d8); border-radius: .25rem; background: #fff; }
+.supportdesk .supportdesk-thumbnail span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.supportdesk .supportdesk-thumbnail:hover img { border-color: currentColor; }
+.supportdesk .supportdesk-thumbnail:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.pswp--supportdesk .supportdesk-lightbox-footer { position: absolute; bottom: 0; left: 0; right: 0; padding: .75rem 1rem; color: #fff; background: rgba(0, 0, 0, .65); }
+.pswp--supportdesk .supportdesk-lightbox-caption { margin: 0 0 .5rem; font-size: .875rem; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pswp--supportdesk .supportdesk-lightbox-strip { display: flex; gap: .5rem; overflow-x: auto; padding: .2rem; max-width: 100%; width: max-content; margin: auto; }
+.pswp--supportdesk .supportdesk-lightbox-strip button { flex: none; background: transparent; border: 2px solid transparent; border-radius: .25rem; padding: 2px; opacity: .65; }
+.pswp--supportdesk .supportdesk-lightbox-strip button[aria-current="true"], .pswp--supportdesk .supportdesk-lightbox-strip button:hover { opacity: 1; border-color: #fff; }
+.pswp--supportdesk .supportdesk-lightbox-strip button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; opacity: 1; }
+.pswp--supportdesk .supportdesk-lightbox-strip img { display: block; width: 4rem; height: 3rem; object-fit: contain; }

@@ -256,27 +256,9 @@ $ticketfiles = $fs->get_area_files(
 
 $ticketattachments = [];
 foreach ($ticketfiles as $f) {
-    $pluginurl = moodle_url::make_pluginfile_url(
-        $f->get_contextid(),
-        $f->get_component(),
-        $f->get_filearea(),
-        $f->get_itemid(),
-        $f->get_filepath(),
-        $f->get_filename()
-    );
-    $mimetype = $f->get_mimetype();
-    $filename = $f->get_filename();
-    $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-    $isaudio = (strpos($mimetype, 'audio/') === 0 || in_array($ext, ['mp3', 'wav', 'ogg', 'webm', 'm4a']));
-    $ticketattachments[] = [
-        'name' => $filename,
-        'download_url' => $pluginurl->out(false),
-        'url' => $pluginurl->out(false),
-        'icon' => $OUTPUT->pix_icon(file_file_icon($f), '', 'core', ['class' => 'w-10 h-10 inline']),
-        'is_image' => (strpos($mimetype, 'image/') === 0),
-        'is_audio' => $isaudio,
-    ];
+    $ticketattachments[] = \local_supportdesk\local\attachments::export($f);
 }
+$PAGE->requires->css(new moodle_url('/local/supportdesk/thirdparty/photoswipe/photoswipe.css'));
 
 $repliesrecords = $DB->get_records(
     'local_supportdesk_replies',
@@ -324,25 +306,7 @@ foreach ($repliesrecords as $r) {
 
     $rattachments = [];
     foreach ($rfiles as $rf) {
-        $replyurl = moodle_url::make_pluginfile_url(
-            $rf->get_contextid(),
-            $rf->get_component(),
-            $rf->get_filearea(),
-            $rf->get_itemid(),
-            $rf->get_filepath(),
-            $rf->get_filename()
-        );
-        $rmimetype = $rf->get_mimetype();
-        $rfilename = $rf->get_filename();
-        $rext = strtolower(pathinfo($rfilename, PATHINFO_EXTENSION));
-        $isaudio = (strpos($rmimetype, 'audio/') === 0 || in_array($rext, ['mp3', 'wav', 'ogg', 'webm', 'm4a']));
-
-        $rattachments[] = [
-            'name' => $rfilename,
-            'url'  => $replyurl->out(false),
-            'is_image' => (strpos($rmimetype, 'image/') === 0),
-            'is_audio' => $isaudio,
-        ];
+        $rattachments[] = \local_supportdesk\local\attachments::export($rf);
     }
 
     $repliesdata[] = [

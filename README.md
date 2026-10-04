@@ -66,6 +66,9 @@ Administrators can enable or disable Support Desk, select assignable support rol
 and configure the support mailbox. Disabling the plugin prevents access to its
 ticket pages and services.
 
+Image attachments appear as thumbnails. Open an image to browse all ticket images,
+including reply attachments, in a keyboard-accessible lightbox with a thumbnail strip.
+
 Support-area colours can be chosen in their administration form. Ticket dates
 follow each user's timezone and language. Information panels use the theme's block
 region, or appear below the main content when the theme provides no block region.
@@ -81,7 +84,8 @@ Original authorship and copyright notices are retained.
 ## License
 
 GNU General Public License version 3 or later. See [LICENSE.md](LICENSE.md) for the full terms.
-Third-party assets retain their own licences.
+Third-party assets retain their own licences. The bundled PhotoSwipe 5.4.4 viewer
+is MIT licensed; see [its licence](thirdparty/photoswipe/LICENSE).
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of

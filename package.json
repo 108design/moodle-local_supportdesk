@@ -4,7 +4,7 @@
   "scripts": {
     "build": "node tools/build.mjs",
     "check": "node tools/build.mjs --check",
-    "test": "node tools/verify-forms.mjs && node tools/verify-ticket-row.mjs && node tools/verify-files.mjs"
+    "test": "node tools/verify-forms.mjs && node tools/verify-ticket-row.mjs && node tools/verify-files.mjs && node tools/verify-gallery.mjs"
   },
   "devDependencies": {
     "@babel/core": "7.28.0",

@@ -223,7 +223,7 @@ $string['supportdesk:viewticket'] = 'Berechtigte Tickets ansehen';
 $string['system_name'] = 'Name des Supportdesks';
 $string['system_name_desc'] = 'Angezeigter Name des Ticket-Systems.';
 $string['ticket_department_label'] = 'Support-Bereich';
-$string['ticket_description_label'] = 'Beschreibung';
+$string['ticket_description_label'] = 'Anliegen';
 $string['ticket_details_heading'] = 'Ticketdetails';
 $string['ticket_id_label'] = 'Ticketnummer';
 $string['ticket_information'] = 'Ticketinformationen';
@@ -314,3 +314,10 @@ $string['privacy:metadata:members'] = 'Zuordnung von Support-Nutzern zu Benachri
 $string['privacy:metadata:messages'] = 'Ticketbezogene Benachrichtigungen über Moodle-Nachrichten.';
 
 $string['privacy:metadata:fallback_email'] = 'Ticketnummer, Betreff, Bereich und Ticket-Link werden bei fehlender Mitarbeiterzuordnung an die konfigurierte Support-Kontaktadresse gesendet.';
+
+$string['image_gallery'] = 'Ticketbilder';
+$string['image_previous'] = 'Vorheriges Bild';
+$string['image_next'] = 'Nächstes Bild';
+$string['image_zoom'] = 'Bild vergrößern';
+$string['image_error'] = 'Das Bild konnte nicht geladen werden.';
+$string['image_thumbnail'] = 'Bild {$a} anzeigen';
