@@ -236,7 +236,7 @@ $string['submit_feedback'] = 'Submit feedback';
 $string['success'] = 'Success!';
 $string['support_departments'] = 'Support departments';
 $string['support_email'] = 'Support Email';
-$string['support_email_desc'] = 'Support notification order: department team → explicitly assigned person on the ticket → this fallback address. The address receives no extra copy. Defaults to the support contact configured in Moodle, or blank if none. Configuring a fallback address is recommended.';
+$string['support_email_desc'] = 'Support notification order: department team → explicitly assigned person on the ticket → this fallback address. Unless additional copies are enabled, this address is used only as fallback. Defaults to the support contact configured in Moodle, or blank if none. Configuring a fallback address is recommended.';
 $string['support_team'] = 'Support';
 $string['supportdesk:addcategory'] = 'Permission to add new categories';
 $string['supportdesk:addticket'] = 'Permission to create new tickets (Customer)';
@@ -336,7 +336,7 @@ $string['messageprovider:ticket_reply'] = 'Replies to your own support tickets';
 $string['privacy:metadata:members'] = 'Assignment of support users to notification teams.';
 $string['privacy:metadata:messages'] = 'Ticket notifications through Moodle messaging.';
 
-$string['privacy:metadata:fallback_email'] = 'Ticket number, subject, area and ticket link are sent to the configured support contact when no staff recipient is assigned.';
+$string['privacy:metadata:fallback_email'] = 'Ticket number, subject, area and ticket link are sent to the configured support contact when no staff recipient is assigned or additional copies are enabled.';
 
 $string['image_gallery'] = 'Ticket images';
 $string['image_previous'] = 'Previous image';
@@ -348,3 +348,6 @@ $string['image_thumbnail'] = 'Show image {$a}';
 $string['allowvoicenotes'] = 'Allow voice messages';
 $string['allowvoicenotes_desc'] = 'Allows microphone recordings in new tickets and replies. Disabled by default. Existing voice messages remain playable; ordinary file attachments remain available.';
 $string['voicenotes_disabled'] = 'Voice messages are currently disabled.';
+
+$string['copyallsupportemail'] = 'Send all tickets to this address as well';
+$string['copyallsupportemail_desc'] = 'Disabled by default. When enabled, the support address above additionally receives all ticket notifications (new tickets, replies and area changes), even when a department team or assignee is configured. No copy is sent without a valid address. This does not grant ticket access.';

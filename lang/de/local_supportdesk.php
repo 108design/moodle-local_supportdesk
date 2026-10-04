@@ -211,7 +211,7 @@ $string['submit_reply'] = 'Antwort senden';
 $string['success'] = 'Erfolgreich';
 $string['support_departments'] = 'Support-Bereiche';
 $string['support_email'] = 'Support-E-Mail';
-$string['support_email_desc'] = 'Empfängerfolge für Support-Benachrichtigungen: Bereichsteam → ausdrücklich zuständige Person im Ticket → diese Fallback-Adresse. Die Adresse erhält keine zusätzliche Kopie. Vorgabe ist der in Moodle eingestellte Supportkontakt, sonst leer. Eine Fallback-Adresse zu hinterlegen wird empfohlen.';
+$string['support_email_desc'] = 'Empfängerfolge für Support-Benachrichtigungen: Bereichsteam → ausdrücklich zuständige Person im Ticket → diese Fallback-Adresse. Ohne aktivierte Zusatzkopie wird die Adresse ausschließlich als Fallback verwendet. Vorgabe ist der in Moodle eingestellte Supportkontakt, sonst leer. Eine Fallback-Adresse zu hinterlegen wird empfohlen.';
 $string['support_team'] = 'Support';
 $string['supportdesk:addcategory'] = 'Support-Bereiche verwalten';
 $string['supportdesk:addticket'] = 'Support-Tickets erstellen';
@@ -313,7 +313,7 @@ $string['messageprovider:ticket_reply'] = 'Antworten auf eigene Support-Tickets'
 $string['privacy:metadata:members'] = 'Zuordnung von Support-Nutzern zu Benachrichtigungsteams.';
 $string['privacy:metadata:messages'] = 'Ticketbezogene Benachrichtigungen über Moodle-Nachrichten.';
 
-$string['privacy:metadata:fallback_email'] = 'Ticketnummer, Betreff, Bereich und Ticket-Link werden bei fehlender Mitarbeiterzuordnung an die konfigurierte Support-Kontaktadresse gesendet.';
+$string['privacy:metadata:fallback_email'] = 'Ticketnummer, Betreff, Bereich und Ticket-Link werden bei fehlender Mitarbeiterzuordnung oder aktivierter Zusatzkopie an die konfigurierte Support-Kontaktadresse gesendet.';
 
 $string['image_gallery'] = 'Ticketbilder';
 $string['image_previous'] = 'Vorheriges Bild';
@@ -325,3 +325,6 @@ $string['image_thumbnail'] = 'Bild {$a} anzeigen';
 $string['allowvoicenotes'] = 'Sprachnachrichten erlauben';
 $string['allowvoicenotes_desc'] = 'Erlaubt Mikrofonaufnahmen in neuen Tickets und Antworten. Standardmäßig aus. Vorhandene Sprachnachrichten bleiben abspielbar; normale Dateianhänge sind weiterhin möglich.';
 $string['voicenotes_disabled'] = 'Sprachnachrichten sind derzeit deaktiviert.';
+
+$string['copyallsupportemail'] = 'Alle Tickets zusätzlich an diese Adresse schicken';
+$string['copyallsupportemail_desc'] = 'Standardmäßig aus. Wenn aktiviert, erhält die oben eingestellte Supportadresse zusätzlich alle Ticketbenachrichtigungen (neue Tickets, Antworten und Bereichswechsel), auch wenn ein Bereichsteam oder eine zuständige Person zugeordnet ist. Ohne gültige Adresse wird keine Kopie versendet. Die Adresse erhält dadurch keinen Zugriff auf Tickets.';

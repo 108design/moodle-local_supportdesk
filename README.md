@@ -13,7 +13,7 @@ to colleagues, and manage the conversation in one place.
 - Ticket statistics and filters for finding requests that need attention.
 - An interface that follows the installed Moodle theme.
 
-The current release is **0.7.0-beta**, targeting Moodle 4.5â€“5.2. Try the ticket,
+The current release is **0.8.2-beta**, targeting Moodle 4.5â€“5.2. Try the ticket,
 attachment and notification workflows on a test site before production use.
 
 ## Installation and staff access
@@ -54,7 +54,7 @@ support area notify its active team.
 If no active team is configured, notifications go to the ticket's assigned active
 staff member. If neither is available, they go to the configured support mailbox.
 Configure a fallback mailbox in the plugin settings so unassigned requests still
-reach someone. This email address does not itself grant access to tickets.
+reach someone. This email address does not itself grant access to tickets. The optional **Send all tickets to this address as well** setting is disabled by default. Enable it to copy every ticket notification, including staff replies, to the mailbox while retaining normal recipient routing. An empty or invalid address receives no copy.
 
 Staff replies notify the ticket owner. Moodle notification preferences apply;
 users do not receive notifications for their own actions. Team membership controls

@@ -33,6 +33,10 @@ class notifications {
     }
 
     public static function fallback_address(\stdClass $ticket, bool $toowner = false): string {
+        // Opt-in copies include staff replies; the address is sent only once per event.
+        if (get_config('local_supportdesk', 'copyallsupportemail')) {
+            return self::support_address();
+        }
         return $toowner || self::staff_members($ticket) ? '' : self::support_address();
     }
 

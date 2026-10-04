@@ -75,6 +75,13 @@ if ($hassiteconfig) {
         PARAM_EMAIL
     ));
 
+    $settings->add(new admin_setting_configcheckbox(
+        'local_supportdesk/copyallsupportemail',
+        get_string('copyallsupportemail', 'local_supportdesk'),
+        get_string('copyallsupportemail_desc', 'local_supportdesk'),
+        0
+    ));
+
 
 
     $settings->add(new admin_setting_configtext(
