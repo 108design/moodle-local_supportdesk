@@ -39,6 +39,7 @@ class presentation {
 
     public static function page(string $template, array $data, array $sidebars = []): void {
         global $PAGE, $OUTPUT;
+        $data['allowvoicenotes'] = (bool)get_config('local_supportdesk', 'allowvoicenotes');
         $fallback = '';
         $regions = $PAGE->blocks->get_regions();
         $region = in_array('side-pre', $regions, true) ? 'side-pre' : $PAGE->blocks->get_default_region();

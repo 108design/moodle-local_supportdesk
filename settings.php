@@ -46,6 +46,13 @@ if ($hassiteconfig) {
         1
     ));
 
+    $settings->add(new admin_setting_configcheckbox(
+        'local_supportdesk/allowvoicenotes',
+        get_string('allowvoicenotes', 'local_supportdesk'),
+        get_string('allowvoicenotes_desc', 'local_supportdesk'),
+        0
+    ));
+
     // Temporarily hidden until 108design Magic Link is publicly available/activatable.
     // Keep the setting and its guards intact; restore this flag for the public integration release.
     $showvisitoraccesssetting = false;

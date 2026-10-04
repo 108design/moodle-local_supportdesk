@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     \local_supportdesk\local\uploads::validate($_FILES['attachments'] ?? [], true);
-    \local_supportdesk\local\uploads::validate($_FILES['voice_note'] ?? []);
+    \local_supportdesk\local\uploads::validate_voice($_FILES['voice_note'] ?? []);
     $newticket = new stdClass();
     $newticket->title = $title;
     $newticket->description = $description;

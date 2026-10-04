@@ -6,6 +6,15 @@ defined('MOODLE_INTERNAL') || die();
 
 /** Validate raw multipart uploads before creating tickets or replies. */
 class uploads {
+    /** Dedicated microphone submissions must obey the setting on the server as well. */
+    public static function validate_voice(array $upload): void {
+        if ($upload && (($upload['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE || !empty($upload['name']))
+                && !get_config('local_supportdesk', 'allowvoicenotes')) {
+            throw new \moodle_exception('voicenotes_disabled', 'local_supportdesk');
+        }
+        self::validate($upload);
+    }
+
     public static function validate(array $upload, bool $multiple = false): void {
         global $CFG;
         if (!$upload) {return;}

@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 throw new \invalid_parameter_exception('A reply is required');
             }
             \local_supportdesk\local\uploads::validate($_FILES['reply_files'] ?? [], true);
-            \local_supportdesk\local\uploads::validate($_FILES['reply_voice'] ?? []);
+            \local_supportdesk\local\uploads::validate_voice($_FILES['reply_voice'] ?? []);
             $reply = (object)[
                 'ticket_id' => $id,
                 'userid' => $USER->id,

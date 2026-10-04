@@ -344,3 +344,7 @@ $string['image_next'] = 'Next image';
 $string['image_zoom'] = 'Zoom image';
 $string['image_error'] = 'The image could not be loaded.';
 $string['image_thumbnail'] = 'Show image {$a}';
+
+$string['allowvoicenotes'] = 'Allow voice messages';
+$string['allowvoicenotes_desc'] = 'Allows microphone recordings in new tickets and replies. Disabled by default. Existing voice messages remain playable; ordinary file attachments remain available.';
+$string['voicenotes_disabled'] = 'Voice messages are currently disabled.';

@@ -321,3 +321,7 @@ $string['image_next'] = 'Nächstes Bild';
 $string['image_zoom'] = 'Bild vergrößern';
 $string['image_error'] = 'Das Bild konnte nicht geladen werden.';
 $string['image_thumbnail'] = 'Bild {$a} anzeigen';
+
+$string['allowvoicenotes'] = 'Sprachnachrichten erlauben';
+$string['allowvoicenotes_desc'] = 'Erlaubt Mikrofonaufnahmen in neuen Tickets und Antworten. Standardmäßig aus. Vorhandene Sprachnachrichten bleiben abspielbar; normale Dateianhänge sind weiterhin möglich.';
+$string['voicenotes_disabled'] = 'Sprachnachrichten sind derzeit deaktiviert.';
