@@ -53,19 +53,21 @@ if ($hassiteconfig) {
         0
     ));
 
-    // Temporarily hidden until 108design Magic Link is publicly available/activatable.
-    // Keep the setting and its guards intact; restore this flag for the public integration release.
-    $showvisitoraccesssetting = false;
-    if ($showvisitoraccesssetting) {
+    $visitormodes = ['login' => get_string('visitormode_login', 'local_supportdesk'),
+        'anonymous' => get_string('visitormode_anonymous', 'local_supportdesk')];
+    $visitordesc = get_string('visitormode_desc', 'local_supportdesk');
+    if (get_config('auth_magiclink', 'version')) {
+        $visitormodes['magiclink'] = get_string('visitormode_magiclink', 'local_supportdesk');
         $visitorstatus = \local_supportdesk\local\visitor_access::availability();
-        $visitordesc = get_string('visitoraccess_desc', 'local_supportdesk');
-        if (!$visitorstatus['ready']) {
-            $visitordesc .= ' ' . get_string($visitorstatus['reason'], 'local_supportdesk');
-        }
-        $settings->add(new \local_supportdesk\local\visitor_setting(
-            'local_supportdesk/visitoraccess', get_string('visitoraccess', 'local_supportdesk'), $visitordesc, 0
-        ));
+        if (!$visitorstatus['ready']) {$visitordesc .= ' ' . get_string($visitorstatus['reason'], 'local_supportdesk');}
     }
+    $settings->add(new \local_supportdesk\local\visitor_mode_setting('local_supportdesk/visitormode',
+        get_string('visitormode', 'local_supportdesk'), $visitordesc, 'login', $visitormodes));
+    $settings->add(new admin_setting_configtext('local_supportdesk/turnstilesitekey',
+        get_string('turnstilesitekey', 'local_supportdesk'), get_string('turnstilesitekey_desc', 'local_supportdesk'),
+        '', PARAM_RAW_TRIMMED));
+    $settings->add(new admin_setting_configpasswordunmask('local_supportdesk/turnstilesecret',
+        get_string('turnstilesecret', 'local_supportdesk'), get_string('turnstilesecret_desc', 'local_supportdesk'), ''));
 
     $settings->add(new admin_setting_configtext(
         'local_supportdesk/support_email',

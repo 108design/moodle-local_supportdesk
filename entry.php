@@ -6,22 +6,16 @@ use local_supportdesk\local\access;
 access::require_enabled();
 $target = visitor_access::target(optional_param('next', '/local/supportdesk/add.php', PARAM_RAW_TRIMMED));
 if (isloggedin() && !isguestuser()) {redirect($target);}
-if (!visitor_access::enabled()) {
+if (!visitor_access::enabled() && !\local_supportdesk\local\public_intake::enabled()) {
     $SESSION->wantsurl = $target->out(false);
     redirect(get_login_url());
 }
-$PAGE->set_context(context_system::instance());
 $PAGE->set_url('/local/supportdesk/entry.php', ['next' => $target->out_as_local_url(false)]);
-$PAGE->set_pagelayout('login');
-$PAGE->set_title(get_string('visitor_heading', 'local_supportdesk'));
-$PAGE->set_heading(get_string('pluginname', 'local_supportdesk'));
-$PAGE->requires->css(new moodle_url('/local/supportdesk/styles/style.css'));
+\local_supportdesk\local\public_ui::prepare('visitor_heading');
 $SESSION->wantsurl = $target->out(false);
-header('Cache-Control: no-store, private');
-header('Referrer-Policy: no-referrer');
-echo $OUTPUT->header();
-echo $OUTPUT->render_from_template('local_supportdesk/entry', [
+\local_supportdesk\local\public_ui::page('entry', [
+    'publicurl' => \local_supportdesk\local\public_intake::enabled() ? (new moodle_url('/local/supportdesk/public.php'))->out(false) : '',
+    'hasmagiclink' => visitor_access::enabled(),
     'magiclinkurl' => (new moodle_url('/auth/magiclink/login.php', ['returnurl' => $target->out_as_local_url(false)]))->out(false),
     'loginurl' => get_login_url(),
 ]);
-echo $OUTPUT->footer();

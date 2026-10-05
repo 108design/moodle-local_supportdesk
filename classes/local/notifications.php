@@ -52,13 +52,30 @@ class notifications {
             ? [$user->id => $user] : [];
     }
 
-    public static function send(\stdClass $ticket, int $actorid, string $event, bool $toowner = false): void {
+    public static function send(\stdClass $ticket, int $actorid, string $event, bool $toowner = false,
+            ?\stdClass $reply = null): void {
         global $DB;
         $a = (object)['id' => $ticket->id, 'title' => $ticket->title,
             'category' => $DB->get_field('local_supportdesk_categories', 'title', ['id' => $ticket->category_id]) ?: '',
             'url' => (new \moodle_url('/local/supportdesk/view.php', ['id' => $ticket->id]))->out(false)];
         $subject = get_string('notify_' . $event, 'local_supportdesk', $a);
         $text = get_string('notify_body', 'local_supportdesk', $a);
+        $maildestinations = [];
+        // Anonymous contacts have no Moodle message recipient. Only send the exact public staff reply.
+        if ($toowner && $event === 'reply' && empty($ticket->userid) && $reply
+                && (int)$reply->ticket_id === (int)$ticket->id && (int)$reply->userid === $actorid) {
+            $contact = $DB->get_record('local_supportdesk_contacts', ['ticketid' => $ticket->id, 'userid' => 0]);
+            if ($contact && validate_email(trim($contact->email))) {
+                $a->reply = html_to_text($reply->message, 0, false);
+                $a->url = (new \moodle_url('/local/supportdesk/claim.php', ['id' => $ticket->id]))->out(false);
+                try {
+                    if (static::deliver_contact(trim($contact->email), $subject,
+                            get_string('public_reply_body', 'local_supportdesk', $a), $a->url)) {
+                        $maildestinations[\core_text::strtolower(trim($contact->email))] = true;
+                    } else {debugging('Support Desk contact email delivery failed', DEBUG_DEVELOPER);}
+                } catch (\Throwable $e) {debugging('Support Desk contact email delivery failed', DEBUG_DEVELOPER);}
+            }
+        }
         foreach (self::recipients($ticket, $actorid, $toowner) as $user) {
             $message = new \core\message\message();
             $message->component = 'local_supportdesk';
@@ -68,29 +85,83 @@ class notifications {
             $message->subject = $subject;
             $message->fullmessage = $text;
             $message->fullmessageformat = FORMAT_PLAIN;
-            $message->fullmessagehtml = text_to_html($message->fullmessage, false, false, true);
+            $message->fullmessagehtml = self::email_html($message->fullmessage, $a->url);
             $message->notification = 1;
             $message->contexturl = $a->url;
             $message->contexturlname = get_string('view_ticket', 'local_supportdesk');
-            try {message_send($message);} catch (\Throwable $e) {debugging('Support Desk notification delivery failed', DEBUG_DEVELOPER);}
+            try {
+                if (message_send($message)) {
+                    $destination = static::native_email_destination($user, $message->name);
+                    if ($destination !== '') {$maildestinations[$destination] = true;}
+                }
+            } catch (\Throwable $e) {debugging('Support Desk notification delivery failed', DEBUG_DEVELOPER);}
         }
         $fallback = self::fallback_address($ticket, $toowner);
-        if ($fallback !== '') {
+        if ($fallback !== '' && !isset($maildestinations[\core_text::strtolower(trim($fallback))])) {
             try {
-                if (!static::deliver_fallback($fallback, $subject, $text)) {
+                if (!static::deliver_fallback($fallback, $subject, $text, $a->url)) {
                     debugging('Support Desk fallback email delivery failed', DEBUG_DEVELOPER);
                 }
             } catch (\Throwable $e) {debugging('Support Desk fallback email delivery failed', DEBUG_DEVELOPER);}
         }
     }
 
-    /** Shared mailbox delivery does not create a Moodle user or grant access. */
-    protected static function deliver_fallback(string $email, string $subject, string $text): bool {
+    /** Resolve native email routing; an in-app notification alone never replaces the mailbox copy. */
+    protected static function native_email_destination(\stdClass $user, string $provider): string {
+        global $CFG;
+        require_once($CFG->dirroot . '/message/lib.php');
+        if (!empty($user->deleted) || !empty($user->suspended) || $user->auth === 'nologin') {return '';}
+        $processor = get_message_processors(true)['email'] ?? null;
+        if (!$processor || !$processor->object->is_user_configured($user)) {return '';}
+        $defaults = get_message_output_default_preferences();
+        $base = 'local_supportdesk_' . $provider;
+        $lockkey = 'email_provider_' . $base . '_locked';
+        if (!empty($defaults->{$base . '_disable'}) || !isset($defaults->$lockkey)) {return '';}
+        $prefkey = 'message_provider_' . $base . '_enabled';
+        // Match Moodle 4.5/5.2 message_send: locked defaults override user preferences/emailstop.
+        if (!empty($defaults->$lockkey)) {
+            $outputs = $defaults->$prefkey ?? '';
+        } else {
+            if (!empty($user->emailstop)) {return '';}
+            $outputs = get_user_preferences($prefkey, null, $user) ?: ($defaults->$prefkey ?? '');
+        }
+        if (!in_array('email', explode(',', $outputs), true)) {return '';}
+        $recipient = clone $user;
+        if (!empty($CFG->messagingallowemailoverride)) {
+            $override = clean_param(get_user_preferences('message_processor_email_email', null, $user), PARAM_EMAIL);
+            if ($override !== '') {$recipient->email = $override;}
+        }
+        $address = trim((string)$recipient->email);
+        if (!validate_email($address) || over_bounce_threshold($recipient)) {return '';}
+        return \core_text::strtolower($address);
+    }
+
+    /** Contact replies carry no access token or attachment and use the configured support Reply-To. */
+    protected static function deliver_contact(string $email, string $subject, string $text, string $url): bool {
         global $CFG;
         $recipient = (object)['id' => -1, 'email' => $email, 'firstname' => get_string('pluginname', 'local_supportdesk'),
-            'lastname' => '', 'auth' => 'manual', 'mnethostid' => (int)$CFG->mnet_localhost_id,
+            'lastname' => '', 'firstnamephonetic' => '', 'lastnamephonetic' => '', 'middlename' => '', 'alternatename' => '',
+            'auth' => 'manual', 'mnethostid' => (int)$CFG->mnet_localhost_id,
             'mailformat' => 1, 'maildisplay' => 0, 'emailstop' => 0, 'deleted' => 0, 'suspended' => 0];
         return email_to_user($recipient, \core_user::get_noreply_user(), $subject, $text,
-            text_to_html($text, false, false, true));
+            self::email_html($text, $url), '', '', true, self::support_address(),
+            get_string('pluginname', 'local_supportdesk'));
+    }
+
+    /** Shared mailbox delivery does not create a Moodle user or grant access. */
+    protected static function deliver_fallback(string $email, string $subject, string $text, string $url): bool {
+        global $CFG;
+        $recipient = (object)['id' => -1, 'email' => $email, 'firstname' => get_string('pluginname', 'local_supportdesk'),
+            'lastname' => '', 'firstnamephonetic' => '', 'lastnamephonetic' => '', 'middlename' => '', 'alternatename' => '',
+            'auth' => 'manual', 'mnethostid' => (int)$CFG->mnet_localhost_id,
+            'mailformat' => 1, 'maildisplay' => 0, 'emailstop' => 0, 'deleted' => 0, 'suspended' => 0];
+        return email_to_user($recipient, \core_user::get_noreply_user(), $subject, $text,
+            self::email_html($text, $url));
+    }
+
+    /** Preserve plain message text; only the generated ticket URL becomes an HTML link. */
+    private static function email_html(string $text, string $url): string {
+        return str_replace(s($url), \html_writer::link($url, s($url)),
+            text_to_html(s($text), false, false, true));
     }
 }

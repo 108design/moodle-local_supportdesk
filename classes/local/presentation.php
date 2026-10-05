@@ -25,6 +25,15 @@ class presentation {
         return userdate($timestamp, get_string('date_format', 'local_supportdesk'));
     }
 
+    /** One shared native radio group for both authenticated and anonymous creation. */
+    public static function priority_choices(string $selected = 'medium'): array {
+        $choices = [];
+        foreach (['low', 'medium', 'high', 'urgent'] as $value) {
+            $choices[] = badges::priority($value) + ['value' => $value, 'selected' => $value === $selected];
+        }
+        return $choices;
+    }
+
     /** Number before a correctly inflected, translated count label. */
     public static function statistics(array $counts): array {
         $rows = [];

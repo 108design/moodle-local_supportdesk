@@ -17,7 +17,7 @@ class provider implements \core_privacy\local\metadata\provider,
     private const USERFIELDS = [
         'tickets' => ['userid', 'created_by', 'assigned_to'], 'replies' => ['userid'],
         'comments' => ['userid'], 'logs' => ['userid'], 'feedback' => ['userid'],
-        'categories' => ['created_by'], 'members' => ['userid'],
+        'categories' => ['created_by'], 'members' => ['userid'], 'contacts' => ['userid'],
     ];
     public static function get_metadata(collection $collection): collection {
         $fields = [
@@ -28,6 +28,7 @@ class provider implements \core_privacy\local\metadata\provider,
             'feedback' => ['userid', 'ticketid', 'rating', 'comment', 'created_at'],
             'categories' => ['created_by', 'title', 'description', 'ip_address', 'created_at'],
             'members' => ['userid', 'categoryid'],
+            'contacts' => ['userid', 'ticketid', 'name', 'email', 'timecreated'],
         ];
         foreach ($fields as $table => $names) {
             $collection->add_database_table('local_supportdesk_' . $table,
@@ -37,6 +38,9 @@ class provider implements \core_privacy\local\metadata\provider,
         $collection->add_subsystem_link('core_message', [], 'privacy:metadata:messages');
         $collection->add_external_location_link('support_mailbox', array_fill_keys(
             ['ticketid', 'title', 'category', 'url'], 'privacy:metadata:field'), 'privacy:metadata:fallback_email');
+        $collection->add_external_location_link('cloudflare_turnstile',
+            ['verificationtoken' => 'privacy:metadata:turnstile', 'hostname' => 'privacy:metadata:turnstile'],
+            'privacy:metadata:turnstile');
         return $collection;
     }
     public static function get_contexts_for_userid(int $userid): contextlist {
@@ -104,6 +108,7 @@ class provider implements \core_privacy\local\metadata\provider,
     private static function erase_user(int $userid): void {
         global $DB;
         $DB->delete_records('local_supportdesk_members', ['userid' => $userid]);
+        $DB->delete_records('local_supportdesk_contacts', ['userid' => $userid]);
         $context = \context_system::instance(); $fs = get_file_storage();
         foreach ($DB->get_records('local_supportdesk_tickets', ['userid' => $userid]) as $ticket) {
             $fs->delete_area_files($context->id, 'local_supportdesk', 'attachment', $ticket->id);

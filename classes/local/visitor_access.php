@@ -7,7 +7,8 @@ defined('MOODLE_INTERNAL') || die();
 class visitor_access {
     public static function availability(): array {
         global $CFG;
-        $installed = class_exists('\\auth_magiclink\\local\\magic_link_service')
+        $installed = (bool)get_config('auth_magiclink', 'version')
+            && class_exists('\\auth_magiclink\\local\\magic_link_service')
             && class_exists('\\auth_magiclink\\local\\licensing\\gate');
         $reason = 'visitor_missing';
         if ($installed) {
@@ -30,7 +31,7 @@ class visitor_access {
 
     public static function enabled(): bool {
         return get_config('local_supportdesk', 'enabled') !== '0'
-            && get_config('local_supportdesk', 'visitoraccess') === '1'
+            && visitor_mode::selected() === 'magiclink'
             && static::availability()['ready'];
     }
 
@@ -54,6 +55,12 @@ class visitor_access {
 
     public static function require_user(\moodle_url $target): void {
         access::require_enabled();
+        if ((!isloggedin() || isguestuser()) && public_intake::enabled()) {
+            if (basename($target->get_path()) === 'add.php') {
+                redirect(new \moodle_url('/local/supportdesk/public.php'));
+            }
+            redirect(new \moodle_url('/local/supportdesk/entry.php', ['next' => $target->out_as_local_url(false)]));
+        }
         if ((!isloggedin() || isguestuser()) && static::enabled()) {
             redirect(new \moodle_url('/local/supportdesk/entry.php', ['next' => $target->out_as_local_url(false)]));
         }

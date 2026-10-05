@@ -1,0 +1,30 @@
+<div class="supportdesk ats-container supportdesk-public-panel">
+{{#submitted}}
+<h1 class="h3">{{#str}}public_received, local_supportdesk{{/str}} #{{ticketid}}</h1>
+<p>{{#str}}public_receipt_help, local_supportdesk{{/str}}</p>
+<a class="btn btn-primary" href="{{claim_url}}">{{#str}}public_continue, local_supportdesk{{/str}}</a>
+{{/submitted}}
+{{^submitted}}
+<h1 class="h3 mb-3">{{#str}}public_heading, local_supportdesk{{/str}}</h1>
+<p>{{#str}}public_help, local_supportdesk{{/str}}</p>
+{{#error}}<div class="alert alert-danger" role="alert">{{error}}</div>{{/error}}
+<form class="supportdesk-form supportdesk-create-form" method="post" enctype="multipart/form-data" action="{{action_url}}">
+<input type="hidden" name="sesskey" value="{{sesskey}}">
+<div class="supportdesk-form-fields">
+<div class="form-group mb-3"><label for="public-name">{{#str}}public_name, local_supportdesk{{/str}} *</label><input class="form-control" id="public-name" name="name" value="{{name}}" maxlength="120" autocomplete="name" required></div>
+<div class="form-group mb-3"><label for="public-email">{{#str}}public_email, local_supportdesk{{/str}} *</label><input class="form-control" type="email" id="public-email" name="email" value="{{email}}" maxlength="254" autocomplete="email" required></div>
+<div class="form-group mb-3"><label for="public-title">{{#str}}ticket_title_label, local_supportdesk{{/str}} *</label><input class="form-control" id="public-title" name="title" value="{{title}}" maxlength="255" required></div>
+<div class="form-group mb-3"><label for="public-category">{{#str}}ticket_department_label, local_supportdesk{{/str}} *</label><select class="form-control" id="public-category" name="category_id" required><option value="">{{#str}}select_department_hint, local_supportdesk{{/str}}</option>{{#categories}}<option value="{{id}}" {{#selected}}selected{{/selected}}>{{title}}</option>{{/categories}}</select></div>
+</div>
+<div class="form-group mb-3"><label for="public-description">{{#str}}ticket_description_label, local_supportdesk{{/str}} *</label><textarea class="form-control" id="public-description" name="description" maxlength="20000" rows="4" data-supportdesk-paste required>{{description}}</textarea><p class="small text-muted mt-1 mb-0">{{#str}}paste_image_hint, local_supportdesk{{/str}}</p></div>
+{{> local_supportdesk/priority_choices}}
+{{> local_supportdesk/files}}
+<div hidden aria-hidden="true"><label for="public-website">Website</label><input id="public-website" name="website" tabindex="-1" autocomplete="off"></div>
+<details class="small text-muted mb-2"><summary>{{#str}}public_spam_protection, local_supportdesk{{/str}}</summary><p class="mt-2">{{#str}}public_turnstile_notice, local_supportdesk{{/str}}</p></details>
+<div class="cf-turnstile mb-3" data-sitekey="{{sitekey}}" data-action="supportdesk_create" data-theme="light"></div>
+<button class="btn btn-primary" type="submit" {{^categories}}disabled{{/categories}}>{{#str}}submit, local_supportdesk{{/str}}</button>
+<a href="{{login_url}}" class="btn btn-secondary">{{#str}}public_login, local_supportdesk{{/str}}</a>
+</form>
+{{#js}}require(['local_supportdesk/forms'], function(module) { module.init(); });{{/js}}
+{{/submitted}}
+</div>

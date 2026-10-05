@@ -1,0 +1,12 @@
+{{! GPL-3.0-or-later; Copyright 2026 Andreas Giesen, 108design. }}
+<fieldset class="supportdesk-priorities mb-3">
+<legend class="supportdesk-field-label">{{#str}}priority, local_supportdesk{{/str}} *</legend>
+<div class="supportdesk-priority-options">
+{{#priorities}}
+<label class="supportdesk-priority-option">
+<input type="radio" class="sr-only visually-hidden" name="priority" value="{{value}}" {{#selected}}checked{{/selected}} required>
+<span class="badge supportdesk-badge {{class}}"><i class="fa {{icon}}" aria-hidden="true"></i> {{label}}</span>
+</label>
+{{/priorities}}
+</div>
+</fieldset>

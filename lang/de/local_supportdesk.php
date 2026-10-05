@@ -327,4 +327,50 @@ $string['allowvoicenotes_desc'] = 'Erlaubt Mikrofonaufnahmen in neuen Tickets un
 $string['voicenotes_disabled'] = 'Sprachnachrichten sind derzeit deaktiviert.';
 
 $string['copyallsupportemail'] = 'Alle Tickets zusätzlich an diese Adresse schicken';
-$string['copyallsupportemail_desc'] = 'Standardmäßig aus. Wenn aktiviert, erhält die oben eingestellte Supportadresse zusätzlich alle Ticketbenachrichtigungen (neue Tickets, Antworten und Bereichswechsel), auch wenn ein Bereichsteam oder eine zuständige Person zugeordnet ist. Ohne gültige Adresse wird keine Kopie versendet. Die Adresse erhält dadurch keinen Zugriff auf Tickets.';
+$string['copyallsupportemail_desc'] = 'Standardmäßig aus. Wenn aktiviert, erhält die oben eingestellte Supportadresse zusätzlich alle Ticketbenachrichtigungen (neue Tickets, Antworten und Bereichswechsel), auch wenn ein Bereichsteam oder eine zuständige Person zugeordnet ist. Ohne gültige Adresse wird keine Kopie versendet. Die Adresse erhält dadurch keinen Zugriff auf Tickets. Eine Zusatzkopie entfällt, wenn dieselbe Adresse für dieses Ereignis bereits als Moodle-Mail-Empfänger vorgesehen ist. Reine Moodle-Benachrichtigungen ohne E-Mail unterdrücken die Kopie nicht.';
+
+$string['publiccreate'] = 'Ticketerstellung ohne Anmeldung erlauben';
+$string['publiccreate_desc'] = 'Explizit opt-in, standardmäßig aus. Aktiviert /local/supportdesk/public.php nur mit gültig konfiguriertem Turnstile. Besucher können ein Ticket erstellen; Verlauf und Anhänge erfordern die Moodle-Anmeldung. Maximal fünf Einsendungen je IP in zehn Minuten.';
+$string['turnstilesitekey'] = 'Turnstile: Website-Schlüssel';
+$string['turnstilesitekey_desc'] = 'Öffentlicher Cloudflare-Turnstile-Website-Schlüssel für diese Moodle-Domain. Das Eintragen aktiviert die Gast-Option nicht.';
+$string['turnstilesecret'] = 'Turnstile: geheimer Schlüssel';
+$string['turnstilesecret_desc'] = 'Wird ausschließlich auf dem Server zur Prüfung verwendet. Ohne beide Schlüssel bleibt die öffentliche Ticketerstellung gesperrt.';
+$string['public_heading'] = 'Ticket ohne Anmeldung erstellen';
+$string['public_help'] = 'Du kannst Dein Anliegen ohne Anmeldung senden. Für den weiteren Verlauf melde Dich anschließend im selben Browser mit einem bestätigten Moodle-Konto und derselben E-Mail-Adresse an. Es wird kein Konto automatisch angelegt.';
+$string['public_name'] = 'Dein Name';
+$string['public_email'] = 'Deine E-Mail-Adresse';
+$string['public_login'] = 'Mit bestehendem Moodle-Zugang anmelden';
+$string['public_origin'] = 'Ohne Anmeldung eingereicht';
+$string['public_unverified'] = 'Kontaktangaben sind noch nicht einem angemeldeten Konto zugeordnet. Die eingegebene E-Mail-Adresse ist nicht bestätigt.';
+$string['public_received'] = 'Ticket wurde angelegt';
+$string['public_receipt_help'] = 'Dein Anliegen wurde an den Support übergeben. Antworten des Supports erhältst Du per E-Mail. Um den Verlauf im Ticketsystem anzusehen und dort zu antworten, kannst Du das Ticket innerhalb von 24 Stunden im selben Browser mit einem bestätigten Konto und derselben E-Mail-Adresse übernehmen.';
+$string['public_continue'] = 'Anmelden und Ticket übernehmen';
+$string['public_claim'] = 'Ticket meinem Konto zuordnen';
+$string['public_claim_help'] = 'Ordne das in diesem Browser erstellte Ticket Deinem angemeldeten Konto zu. Die Konto-E-Mail muss mit der bei der Erstellung angegebenen Adresse übereinstimmen.';
+$string['public_claim_failed'] = 'Das Ticket kann diesem Konto nicht zugeordnet werden. Verwende dasselbe Browserfenster und ein bestätigtes Konto mit der angegebenen E-Mail-Adresse innerhalb von 24 Stunden.';
+$string['public_claim_retry'] = 'Zuordnung erneut prüfen';
+$string['public_spam_protection'] = 'Spam-Schutz durch Cloudflare Turnstile';
+$string['public_reply_body'] = 'Der Support hat auf Dein Ticket #{$a->id} „{$a->title}“ geantwortet:
+
+{$a->reply}
+
+Den Verlauf und etwaige Anhänge kannst Du nach Anmeldung und Zuordnung zu Deinem Konto im Ticketsystem öffnen:
+{$a->url}
+
+Verwende dafür innerhalb von 24 Stunden nach der Ticketerstellung denselben Browser und ein bestätigtes Konto mit dieser E-Mail-Adresse.
+
+Antworten auf diese E-Mail werden derzeit nicht automatisch dem Ticket hinzugefügt.';
+$string['public_invalid'] = 'Bitte prüfe Deine Angaben und Anhänge. Name, gültige E-Mail-Adresse, Betreff, Bereich und Anliegen sind erforderlich.';
+$string['public_rate_limit'] = 'Für diese Verbindung wurden bereits mehrere Tickets eingereicht. Bitte versuche es in zehn Minuten erneut oder melde Dich an.';
+$string['public_verification_failed'] = 'Der Spam-Schutz konnte die Anfrage nicht bestätigen. Bitte versuche es erneut. Es wurde kein Ticket angelegt.';
+$string['public_unavailable'] = 'Die Ticketerstellung ohne Anmeldung ist derzeit nicht verfügbar. Bitte melde Dich an.';
+$string['visitormode'] = 'Zugang zum Support Desk';
+$string['visitormode_login'] = 'Nur nach Anmeldung';
+$string['visitormode_anonymous'] = 'Gastticket ohne Anmeldung (Turnstile)';
+$string['visitormode_magiclink'] = 'Anmeldung per Magic Link';
+$string['visitormode_desc'] = 'Standardmäßig nur nach Anmeldung. Alternativ kannst Du Gasttickets mit Turnstile ermöglichen. Die normale Moodle-Anmeldung bleibt verfügbar. Gasttickets benötigen beide Turnstile-Schlüssel.';
+$string['public_entry_help'] = 'Du kannst Dein Anliegen ohne Anmeldung senden. Antworten des Supports erhältst Du per E-Mail; für den Verlauf im Ticketsystem ist eine Anmeldung erforderlich.';
+$string['visitor_login_help'] = 'Du hast bereits einen Moodle-Zugang? Verwende Deine gewohnte Anmeldung.';
+$string['public_turnstile_notice'] = 'Dieses Formular verwendet Cloudflare Turnstile zum Spam-Schutz. Dabei werden technische Browserdaten an Cloudflare übertragen; Deine Ticketinhalte werden nicht zur Prüfung gesendet.';
+$string['privacy:metadata:contacts'] = 'Kontaktangaben öffentlicher Tickets und spätere Zuordnung zum angemeldeten Konto.';
+$string['privacy:metadata:turnstile'] = 'Cloudflare verarbeitet die Prüfantwort, den Website-Hostnamen und technische Browserdaten für den Spam-Schutz der öffentlichen Ticketerstellung. Ticketinhalte werden nicht gesendet.';

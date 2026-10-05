@@ -1,4 +1,13 @@
-# 1.0.0 — 2026-10-04
+# Changelog
+
+## 1.0.2 — 2026-10-05
+
+- Add optional guest ticket creation with Cloudflare Turnstile; sign-in remains the default.
+- Deliver public staff replies to guest contacts by email. Ticket history and files still require sign-in.
+- Allow a confirmed account with a matching email address to claim its guest ticket using the original browser session within 24 hours.
+- Unify access-page presentation and ticket creation forms, including priorities and full-width attachments.
+- Avoid duplicate support-mailbox copies when Moodle already delivers the staff notification by email.
+- Keep general access-setting help focused on the available sign-in and guest-ticket modes.
 
 ## 1.0.1 — 2026-10-05
 
@@ -13,7 +22,6 @@
 
 # 0.6.1-beta — 2026-10-03
 
-- Temporarily hide the visitor setting pending public Magic Link availability/activation; retain code, hints and stored configuration.
 - Staff notification order: active department team, otherwise explicitly assigned ticket staff, otherwise support mailbox.
 - Mailbox is a fallback only, with no extra copy for assigned teams/staff or fallback for customer-facing replies.
 - Default mailbox uses Moodle supportemail, otherwise blank; recommend configuring a fallback in DE/EN settings.
@@ -24,9 +32,7 @@
 
 
 
-- Optional verified-email visitor entry via existing auth_magiclink, explicitly off by default; native login remains available.
 
-- Availability hints and server-side checks for provider enablement, activation and allowed account creation.
 
 - Safe ticket return targets; no anonymous ticket/file access, extra token store or Storefront dependency.
 
@@ -132,7 +138,6 @@ Independent GPL v3-or-later customer support fork of Academic Ticket System 3.2.
 
 - Scoped, locally bundled CSS/icons/dialog assets; no Tailwind CDN at runtime. Tailwind remains build tooling.
 
-- Optional passwordless Moodle sign-in via an independently installed `auth_magiclink`; no hard dependency.
 
 
 
@@ -143,4 +148,3 @@ Validation: PHP 8.3 syntax, reproducible 21-asset build, synthetic external-foot
 per database. Complete PHPUnit/fresh-install matrix, Moodle 4.5 and real browser upload/reply workflows
 
 remain outstanding. This is a beta, not full production acceptance.
-

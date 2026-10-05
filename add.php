@@ -40,6 +40,7 @@ $PAGE->set_title(get_string('add_ticket', 'local_supportdesk'));
 $PAGE->set_heading(get_string('add_ticket', 'local_supportdesk'));
 $customcss = \local_supportdesk\local\presentation::colours();
 \local_supportdesk\local\presentation::setup();
+$PAGE->add_body_class('supportdesk-create-page');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_sesskey();
@@ -171,6 +172,7 @@ $templatedata = [
     'title' => get_string('add_ticket', 'local_supportdesk'),
     'sesskey' => sesskey(),
     'categories' => $categorieslist,
+    'priorities' => \local_supportdesk\local\presentation::priority_choices(),
     'action_url' => $PAGE->url->out(false),
     'return_url' => (new moodle_url('/local/supportdesk/index.php'))->out(false),
 ];

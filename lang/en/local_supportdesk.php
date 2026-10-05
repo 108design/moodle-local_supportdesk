@@ -319,7 +319,7 @@ $string['visitor_heading'] = 'Contact support';
 $string['visitor_intro'] = 'Verify your email address with Magic Link. Then create your ticket or open your existing tickets.';
 $string['visitor_continue'] = 'Continue with email';
 $string['visitor_account_hint'] = 'You do not need a password. If you do not have an account yet, Moodle creates one after email verification using your first and last name.';
-$string['visitor_standardlogin'] = 'Use standard Moodle login';
+$string['visitor_standardlogin'] = 'Sign in with your Moodle account';
 $string['department_team'] = 'Support team';
 $string['department_team_help'] = 'Selected active users with the system Support role receive notifications for this area. Without a department team, the explicitly assigned person on the ticket is notified, otherwise the configured support email is used as fallback. Membership does not change access permissions.';
 $string['department_team_empty'] = 'No eligible people yet. Assign the Support role at system level to the people you want to select.';
@@ -350,4 +350,50 @@ $string['allowvoicenotes_desc'] = 'Allows microphone recordings in new tickets a
 $string['voicenotes_disabled'] = 'Voice messages are currently disabled.';
 
 $string['copyallsupportemail'] = 'Send all tickets to this address as well';
-$string['copyallsupportemail_desc'] = 'Disabled by default. When enabled, the support address above additionally receives all ticket notifications (new tickets, replies and area changes), even when a department team or assignee is configured. No copy is sent without a valid address. This does not grant ticket access.';
+$string['copyallsupportemail_desc'] = 'Disabled by default. When enabled, the support address above additionally receives all ticket notifications (new tickets, replies and area changes), even when a department team or assignee is configured. No copy is sent without a valid address. This does not grant ticket access. The additional copy is omitted when the same address is already selected for Moodle email delivery for this event. In-app notifications without email do not suppress the copy.';
+
+$string['publiccreate'] = 'Allow ticket creation without login';
+$string['publiccreate_desc'] = 'Explicit opt-in, disabled by default. Enables /local/supportdesk/public.php only with configured Turnstile. Visitors can create a ticket; history and attachments require Moodle login. Up to five submissions per IP in ten minutes.';
+$string['turnstilesitekey'] = 'Turnstile: site key';
+$string['turnstilesitekey_desc'] = 'Public Cloudflare Turnstile site key for this Moodle domain. Entering keys does not enable guest submissions.';
+$string['turnstilesecret'] = 'Turnstile: secret key';
+$string['turnstilesecret_desc'] = 'Used only on the server for verification. Public ticket creation remains unavailable without both keys.';
+$string['public_heading'] = 'Create a ticket without login';
+$string['public_help'] = 'Submit your issue without logging in. To continue, sign in afterwards in the same browser with a confirmed Moodle account using the same email address. No account is created automatically.';
+$string['public_name'] = 'Your name';
+$string['public_email'] = 'Your email address';
+$string['public_login'] = 'Sign in with your Moodle account';
+$string['public_origin'] = 'Submitted without login';
+$string['public_unverified'] = 'Contact details are not yet linked to a logged-in account. The submitted email address is unverified.';
+$string['public_received'] = 'Ticket created';
+$string['public_receipt_help'] = 'Your issue has been passed to support. You will receive support replies by email. To view the conversation and reply in the ticket system, claim the ticket within 24 hours in the same browser with a confirmed account using the same email address.';
+$string['public_continue'] = 'Sign in and claim ticket';
+$string['public_claim'] = 'Link ticket to my account';
+$string['public_claim_help'] = 'Link the ticket created in this browser to your logged-in account. Your account email must match the address provided when creating the ticket.';
+$string['public_claim_failed'] = 'This ticket cannot be linked to this account. Use the same browser and a confirmed account with the submitted email address within 24 hours.';
+$string['public_claim_retry'] = 'Check linking again';
+$string['public_spam_protection'] = 'Spam protection by Cloudflare Turnstile';
+$string['public_reply_body'] = 'Support has replied to your ticket #{$a->id} “{$a->title}”:
+
+{$a->reply}
+
+After signing in and linking the ticket to your account, you can open its history and any attachments:
+{$a->url}
+
+Within 24 hours of ticket creation, use the same browser and a confirmed account with this email address.
+
+Replies to this email are currently not added to the ticket automatically.';
+$string['public_invalid'] = 'Please check your details and attachments. Name, valid email, subject, area and issue are required.';
+$string['public_rate_limit'] = 'Several tickets have already been submitted from this connection. Please try again in ten minutes or sign in.';
+$string['public_verification_failed'] = 'Spam protection could not verify this request. Please try again. No ticket was created.';
+$string['public_unavailable'] = 'Ticket creation without login is currently unavailable. Please sign in.';
+$string['visitormode'] = 'Support Desk access';
+$string['visitormode_login'] = 'Sign-in required';
+$string['visitormode_anonymous'] = 'Guest ticket without sign-in (Turnstile)';
+$string['visitormode_magiclink'] = 'Sign in through Magic Link';
+$string['visitormode_desc'] = 'Sign-in required by default. Alternatively, enable guest tickets with Turnstile. Standard Moodle sign-in remains available. Guest tickets require both Turnstile keys.';
+$string['public_entry_help'] = 'Submit your issue without signing in. You will receive support replies by email; viewing the conversation in the ticket system requires sign-in.';
+$string['visitor_login_help'] = 'Already have a Moodle account? Use your usual sign-in method.';
+$string['public_turnstile_notice'] = 'This form uses Cloudflare Turnstile for spam protection. Technical browser data is shared with Cloudflare; your ticket content is not sent for verification.';
+$string['privacy:metadata:contacts'] = 'Public ticket contact details and subsequent association with a logged-in account.';
+$string['privacy:metadata:turnstile'] = 'Cloudflare processes the verification response, website hostname and technical browser data for public ticket spam protection. Ticket content is not sent.';

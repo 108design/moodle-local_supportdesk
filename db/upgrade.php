@@ -54,5 +54,29 @@ function xmldb_local_supportdesk_upgrade($oldversion) {
         }
         upgrade_plugin_savepoint(true, 2026100306, 'local', 'supportdesk');
     }
+    if ($oldversion < 2026100501) {
+        global $DB;
+        $table = new xmldb_table('local_supportdesk_contacts');
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE);
+        $table->add_field('ticketid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL);
+        $table->add_field('userid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0);
+        $table->add_field('name', XMLDB_TYPE_CHAR, '120', null, XMLDB_NOTNULL);
+        $table->add_field('email', XMLDB_TYPE_CHAR, '254', null, XMLDB_NOTNULL);
+        $table->add_field('claimhash', XMLDB_TYPE_CHAR, '64', null, XMLDB_NOTNULL);
+        $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL);
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+        $table->add_key('ticketid', XMLDB_KEY_FOREIGN_UNIQUE, ['ticketid'], 'local_supportdesk_tickets', ['id']);
+        if (!$DB->get_manager()->table_exists($table)) {$DB->get_manager()->create_table($table);}
+        if (get_config('local_supportdesk', 'publiccreate') === false) {set_config('publiccreate', 0, 'local_supportdesk');}
+        upgrade_plugin_savepoint(true, 2026100501, 'local', 'supportdesk');
+    }
+    if ($oldversion < 2026100505) {
+        // Preserve existing opt-in while replacing competing switches with one explicit visitor mode.
+        // An installation which enabled both keeps verified Magic Link access, never both routes.
+        if (get_config('local_supportdesk', 'visitormode') === false) {
+            set_config('visitormode', \local_supportdesk\local\visitor_mode::selected(), 'local_supportdesk');
+        }
+        upgrade_plugin_savepoint(true, 2026100505, 'local', 'supportdesk');
+    }
     return true;
 }

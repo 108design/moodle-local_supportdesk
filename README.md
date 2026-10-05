@@ -80,7 +80,8 @@ from that plugin are not imported during installation.
 ## Creating and following tickets
 
 Sign in to Moodle and open Support Desk. Create a ticket with a subject, support
-area and description, and add any files that help explain the request. Screenshots
+area and issue, choose a priority from the badge radio buttons, and add any files
+that help explain the request. Screenshots
 pasted into the description or reply field join the attachment list. Files are
 uploaded when you submit the form; you can remove them before submitting.
 
@@ -89,6 +90,34 @@ grant microphone permission. Review the recording before submitting it.
 
 Users can view and reply to their own tickets. Support staff can manage tickets
 across support areas. The same access rules apply to ticket and reply attachments.
+
+## Tickets without login
+
+This feature is an explicit opt-in and is **disabled by default**. In the plugin
+settings, configure a Cloudflare Turnstile site key and secret for your Moodle
+hostname, then select **Guest ticket without sign-in (Turnstile)** under **Support Desk access**. Keys alone do not
+activate it. Share `/local/supportdesk/entry.php` as the support entry.
+This flow does not create Moodle accounts.
+
+Visitors provide their name, email, area, subject, issue and priority, with optional file
+attachments and pasted screenshots. Turnstile is checked on the server before
+saving. Up to five public tickets per IP can be submitted in ten minutes; users
+behind the same network share this limit. Logged-in ticket creation is unaffected.
+Technical browser data is processed by Cloudflare; ticket content is not sent
+for verification. Failed or unavailable verification creates no ticket.
+
+Contacts are initially unverified. A submitted email never links an existing
+account automatically. Staff replies are emailed to the submitted contact address,
+including the public reply text. This does not verify the address or grant access. Staff
+see the contact details and unverified state. Staff/team/fallback notifications
+continue normally. Ticket history and attachment downloads require Moodle login.
+
+After submission, use **Sign in and claim ticket** within 24 hours in the same
+browser. Sign in through an available Moodle login method with a confirmed
+account using the submitted email address, then confirm association. Both the
+browser submission proof and matching account email are required. A new account,
+if needed, must be created through the site's normal process. Switching browsers,
+clearing the session or losing the receipt removes this self-service path.
 
 ## Support teams and notifications
 
@@ -99,7 +128,9 @@ support area notify its active team.
 If no active team is configured, notifications go to the ticket's assigned active
 staff member. If neither is available, they go to the configured support mailbox.
 Configure a fallback mailbox in the plugin settings so unassigned requests still
-reach someone. This email address does not itself grant access to tickets. The optional **Send all tickets to this address as well** setting is disabled by default. Enable it to copy every ticket notification, including staff replies, to the mailbox while retaining normal recipient routing. An empty or invalid address receives no copy.
+reach someone. Guest reply emails use this address as Reply-To when configured.
+Replies to those emails are not currently imported into tickets; continue in the
+ticket system after login and association. This email address does not itself grant access to tickets. The optional **Send all tickets to this address as well** setting is disabled by default. Enable it to copy every ticket notification, including staff replies, to the mailbox while retaining normal recipient routing. An empty or invalid address receives no copy. The additional copy is omitted if the same address already receives the native Moodle email for that event, including permitted notification-email overrides. In-app-only notifications do not suppress the copy.
 
 Staff replies notify the ticket owner. Moodle notification preferences apply;
 users do not receive notifications for their own actions. Team membership controls
@@ -110,6 +141,14 @@ notification routing, while the Support role controls ticket access.
 Administrators can enable or disable Support Desk, select assignable support roles,
 configure the support mailbox, and enable voice-message recording (disabled by default). Disabling the plugin prevents access to its
 ticket pages and services.
+
+**Support Desk access** defaults to sign-in required. Administrators may enable
+guest tickets with Turnstile as an alternative. Standard Moodle sign-in remains
+available in both modes.
+
+Entry, submission and confirmation panels use the active theme's login layout.
+When Frontpage provides the configured, published login page, these panels reuse
+its actual panel design, backgrounds and navigation/footer settings.
 
 Image attachments appear as thumbnails. Open an image to browse all ticket images,
 including reply attachments, in a keyboard-accessible lightbox with a thumbnail strip.

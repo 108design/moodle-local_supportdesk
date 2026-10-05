@@ -73,3 +73,21 @@
 .pswp--supportdesk .supportdesk-lightbox-strip button[aria-current="true"], .pswp--supportdesk .supportdesk-lightbox-strip button:hover { opacity: 1; border-color: #fff; }
 .pswp--supportdesk .supportdesk-lightbox-strip button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; opacity: 1; }
 .pswp--supportdesk .supportdesk-lightbox-strip img { display: block; width: 4rem; height: 3rem; object-fit: contain; }
+
+/* Guest content inherits the theme or Frontpage login panel, including all authored styling. */
+.supportdesk-access-panel { width: 100%; max-width: 36rem; margin-inline: auto; }
+.supportdesk-public-panel { width: 100%; margin-inline: auto; }
+.supportdesk-public-panel .supportdesk-form { max-width: none; }
+.supportdesk-public-panel .form-group, .supportdesk-create-form .form-group { margin-bottom: .75rem !important; }
+.supportdesk-public-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-top: 1rem; }
+.supportdesk-form-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1rem; align-items: start; }
+.supportdesk-form-fields > * { min-width: 0; }
+.supportdesk-priorities legend { margin-bottom: .5rem; }
+.supportdesk-priority-options { display: flex; flex-wrap: wrap; gap: .75rem; padding: .2rem; }
+.supportdesk-form label.supportdesk-priority-option { position: relative; margin: 0; cursor: pointer; text-transform: none; letter-spacing: normal; }
+.supportdesk-priority-option input:checked + .supportdesk-badge { outline: 2px solid currentColor; outline-offset: 2px; font-weight: 600; }
+.supportdesk-priority-option input:focus-visible + .supportdesk-badge { outline: 2px dashed var(--bs-primary, currentColor); outline-offset: 3px; }
+.supportdesk-priority-option:hover .supportdesk-badge { border-color: currentColor; }
+@media (max-width: 575.98px) {
+    .supportdesk-form-fields { grid-template-columns: 1fr; }
+}

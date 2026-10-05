@@ -4,6 +4,22 @@
        xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
     <TABLES>
+        <TABLE NAME="local_supportdesk_contacts" COMMENT="Public ticket contact, linked only after authenticated session-proof claim">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="ticketid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
+                <FIELD NAME="name" TYPE="char" LENGTH="120" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="email" TYPE="char" LENGTH="254" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="claimhash" TYPE="char" LENGTH="64" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+                <KEY NAME="ticketid" TYPE="foreign-unique" FIELDS="ticketid" REFTABLE="local_supportdesk_tickets" REFFIELDS="id" />
+            </KEYS>
+        </TABLE>
+
         <TABLE NAME="local_supportdesk_members" COMMENT="Support role members receiving department notifications">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />

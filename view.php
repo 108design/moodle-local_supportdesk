@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $a->new = get_status_str($newstatus);
             $logmessage = get_string('log_status_changed_from_to', 'local_supportdesk', $a);
             local_supportdesk_log_action($id, $USER->id, $logmessage, $oldstatus, $newstatus);
-            \local_supportdesk\local\notifications::send($ticketrecord, (int)$USER->id, 'reply', !$isowner);
+            \local_supportdesk\local\notifications::send($ticketrecord, (int)$USER->id, 'reply', !$isowner, $reply);
         }
         redirect($PAGE->url);
     }
@@ -374,7 +374,7 @@ if ($showadminpanel) {
     $latestselsql = "SELECT * FROM {local_supportdesk_tickets}
                      WHERE userid = ? AND id != ?
                      ORDER BY created_at DESC";
-    $recs = $DB->get_records_sql($latestselsql, [$ticketrecord->userid, $id], 0, 5);
+    $recs = $ticketrecord->userid ? $DB->get_records_sql($latestselsql, [$ticketrecord->userid, $id], 0, 5) : [];
     foreach ($recs as $rec) {
         $latesttickets[] = [
             'id' => $rec->id,
@@ -452,6 +452,7 @@ if ($feedbackrecord) {
     ];
 }
 
+$publiccontact = $DB->get_record('local_supportdesk_contacts', ['ticketid' => $id]);
 $creatorprofileurl = new moodle_url('/user/profile.php', ['id' => $ticketowner->id]);
 $homeurl = new moodle_url('/local/supportdesk/index.php');
 
@@ -468,7 +469,9 @@ $templatedata = [
         'category' => $ticketrecord->category_name ?: get_string('general', 'local_supportdesk'),
         'category_id' => $ticketrecord->category_id,
         'priority' => $priority,
-        'creator_profile_url' => $creatorprofileurl->out(false),
+        'creator_profile_url' => $ticketowner->id ? $creatorprofileurl->out(false) : '',
+        'public_contact' => $publiccontact ? ['name' => $publiccontact->name, 'email' => $publiccontact->email,
+            'unclaimed' => !$publiccontact->userid] : null,
         'priority_label' => get_string('priority_' . $priority, 'local_supportdesk'),
         'created_by' => fullname($ticketowner),
         'created_at' => \local_supportdesk\local\presentation::date($ticketrecord->created_at),

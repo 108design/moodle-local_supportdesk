@@ -1,8 +1,9 @@
 {{! GPL-3.0-or-later; Copyright 2026 Andreas Giesen, 108design. }}
-<div class="supportdesk">
-<h1 class="h3">{{#str}}visitor_heading, local_supportdesk{{/str}}</h1>
-<p>{{#str}}visitor_intro, local_supportdesk{{/str}}</p>
+<div class="supportdesk supportdesk-public-panel">
+<h1 class="h3 mb-4">{{#str}}visitor_heading, local_supportdesk{{/str}}</h1>
+{{#publicurl}}<section class="mb-4"><p>{{#str}}public_entry_help, local_supportdesk{{/str}}</p><a class="btn btn-primary" href="{{publicurl}}">{{#str}}public_heading, local_supportdesk{{/str}}</a></section>{{/publicurl}}
+{{#hasmagiclink}}<section class="mb-4"><p>{{#str}}visitor_intro, local_supportdesk{{/str}}</p>
 <p><a class="btn btn-primary" href="{{magiclinkurl}}">{{#str}}visitor_continue, local_supportdesk{{/str}}</a></p>
-<p class="small text-muted">{{#str}}visitor_account_hint, local_supportdesk{{/str}}</p>
-<a href="{{loginurl}}">{{#str}}visitor_standardlogin, local_supportdesk{{/str}}</a>
+<p class="mt-3 mb-0">{{#str}}visitor_account_hint, local_supportdesk{{/str}}</p></section>
+{{/hasmagiclink}}<section class="border-top pt-3"><p>{{#str}}visitor_login_help, local_supportdesk{{/str}}</p><a class="btn btn-secondary" href="{{loginurl}}">{{#str}}visitor_standardlogin, local_supportdesk{{/str}}</a></section>
 </div>
