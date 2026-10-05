@@ -128,6 +128,8 @@ Original authorship and copyright notices are retained.
 
 ## License
 
+**Available free of charge under the terms of the applicable license.**
+
 GNU General Public License version 3 or later. See [LICENSE.md](LICENSE.md) for the full terms.
 Third-party assets retain their own licences. The bundled PhotoSwipe 5.4.4 viewer
 is MIT licensed; see [its licence](thirdparty/photoswipe/LICENSE).
