@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/branding/logo.svg" alt="Support Desk logo" width="443" height="443">
+</p>
+
 # Support Desk for Moodle
 
 Manage support requests inside Moodle. Users create tickets, follow their status
