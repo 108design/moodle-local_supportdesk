@@ -1,5 +1,11 @@
 # 1.0.0 — 2026-10-04
 
+## 1.0.1 — 2026-10-05
+
+- Add the product logo above the README title at 125 by 125 pixels.
+- Clarify current-release licence and availability.
+- Plugin functionality and complete licence terms are unchanged.
+
 - First stable release, with the fixed product name Support Desk.
 - Conversation image galleries, optional voice messages and optional support-mailbox copies.
 - Verified ticket creation, replies, attachments, protected downloads, status changes and feedback on Moodle 4.5 and 5.2.
