@@ -18,32 +18,32 @@ Click a preview to open the full-size screenshot.
 <table>
 <tr>
 <td align="center" width="50%" valign="middle">
-<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-tickets.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-tickets.jpg" width="300" height="91" alt="Ticket overview and status"></a><br>
-<sub>Ticket overview and status</sub>
+<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/sd-new-no-login.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/sd-new-no-login.jpg" width="115" height="160" alt="Create a guest ticket without signing in"></a><br>
+<sub>Create a guest ticket without signing in</sub>
 </td>
 <td align="center" width="50%" valign="middle">
-<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-new-ticket.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-new-ticket.jpg" width="136" height="160" alt="Create a ticket with files or a voice message"></a><br>
+<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/sd-new-logged-in.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/sd-new-logged-in.jpg" width="156" height="160" alt="Create a ticket with files or a voice message"></a><br>
 <sub>Create a ticket with files or a voice message</sub>
 </td>
 </tr>
 <tr>
 <td align="center" width="50%" valign="middle">
-<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-ticket01.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-ticket01.jpg" width="300" height="147" alt="Ticket details, assignment and conversation"></a><br>
-<sub>Ticket details, assignment and conversation</sub>
+<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-tickets.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-tickets.jpg" width="300" height="91" alt="Ticket overview and status"></a><br>
+<sub>Ticket overview and status</sub>
 </td>
 <td align="center" width="50%" valign="middle">
-<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-ticket02.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-ticket02.jpg" width="300" height="135" alt="Reply to a ticket and add attachments"></a><br>
-<sub>Reply to a ticket and add attachments</sub>
+<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-ticket01.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-ticket01.jpg" width="300" height="147" alt="Ticket details, assignment and conversation"></a><br>
+<sub>Ticket details, assignment and conversation</sub>
 </td>
 </tr>
 <tr>
 <td align="center" width="50%" valign="middle">
-<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-departments.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-departments.jpg" width="289" height="160" alt="Configure support departments and teams"></a><br>
-<sub>Configure support departments and teams</sub>
+<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-ticket02.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-ticket02.jpg" width="300" height="135" alt="Reply to a ticket and add attachments"></a><br>
+<sub>Reply to a ticket and add attachments</sub>
 </td>
 <td align="center" width="50%" valign="middle">
-<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-settings.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-settings.jpg" width="243" height="160" alt="Configure notifications, staff roles and voice messages"></a><br>
-<sub>Configure notifications, staff roles and voice messages</sub>
+<a href="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-departments.jpg"><img src="https://raw.githubusercontent.com/108design/moodle-local_supportdesk/main/docs/screenshots/support-desk-departments.jpg" width="289" height="160" alt="Configure support departments and teams"></a><br>
+<sub>Configure support departments and teams</sub>
 </td>
 </tr>
 </table>
