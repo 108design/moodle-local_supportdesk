@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.2 — 2026-10-05
+## 1.1.0 — 2026-10-05
 
 - Add optional guest ticket creation with Cloudflare Turnstile; sign-in remains the default.
 - Deliver public staff replies to guest contacts by email. Ticket history and files still require sign-in.
