@@ -374,3 +374,12 @@ $string['visitor_login_help'] = 'Du hast bereits einen Moodle-Zugang? Verwende D
 $string['public_turnstile_notice'] = 'Dieses Formular verwendet Cloudflare Turnstile zum Spam-Schutz. Dabei werden technische Browserdaten an Cloudflare übertragen; Deine Ticketinhalte werden nicht zur Prüfung gesendet.';
 $string['privacy:metadata:contacts'] = 'Kontaktangaben öffentlicher Tickets und spätere Zuordnung zum angemeldeten Konto.';
 $string['privacy:metadata:turnstile'] = 'Cloudflare verarbeitet die Prüfantwort, den Website-Hostnamen und technische Browserdaten für den Spam-Schutz der öffentlichen Ticketerstellung. Ticketinhalte werden nicht gesendet.';
+
+// Contextual administration help.
+$string['adminhelp'] = 'Hilfe zur Verwaltung';
+$string['adminhelpmore'] = 'Mehr dazu im Hilfepanel';
+$string['adminhelptopics'] = 'Hilfethemen';
+$string['adminhelp_overview'] = 'Support-Zugang einrichten';
+$string['adminhelp_overview_article'] = '<p>Lege fest, wo der Support erreichbar ist und welche Zugangsmethode angeboten wird. Prüfe die gewählte Variante sowohl angemeldet als auch ohne Anmeldung.</p><p>Öffentliche Anfragen benötigen die dafür vorgesehenen Sicherheitsvoraussetzungen. Wenn die Seite auf fehlende Einstellungen hinweist, vervollständige diese, bevor Du den Zugang anbietest.</p>';
+$string['adminhelp_delivery'] = 'Team und Benachrichtigungen';
+$string['adminhelp_delivery_article'] = '<p>Wähle die Rollen, die für Support-Aufgaben zur Verfügung stehen sollen, und prüfe die Support-E-Mail-Adresse. Die Zuordnung zu einem Team und die konkrete Bearbeitung erfolgen in der Support-Verwaltung.</p><p>Eine E-Mail-Kopie ist eine Benachrichtigung. Antworten aus einem externen Mailprogramm werden nicht automatisch als Ticketantwort übernommen.</p>';

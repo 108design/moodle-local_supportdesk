@@ -152,3 +152,8 @@ function local_supportdesk_log_action($tid, $uid, $act, $old = null, $new = null
     ];
     return $DB->insert_record('local_supportdesk_logs', $log);
 }
+
+/** Contextual help for the explicitly registered administration pages only. */
+function local_supportdesk_render_navbar_output(\renderer_base $renderer): string {
+    return \local_supportdesk\local\admin_help::navbar($renderer);
+}

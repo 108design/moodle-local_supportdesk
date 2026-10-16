@@ -397,3 +397,12 @@ $string['visitor_login_help'] = 'Already have a Moodle account? Use your usual s
 $string['public_turnstile_notice'] = 'This form uses Cloudflare Turnstile for spam protection. Technical browser data is shared with Cloudflare; your ticket content is not sent for verification.';
 $string['privacy:metadata:contacts'] = 'Public ticket contact details and subsequent association with a logged-in account.';
 $string['privacy:metadata:turnstile'] = 'Cloudflare processes the verification response, website hostname and technical browser data for public ticket spam protection. Ticket content is not sent.';
+
+// Contextual administration help.
+$string['adminhelp'] = 'Administration help';
+$string['adminhelpmore'] = 'More in the help panel';
+$string['adminhelptopics'] = 'Help Topics';
+$string['adminhelp_overview'] = 'Setting up support access';
+$string['adminhelp_overview_article'] = '<p>Choose where support is available and which access method is offered. Check the selected option both while signed in and while signed out.</p><p>Public requests require the corresponding security prerequisites. Complete any missing settings reported on this page before offering access.</p>';
+$string['adminhelp_delivery'] = 'Team and notifications';
+$string['adminhelp_delivery_article'] = '<p>Select the roles available for support work and check the support email address. Team assignment and individual ticket handling take place in support administration.</p><p>An email copy is a notification. Replies sent from an external email application are not automatically imported as ticket replies.</p>';
