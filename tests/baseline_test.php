@@ -1,4 +1,26 @@
 <?php
+/**
+ * This file is part of Moodle - https://moodle.org/
+ *
+ * Moodle is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Moodle is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Moodle. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * File documentation for tests/baseline_test.php.
+ *
+ * @package   local_supportdesk
+ * @copyright 2026 Andreas Giesen, 108design
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2026 Andreas Giesen, 108design.
 namespace local_supportdesk;
@@ -198,8 +220,9 @@ final class baseline_test extends \core_privacy\tests\provider_testcase {
             try {
                 $type === 'status' ? access::validate_status($value) : access::validate_priority($value);
                 $this->fail('Expected rejection');
-            } catch (\invalid_parameter_exception $e) {
-                $this->assertNotEmpty($e->getMessage());
+            } catch (\moodle_exception $e) {
+                $this->assertSame('invalid' . $type, $e->errorcode);
+                $this->assertSame(get_string('invalid' . $type, 'local_supportdesk'), $e->getMessage());
             }
         }
     }

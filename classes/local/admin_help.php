@@ -1,4 +1,26 @@
 <?php
+/**
+ * This file is part of Moodle - https://moodle.org/
+ *
+ * Moodle is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Moodle is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Moodle. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * File documentation for classes/local/admin_help.php.
+ *
+ * @package   local_supportdesk
+ * @copyright 2026 Andreas Giesen
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 // Copyright (C) 2026 Andreas Giesen. See LICENSE.
 namespace local_supportdesk\local;
 
@@ -6,19 +28,36 @@ defined('MOODLE_INTERNAL') || die();
 
 /** Contextual settings help, following the standalone Frontpage panel contract. */
 final class admin_help {
-    private const TOPICS = ['overview', 'delivery'];
+    private const TOPICS = ['overview', 'delivery', 'tickets', 'handling'];
+    private static array $topics = [];
     private static bool $prepared = false;
 
     /** Register only the permitted settings page before its header is rendered. */
     public static function prepare(\core\hook\output\before_http_headers $hook): void {
         global $CFG, $PAGE;
-        if (self::$prepared || admin_branding::page_capability() === null) {
+        if (self::$prepared || (defined('CLI_SCRIPT') && CLI_SCRIPT)) {
             return;
+        }
+        if (admin_branding::page_capability() !== null) {
+            self::$topics = ['overview', 'delivery'];
+        } else {
+            $context = \context_system::instance();
+            if (!self::is_ticket_page($PAGE->url) || !isloggedin() || isguestuser()
+                    || get_config('local_supportdesk', 'enabled') === '0'
+                    || (!access::can_manage() && !has_any_capability([
+                        'local/supportdesk:viewticket', 'local/supportdesk:addticket'], $context))) {
+                return;
+            }
+            self::$topics = ['tickets'];
+            if (access::can_manage()) {
+                self::$topics[] = 'handling';
+            }
         }
         $PAGE->add_body_class('local-supportdesk-admin-help-page');
         self::$prepared = true;
         $PAGE->requires->css(new \moodle_url('/local/supportdesk/styles/admin_help.css', [
             'rev' => get_config('local_supportdesk', 'version'),
+            'theme' => theme_get_revision(),
         ]));
         $module = (int)$CFG->version < 2025041400 ? 'admin_help_legacy' : 'admin_help';
         $PAGE->requires->js_call_amd('local_supportdesk/admin_help_form', 'init');
@@ -27,15 +66,28 @@ final class admin_help {
         ]]);
     }
 
+    /** Match native ticket routes, including installations below a URL subdirectory. */
+    private static function is_ticket_page(\moodle_url $url): bool {
+        foreach (['index.php', 'add.php', 'view.php'] as $page) {
+            if ($url->get_path() === (new \moodle_url('/local/supportdesk/' . $page))->get_path()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /** Native popover with concise guidance and a direct link to the extended topic. */
     public static function icon(string $key): string {
         global $CFG, $PAGE;
         if (!in_array($key, self::TOPICS, true)) {
             throw new \coding_exception('Unknown Administration help topic.');
         }
+        if (defined('CLI_SCRIPT') && CLI_SCRIPT) {
+            return '';
+        }
         $url = new \moodle_url($PAGE->url);
         $url->param('supportdeskhelp', $key);
-        $help = new \help_icon($key, 'local_supportdesk', $url->out(false));
+        $help = new \help_icon('adminhelp_' . $key, 'local_supportdesk', $url->out(false));
         $renderer = $PAGE->get_renderer('core');
         $data = (array)$help->export_for_template($renderer);
         $data['completedoclink'] = \html_writer::link($url, get_string('adminhelpmore', 'local_supportdesk'));
@@ -44,13 +96,18 @@ final class admin_help {
         return $renderer->render_from_template('local_supportdesk/settings_help_icon', $data);
     }
 
+    /** Match the panel name to its audience. */
+    private static function title(): string {
+        return get_string(in_array('tickets', self::$topics, true) ? 'tickethelp' : 'adminhelp', 'local_supportdesk');
+    }
+
     /** Always available in the native Topnav user area on the registered page. */
     public static function navbar(\renderer_base $renderer): string {
         global $CFG;
         if (!self::$prepared) {
             return '';
         }
-        $label = get_string('adminhelp', 'local_supportdesk');
+        $label = self::title();
         return \html_writer::tag('button', $renderer->pix_icon(
             (int)$CFG->version < 2026100500 ? 'i/info' : 'i/circleinfo', ''), [
                 'type' => 'button', 'class' => 'nav-link icon-no-margin local-supportdesk-help-navbar',
@@ -65,14 +122,14 @@ final class admin_help {
         if (!self::$prepared) {
             return '';
         }
-        $title = get_string('adminhelp', 'local_supportdesk');
+        $title = self::title();
         $close = \html_writer::tag('button', \html_writer::span('&#215;', '', ['aria-hidden' => 'true']), [
             'type' => 'button', 'class' => 'btn btn-secondary btn-sm local-supportdesk-help-close',
             'aria-label' => get_string('closebuttontitle', 'moodle'), 'data-supportdesk-help-close' => '1',
         ]);
         $options = '';
         $articles = '';
-        foreach (self::TOPICS as $topic) {
+        foreach (self::$topics as $topic) {
             $label = get_string('adminhelp_' . $topic, 'local_supportdesk');
             $options .= \html_writer::tag('option', $label, ['value' => $topic]);
             $articles .= \html_writer::tag('article', \html_writer::tag('h3', $label, ['class' => 'h5', 'tabindex' => '-1'])

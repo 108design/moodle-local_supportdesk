@@ -1,4 +1,26 @@
 <?php
+/**
+ * This file is part of Moodle - https://moodle.org/
+ *
+ * Moodle is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Moodle is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Moodle. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * File documentation for classes/local/uploads.php.
+ *
+ * @package   local_supportdesk
+ * @copyright 2026 Andreas Giesen, 108design
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2026 Andreas Giesen, 108design.
 namespace local_supportdesk\local;
@@ -23,7 +45,7 @@ class uploads {
         $sizes = $multiple ? ($upload['size'] ?? []) : [$upload['size'] ?? 0];
         $paths = $multiple ? ($upload['tmp_name'] ?? []) : [$upload['tmp_name'] ?? ''];
         if (!is_array($names) || !is_array($errors) || !is_array($sizes) || !is_array($paths) || count($names) > 10) {
-            throw new \invalid_parameter_exception('Invalid upload or more than 10 attachments');
+            throw new \moodle_exception('invalidattachmentcount', 'local_supportdesk');
         }
         $maxbytes = min(5 * 1024 * 1024, get_max_upload_file_size($CFG->maxbytes ?? 0));
         foreach ($names as $i => $name) {
@@ -31,7 +53,7 @@ class uploads {
             if ($error === UPLOAD_ERR_NO_FILE) {continue;}
             if (!is_string($name) || clean_param($name, PARAM_FILE) === '' || $error !== UPLOAD_ERR_OK
                     || !isset($sizes[$i], $paths[$i]) || $sizes[$i] > $maxbytes || !is_uploaded_file($paths[$i])) {
-                throw new \invalid_parameter_exception('Invalid upload, upload failure, or attachment exceeds 5 MB/site limit');
+                throw new \moodle_exception('invalidattachment', 'local_supportdesk');
             }
         }
     }

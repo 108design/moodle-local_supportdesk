@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     \local_supportdesk\local\access::validate_priority($priority);
     $DB->get_record('local_supportdesk_categories', ['id' => $categoryid], 'id', MUST_EXIST);
     if (trim($title) === '' || core_text::strlen($title) > 255 || trim(strip_tags($description)) === '') {
-        throw new \invalid_parameter_exception('A subject and description are required');
+        throw new \moodle_exception('subjectissuerequired', 'local_supportdesk');
     }
 
     \local_supportdesk\local\uploads::validate($_FILES['attachments'] ?? [], true);

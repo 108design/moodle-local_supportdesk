@@ -66,6 +66,8 @@ class check_urgent extends external_api {
             throw new \required_capability_exception($context, 'local/supportdesk:manageticket', 'nopermissions', '');
         }
 
+        require_capability('local/supportdesk:specialist', $context);
+
         if (!\local_supportdesk\local\department_team::has_memberships((int)$USER->id)) {
             return ['status' => 'none', 'id' => 0, 'title' => '', 'user' => '', 'url' => ''];
         }

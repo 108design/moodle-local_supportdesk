@@ -65,7 +65,7 @@ Click a preview to open the full-size screenshot.
 - Ticket statistics and filters for finding requests that need attention.
 - An interface that follows the installed Moodle theme.
 
-Support Desk requires Moodle 4.5–5.2.
+Support Desk supports Moodle 4.5 to 5.3.
 
 ## Installation and staff access
 

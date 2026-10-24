@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.5.0 (unreleased)
+
+- Restore team-scoped on-screen urgent ticket alerts and remove an unused overview permission.
+- Translate input and upload errors and system labels.
+- Correct contextual help loading and add guidance for creating and managing tickets.
+- Document optional Magic Link sign-in and its free site activation. Show its option only after the separate authentication plugin is installed, enabled and already activated.
+
+## 1.4.0 (2026-10-17)
+
+- Use a consistent help-panel header with the 108design logo, topic selector and close button.
+- Include the rebuilt help modules and source maps.
+
+## 1.3.0 (2026-10-16)
+
+- Add product identity on administration pages and links.
+- Add contextual help for support access and notification settings.
+
 ## 1.1.0 — 2026-10-05
 
 - Add optional guest ticket creation with Cloudflare Turnstile; sign-in remains the default.

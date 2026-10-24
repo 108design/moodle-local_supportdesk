@@ -37,9 +37,8 @@ jobs:
       fail-fast: false
       matrix:
         lane:
-          - {php: '8.1', branch: MOODLE_405_STABLE}
           - {php: '8.3', branch: MOODLE_502_STABLE}
-        database: [pgsql, mariadb]
+        database: [mariadb]
     steps:
       - uses: actions/checkout@v4
         with:

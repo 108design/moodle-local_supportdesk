@@ -37,7 +37,7 @@ global $USER, $DB, $PAGE, $OUTPUT, $CFG;
  * @param string $val
  * @return string
  */
-function get_status_str($val) {
+function local_supportdesk_get_status_str($val) {
     $val = strtolower(trim($val));
     $map = [
         'in progress'   => 'in_progress',
@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($canreply) {
             $message = required_param('reply_message', PARAM_CLEANHTML);
             if (trim(strip_tags($message)) === '') {
-                throw new \invalid_parameter_exception('A reply is required');
+                throw new \moodle_exception('replyrequired', 'local_supportdesk');
             }
             \local_supportdesk\local\uploads::validate($_FILES['reply_files'] ?? [], true);
             \local_supportdesk\local\uploads::validate_voice($_FILES['reply_voice'] ?? []);
@@ -161,8 +161,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $DB->set_field('local_supportdesk_tickets', 'status', $newstatus, ['id' => $id]);
             $a = new stdClass();
             $a->user = fullname($USER);
-            $a->old = get_status_str($oldstatus);
-            $a->new = get_status_str($newstatus);
+            $a->old = local_supportdesk_get_status_str($oldstatus);
+            $a->new = local_supportdesk_get_status_str($newstatus);
             $logmessage = get_string('log_status_changed_from_to', 'local_supportdesk', $a);
             local_supportdesk_log_action($id, $USER->id, $logmessage, $oldstatus, $newstatus);
             \local_supportdesk\local\notifications::send($ticketrecord, (int)$USER->id, 'reply', !$isowner, $reply);
@@ -176,8 +176,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $DB->set_field('local_supportdesk_tickets', 'status', $status, ['id' => $id]);
         $a = new stdClass();
         $a->user = fullname($USER);
-        $a->old = get_status_str($oldstatus);
-        $a->new = get_status_str($status);
+        $a->old = local_supportdesk_get_status_str($oldstatus);
+        $a->new = local_supportdesk_get_status_str($status);
         $logmessage = get_string('log_status_changed_from_to', 'local_supportdesk', $a);
         local_supportdesk_log_action($id, $USER->id, $logmessage, $oldstatus, $status);
         redirect($PAGE->url);
@@ -186,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $assignedtoparam = required_param('assigned_to', PARAM_INT);
         $assignees = \local_supportdesk\local\access::assignable_users();
         if ($assignedtoparam < 0 || ($assignedtoparam > 0 && !isset($assignees[$assignedtoparam]))) {
-            throw new \invalid_parameter_exception('Invalid support assignee');
+            throw new \moodle_exception('invalidassignee', 'local_supportdesk');
         }
         if ($assignedtoparam > 0) {
             $assigneduserrec = $DB->get_record('user', ['id' => $assignedtoparam]);
@@ -225,7 +225,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'submit_feedback' && !$isadminview && $ticketrecord->userid == $USER->id) {
         $rating = required_param('rating', PARAM_INT);
         if ($ticketrecord->status !== 'closed' || $rating < 1 || $rating > 5) {
-            throw new \invalid_parameter_exception('Invalid ticket feedback');
+            throw new \moodle_exception('invalidfeedback', 'local_supportdesk');
         }
         $comment = optional_param('feedback_comment', '', PARAM_TEXT);
         if (!$DB->record_exists('local_supportdesk_feedback', ['ticketid' => $id])) {
@@ -353,7 +353,7 @@ if ($showadminpanel) {
                 $luser->alternatename = '';
             }
             $ticketlog[] = [
-                'message' => ($luser ? fullname($luser) : 'System') . ": " . $l->actionname,
+                'message' => ($luser ? fullname($luser) : get_string('systemactor', 'local_supportdesk')) . ": " . $l->actionname,
                 'time' => \local_supportdesk\local\presentation::date($l->timemodified),
             ];
         }
@@ -379,7 +379,7 @@ if ($showadminpanel) {
         $latesttickets[] = [
             'id' => $rec->id,
             'title' => format_string($rec->title),
-            'status' => get_status_str($rec->status),
+            'status' => local_supportdesk_get_status_str($rec->status),
             'status_badge' => \local_supportdesk\local\badges::status($rec->status),
             'status_class' => local_supportdesk_get_class($rec->status),
         ];
@@ -413,7 +413,7 @@ if ($showadminpanel) {
                 $noteuser->alternatename = '';
             }
             $internalnotes[] = [
-                'user_name' => $noteuser ? fullname($noteuser) : 'Unknown',
+                'user_name' => $noteuser ? fullname($noteuser) : get_string('unknown_user', 'local_supportdesk'),
                 'content' => format_text($note->content, FORMAT_HTML),
                 'time' => \local_supportdesk\local\presentation::date($note->created_at),
                 'is_me' => ($note->userid == $USER->id),
@@ -464,7 +464,7 @@ $templatedata = [
         'title' => format_string($ticketrecord->title),
         'description' => format_text($ticketrecord->description, FORMAT_HTML),
         'status' => $ticketrecord->status,
-        'translated_status' => get_status_str($ticketrecord->status),
+        'translated_status' => local_supportdesk_get_status_str($ticketrecord->status),
         'status_class' => local_supportdesk_get_class($ticketrecord->status),
         'category' => $ticketrecord->category_name ?: get_string('general', 'local_supportdesk'),
         'category_id' => $ticketrecord->category_id,
@@ -508,7 +508,7 @@ $templatedata = [
 
 $templatedata['statuses'] = [];
 foreach (['open', 'in progress', 'admin reply', 'student reply', 'closed'] as $statusvalue) {
-    $templatedata['statuses'][] = ['value' => $statusvalue, 'label' => get_status_str($statusvalue), 'selected' => $statusvalue === $ticketrecord->status];
+    $templatedata['statuses'][] = ['value' => $statusvalue, 'label' => local_supportdesk_get_status_str($statusvalue), 'selected' => $statusvalue === $ticketrecord->status];
 }
 $templatedata += ['voice_field' => 'reply_voice', 'file_field' => 'reply_files[]', 'file_id' => 'reply_file_input'];
 $sidebars = ['ticket_information' => 'ticket_information'];

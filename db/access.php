@@ -37,15 +37,6 @@ $capabilities = [
         'riskbitmask' => RISK_CONFIG,
     ],
 
-    // Permission to view summry own tickets.
-    'local/supportdesk:viewownoverviews' => [
-        'captype' => 'read',
-        'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes' => [
-            'student' => CAP_ALLOW,
-            'user' => CAP_ALLOW,
-        ],
-    ],
 // Permission to receive urgent alerts as a specialist.
     'local/supportdesk:specialist' => [
         'captype' => 'read',

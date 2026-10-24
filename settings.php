@@ -35,44 +35,46 @@ if ($hassiteconfig) {
     $settings->add(new admin_setting_configcheckbox(
         'local_supportdesk/enabled',
         get_string('enable', 'local_supportdesk'),
-        get_string('enable_desc', 'local_supportdesk'),
+        get_string('enable_desc', 'local_supportdesk') . \local_supportdesk\local\admin_help::icon('overview'),
         1
     ));
 
     $settings->add(new admin_setting_configcheckbox(
         'local_supportdesk/add_to_navbar',
         get_string('add_to_navbar', 'local_supportdesk'),
-        get_string('add_to_navbar_desc', 'local_supportdesk'),
+        get_string('add_to_navbar_desc', 'local_supportdesk') . \local_supportdesk\local\admin_help::icon('overview'),
         1
     ));
 
     $settings->add(new admin_setting_configcheckbox(
         'local_supportdesk/allowvoicenotes',
         get_string('allowvoicenotes', 'local_supportdesk'),
-        get_string('allowvoicenotes_desc', 'local_supportdesk'),
+        get_string('allowvoicenotes_desc', 'local_supportdesk') . \local_supportdesk\local\admin_help::icon('overview'),
         0
     ));
 
     $visitormodes = ['login' => get_string('visitormode_login', 'local_supportdesk'),
         'anonymous' => get_string('visitormode_anonymous', 'local_supportdesk')];
-    $visitordesc = get_string('visitormode_desc', 'local_supportdesk');
-    if (get_config('auth_magiclink', 'version')) {
+    $visitordesc = get_string('visitormode_desc', 'local_supportdesk') . \local_supportdesk\local\admin_help::icon('overview');
+    // Magic Link is currently private; a public release with free site activation is planned.
+    // Show this optional mode only when auth_magiclink is installed, enabled and already activated.
+    $visitorstatus = \local_supportdesk\local\visitor_access::availability();
+    if ($visitorstatus['activated']) {
         $visitormodes['magiclink'] = get_string('visitormode_magiclink', 'local_supportdesk');
-        $visitorstatus = \local_supportdesk\local\visitor_access::availability();
         if (!$visitorstatus['ready']) {$visitordesc .= ' ' . get_string($visitorstatus['reason'], 'local_supportdesk');}
     }
     $settings->add(new \local_supportdesk\local\visitor_mode_setting('local_supportdesk/visitormode',
         get_string('visitormode', 'local_supportdesk'), $visitordesc, 'login', $visitormodes));
     $settings->add(new admin_setting_configtext('local_supportdesk/turnstilesitekey',
-        get_string('turnstilesitekey', 'local_supportdesk'), get_string('turnstilesitekey_desc', 'local_supportdesk'),
+        get_string('turnstilesitekey', 'local_supportdesk'), get_string('turnstilesitekey_desc', 'local_supportdesk') . \local_supportdesk\local\admin_help::icon('overview'),
         '', PARAM_RAW_TRIMMED));
     $settings->add(new admin_setting_configpasswordunmask('local_supportdesk/turnstilesecret',
-        get_string('turnstilesecret', 'local_supportdesk'), get_string('turnstilesecret_desc', 'local_supportdesk'), ''));
+        get_string('turnstilesecret', 'local_supportdesk'), get_string('turnstilesecret_desc', 'local_supportdesk') . \local_supportdesk\local\admin_help::icon('overview'), ''));
 
     $settings->add(new admin_setting_configtext(
         'local_supportdesk/support_email',
         get_string('support_email', 'local_supportdesk'),
-        get_string('support_email_desc', 'local_supportdesk'),
+        get_string('support_email_desc', 'local_supportdesk') . \local_supportdesk\local\admin_help::icon('delivery'),
         \local_supportdesk\local\notifications::default_support_address(),
         PARAM_EMAIL
     ));
@@ -80,7 +82,7 @@ if ($hassiteconfig) {
     $settings->add(new admin_setting_configcheckbox(
         'local_supportdesk/copyallsupportemail',
         get_string('copyallsupportemail', 'local_supportdesk'),
-        get_string('copyallsupportemail_desc', 'local_supportdesk'),
+        get_string('copyallsupportemail_desc', 'local_supportdesk') . \local_supportdesk\local\admin_help::icon('delivery'),
         0
     ));
 
@@ -89,7 +91,7 @@ if ($hassiteconfig) {
     $settings->add(new admin_setting_configtext(
         'local_supportdesk/system_name',
         get_string('system_name', 'local_supportdesk'),
-        get_string('system_name_desc', 'local_supportdesk'),
+        get_string('system_name_desc', 'local_supportdesk') . \local_supportdesk\local\admin_help::icon('delivery'),
         'Support',
         PARAM_TEXT
     ));
@@ -111,7 +113,7 @@ if ($hassiteconfig) {
     $settings->add(new admin_setting_configmultiselect(
         'local_supportdesk/assignable_roles',
         get_string('assignable_roles', 'local_supportdesk'),
-        get_string('assignable_roles_desc', 'local_supportdesk'),
+        get_string('assignable_roles_desc', 'local_supportdesk') . \local_supportdesk\local\admin_help::icon('delivery'),
         ['supportdeskagent'],
         $allroles
     ));

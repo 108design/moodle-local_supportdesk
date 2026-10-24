@@ -403,6 +403,45 @@ $string['adminhelp'] = 'Administration help';
 $string['adminhelpmore'] = 'More in the help panel';
 $string['adminhelptopics'] = 'Help Topics';
 $string['adminhelp_overview'] = 'Setting up support access';
-$string['adminhelp_overview_article'] = '<p>Choose where support is available and which access method is offered. Check the selected option both while signed in and while signed out.</p><p>Public requests require the corresponding security prerequisites. Complete any missing settings reported on this page before offering access.</p>';
+$string['adminhelp_overview_article'] = '<p>Choose where support is available and which access method is offered. Check the selected option both while signed in and while signed out.</p><p>Public requests require the corresponding security prerequisites. Complete any missing settings reported on this page before offering access.</p><p>Sign-in is the default. Guest tickets require both Turnstile keys. Voice recording is optional and requires browser microphone permission.</p>';
 $string['adminhelp_delivery'] = 'Team and notifications';
 $string['adminhelp_delivery_article'] = '<p>Select the roles available for support work and check the support email address. Team assignment and individual ticket handling take place in support administration.</p><p>An email copy is a notification. Replies sent from an external email application are not automatically imported as ticket replies.</p>';
+
+$string['subjectissuerequired'] = 'Enter a subject of up to 255 characters and describe your issue.';
+
+$string['replyrequired'] = 'Enter a reply before sending it.';
+
+$string['invalidassignee'] = 'Select an available support staff member.';
+
+$string['invalidfeedback'] = 'Select a rating from 1 to 5.';
+
+$string['invalidstatus'] = 'Select a valid ticket status.';
+
+$string['invalidpriority'] = 'Select a valid ticket priority.';
+
+$string['invalidattachmentcount'] = 'Choose no more than 10 valid attachments.';
+
+$string['invalidattachment'] = 'The attachment could not be uploaded. Check the file and try again. Each attachment must be within 5 MB and the site upload limit.';
+
+$string['systemactor'] = 'System';
+
+$string['website'] = 'Website';
+
+$string['adminhelp_tickets'] = 'Creating and following tickets';
+
+$string['adminhelp_tickets_help'] = 'Describe your issue, choose a support area and priority, and add any useful files. Open your ticket to read replies or continue the conversation.';
+
+$string['adminhelp_tickets_article'] = '<p>Choose a support area, enter a short subject and describe your issue. Priority indicates urgency. You can attach up to ten files, each within 5 MB and the site upload limit. Pasted screenshots are uploaded when you submit the form.</p><p>Voice recording is available only when enabled by the administrator and allowed by your browser. Review a recording before sending it. Open a ticket from the overview to read and send replies. Closed tickets offer a one-time rating.</p>';
+
+$string['adminhelp_handling'] = 'Support team: managing tickets';
+
+$string['adminhelp_handling_help'] = 'Manage status, support area and assignment in the ticket panels. Internal notes are visible to support staff. Team membership routes alerts; it does not grant ticket access.';
+
+$string['adminhelp_handling_article'] = '<p>Open a ticket to change its status, support area or assigned staff member. Use internal notes for staff-only information and the reply box for messages to the customer. The history records ticket changes.</p><p>Support-area teams determine notification recipients. Eligible team members with the specialist and ticket-management permissions receive on-screen alerts for recent open urgent or high-priority tickets. A notification opens the ticket; it does not change its status.</p>';
+
+$string['adminhelp_overview_help'] = 'Choose support access and check the prerequisites of the selected mode.';
+$string['adminhelp_delivery_help'] = 'Configure team roles and the support mailbox. Team membership controls notification routing.';
+
+$string['tickethelp'] = 'Support Desk help';
+
+$string['invalidaccessmode'] = 'Select an available Support Desk access method.';

@@ -1,4 +1,26 @@
 <?php
+/**
+ * This file is part of Moodle - https://moodle.org/
+ *
+ * Moodle is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Moodle is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Moodle. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * File documentation for lang/de/local_supportdesk.php.
+ *
+ * @package   local_supportdesk
+ * @copyright 2026 Andreas Giesen, 108design
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2026 Andreas Giesen, 108design.
 defined('MOODLE_INTERNAL') || die();
@@ -380,6 +402,45 @@ $string['adminhelp'] = 'Hilfe zur Verwaltung';
 $string['adminhelpmore'] = 'Mehr dazu im Hilfepanel';
 $string['adminhelptopics'] = 'Hilfethemen';
 $string['adminhelp_overview'] = 'Support-Zugang einrichten';
-$string['adminhelp_overview_article'] = '<p>Lege fest, wo der Support erreichbar ist und welche Zugangsmethode angeboten wird. Prüfe die gewählte Variante sowohl angemeldet als auch ohne Anmeldung.</p><p>Öffentliche Anfragen benötigen die dafür vorgesehenen Sicherheitsvoraussetzungen. Wenn die Seite auf fehlende Einstellungen hinweist, vervollständige diese, bevor Du den Zugang anbietest.</p>';
+$string['adminhelp_overview_article'] = '<p>Lege fest, wo der Support erreichbar ist und welche Zugangsmethode angeboten wird. Prüfe die gewählte Variante sowohl angemeldet als auch ohne Anmeldung.</p><p>Öffentliche Anfragen benötigen die dafür vorgesehenen Sicherheitsvoraussetzungen. Wenn die Seite auf fehlende Einstellungen hinweist, vervollständige diese, bevor Du den Zugang anbietest.</p><p>Die Anmeldung ist der Standard. Gast-Tickets benötigen beide Turnstile-Schlüssel. Sprachaufnahmen sind optional und benötigen die Mikrofonfreigabe des Browsers.</p>';
 $string['adminhelp_delivery'] = 'Team und Benachrichtigungen';
 $string['adminhelp_delivery_article'] = '<p>Wähle die Rollen, die für Support-Aufgaben zur Verfügung stehen sollen, und prüfe die Support-E-Mail-Adresse. Die Zuordnung zu einem Team und die konkrete Bearbeitung erfolgen in der Support-Verwaltung.</p><p>Eine E-Mail-Kopie ist eine Benachrichtigung. Antworten aus einem externen Mailprogramm werden nicht automatisch als Ticketantwort übernommen.</p>';
+
+$string['subjectissuerequired'] = 'Gib einen Betreff mit höchstens 255 Zeichen ein und beschreibe Dein Anliegen.';
+
+$string['replyrequired'] = 'Gib vor dem Senden eine Antwort ein.';
+
+$string['invalidassignee'] = 'Wähle eine verfügbare Person aus dem Support-Team.';
+
+$string['invalidfeedback'] = 'Wähle eine Bewertung von 1 bis 5.';
+
+$string['invalidstatus'] = 'Wähle einen gültigen Ticketstatus.';
+
+$string['invalidpriority'] = 'Wähle eine gültige Priorität.';
+
+$string['invalidattachmentcount'] = 'Wähle höchstens 10 gültige Anhänge.';
+
+$string['invalidattachment'] = 'Der Anhang konnte nicht hochgeladen werden. Prüfe die Datei und versuche es erneut. Jeder Anhang muss innerhalb von 5 MB und der Uploadgrenze der Website liegen.';
+
+$string['systemactor'] = 'System';
+
+$string['website'] = 'Website';
+
+$string['adminhelp_tickets'] = 'Tickets erstellen und verfolgen';
+
+$string['adminhelp_tickets_help'] = 'Beschreibe Dein Anliegen, wähle einen Supportbereich und eine Priorität und füge hilfreiche Dateien hinzu. Öffne Dein Ticket, um Antworten zu lesen oder das Gespräch fortzusetzen.';
+
+$string['adminhelp_tickets_article'] = '<p>Wähle einen Supportbereich, gib einen kurzen Betreff ein und beschreibe Dein Anliegen. Die Priorität gibt die Dringlichkeit an. Du kannst bis zu zehn Dateien anhängen, jeweils innerhalb von 5 MB und der Uploadgrenze der Website. Eingefügte Screenshots werden beim Absenden hochgeladen.</p><p>Sprachaufnahmen sind verfügbar, wenn die Administration sie aktiviert hat und Dein Browser sie erlaubt. Prüfe eine Aufnahme vor dem Absenden. Öffne ein Ticket aus der Übersicht, um Antworten zu lesen und zu senden. Geschlossene Tickets kannst Du einmal bewerten.</p>';
+
+$string['adminhelp_handling'] = 'Support-Team: Tickets bearbeiten';
+
+$string['adminhelp_handling_help'] = 'Ändere Status, Supportbereich und Zuordnung in den Ticketpanels. Interne Notizen sieht das Support-Team. Die Teammitgliedschaft steuert Hinweise und erteilt keine Ticketrechte.';
+
+$string['adminhelp_handling_article'] = '<p>Öffne ein Ticket, um seinen Status, Supportbereich oder die zuständige Person zu ändern. Nutze interne Notizen für Informationen an das Team und das Antwortfeld für Nachrichten an die anfragende Person. Der Verlauf hält Ticketänderungen fest.</p><p>Die Teams der Supportbereiche bestimmen die Benachrichtigungsempfänger. Berechtigte Teammitglieder mit den Rechten für Spezialistenhinweise und Ticketverwaltung sehen Bildschirmhinweise zu kürzlich erstellten offenen Tickets mit hoher oder dringender Priorität. Ein Hinweis öffnet das Ticket und ändert seinen Status nicht.</p>';
+
+$string['adminhelp_overview_help'] = 'Wähle den Supportzugang und prüfe die Voraussetzungen des gewählten Modus.';
+$string['adminhelp_delivery_help'] = 'Konfiguriere Teamrollen und das Supportpostfach. Die Teammitgliedschaft steuert die Benachrichtigungen.';
+
+$string['tickethelp'] = 'Support-Desk-Hilfe';
+
+$string['invalidaccessmode'] = 'Wähle eine verfügbare Zugangsart für Support Desk.';

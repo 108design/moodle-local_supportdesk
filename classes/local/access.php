@@ -1,4 +1,26 @@
 <?php
+/**
+ * This file is part of Moodle - https://moodle.org/
+ *
+ * Moodle is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Moodle is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Moodle. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * File documentation for classes/local/access.php.
+ *
+ * @package   local_supportdesk
+ * @copyright 2026 Andreas Giesen, 108design
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright 2026 Andreas Giesen, 108design.
 
@@ -65,13 +87,13 @@ class access {
 
     public static function validate_status(string $status): void {
         if (!in_array($status, ['open', 'in progress', 'admin reply', 'student reply', 'closed'], true)) {
-            throw new \invalid_parameter_exception('Invalid ticket status');
+            throw new \moodle_exception('invalidstatus', 'local_supportdesk');
         }
     }
 
     public static function validate_priority(string $priority): void {
         if (!in_array($priority, ['low', 'medium', 'high', 'urgent'], true)) {
-            throw new \invalid_parameter_exception('Invalid ticket priority');
+            throw new \moodle_exception('invalidpriority', 'local_supportdesk');
         }
     }
 }
