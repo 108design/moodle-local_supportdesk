@@ -125,6 +125,20 @@ browser submission proof and matching account email are required. A new account,
 if needed, must be created through the site's normal process. Switching browsers,
 clearing the session or losing the receipt removes this self-service path.
 
+## Optional Magic Link sign-in
+
+The **Sign in through Magic Link** mode uses the separate
+[Magic Link Auth plugin](https://cms.108design.com/local/storefront/product.php?product=magic-link-auth-free)
+(`auth_magiclink`), available from 108design under its own licence terms. Its current
+licence and site activation are free of charge and require a 108design account
+connection.
+
+The option appears in Support Desk after Magic Link Auth is installed, enabled
+under Moodle authentication and activated for the site. Account creation follows
+its configured registration policy. Magic Link creates a normal Moodle login
+session; administrators should align this access mode with their site's
+authentication policy.
+
 ## Support teams and notifications
 
 Under **Support Desk → Support areas → Edit**, select the active Support-role users
