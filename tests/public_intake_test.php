@@ -157,7 +157,10 @@ final class public_intake_test extends \advanced_testcase {
             $id = $intake::submit($data + ['priority' => $priority], [], 'token');
             $this->assertSame($priority, $DB->get_field('local_supportdesk_tickets', 'priority', ['id' => $id]));
         }
-        $this->rejects(fn() => $intake::submit($data + ['priority' => 'high1'], [], 'token'), 'public_invalid');
+        global $DB;
+        $before = $DB->count_records('local_supportdesk_tickets');
+        $this->rejects(fn() => $intake::submit($data + ['priority' => 'high1'], [], 'token'), 'invalidpriority');
+        $this->assertSame($before, $DB->count_records('local_supportdesk_tickets'));
         $this->assertSame(4, $DB->count_records('local_supportdesk_tickets'));
     }
     public function test_turnstile_checks_hostname_action_and_strict_success_without_sending_content(): void {

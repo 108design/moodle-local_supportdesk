@@ -89,7 +89,7 @@ final class visitor_mode_test extends \advanced_testcase {
             foreach ($settings->settings as $setting) {
                 $html .= $setting->output_html($setting->get_setting());
             }
-            if ($installedversion === false) {
+            if ($installedversion === false || !class_exists('\\auth_magiclink\\local\\magic_link_service')) {
                 $this->assertStringNotContainsString('value="magiclink"', $html);
             } else {
                 $this->assertStringContainsString('value="magiclink"', $html);
