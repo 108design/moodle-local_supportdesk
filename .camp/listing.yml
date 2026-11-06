@@ -1,0 +1,33 @@
+name: Support Desk
+summary: Free GPL support tickets for Moodle by 108design, with support teams, attachments and optional guest access.
+description: |
+  Support Desk manages support requests inside Moodle. Users create private
+  tickets, follow their status and reply to the support team. Staff organise
+  tickets by support area, assign them to colleagues and manage the conversation
+  in one place. Tickets support file attachments, pasted screenshots and optional
+  voice messages, with email and Moodle notifications.
+
+  The plugin is free of charge under the GNU GPL v3 or later. Standard ticket
+  handling uses existing Moodle accounts and works without Cloudflare or another
+  external account. No paid subscription is required.
+
+  Magic Link sign-in is optional and available free of charge, without
+  activation, from https://github.com/108design/moodle-auth_magiclink.
+  A Moodle Marketplace listing is expected shortly. Standard Moodle sign-in
+  remains available.
+
+  Guest tickets without Moodle sign-in are an optional feature, disabled by
+  default. Only administrators who enable this feature need a Cloudflare account
+  and Turnstile site and secret keys. Cloudflare offers a free Turnstile plan;
+  no paid plan is required for this integration. Turnstile verifies guest
+  submissions before a ticket is saved. Signed-in ticket handling is unaffected.
+
+  Maintained by 108design as an independent GPL derivative of Academic Ticket
+  System, with the original authorship and licence notices retained.
+labels:
+  - external-account
+  - paid-service
+category: Support
+links:
+  docs: https://github.com/108design/moodle-local_supportdesk/blob/main/README.md
+  issues: https://github.com/108design/moodle-local_supportdesk/issues

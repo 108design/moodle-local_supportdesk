@@ -185,3 +185,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 This program comes without warranty; see the GPL for the applicable terms.
+
+## Optional Magic Link sign-in
+
+Magic Link is optional and available free of charge, without activation, from [GitHub](https://github.com/108design/moodle-auth_magiclink). A Moodle Marketplace listing is expected shortly. Standard Moodle sign-in remains available.
