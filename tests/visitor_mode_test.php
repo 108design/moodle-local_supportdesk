@@ -69,13 +69,13 @@ final class visitor_mode_test extends \advanced_testcase {
         $this->assertSame('anonymous', $setting->get_setting());
     }
 
-    public function test_settings_have_no_magic_link_option_or_hint_without_activation(): void {
+    public function test_settings_explain_magic_link_even_when_unavailable(): void {
         global $CFG;
         $this->resetAfterTest();
         $this->setAdminUser();
         require_once($CFG->libdir . '/adminlib.php');
         foreach ([false, 2026101705] as $installedversion) {
-            if ($installedversion === false) {
+            if ($installedversion === false || !class_exists('\\auth_magiclink\\local\\magic_link_service')) {
                 unset_config('version', 'auth_magiclink');
             } else {
                 // A database version alone is not evidence of an installed, usable or activated provider.
@@ -89,10 +89,51 @@ final class visitor_mode_test extends \advanced_testcase {
             foreach ($settings->settings as $setting) {
                 $html .= $setting->output_html($setting->get_setting());
             }
-            $this->assertStringNotContainsString('value="magiclink"', $html);
-            $this->assertStringNotContainsString('Magic Link', $html);
+            if ($installedversion === false) {
+                $this->assertStringNotContainsString('value="magiclink"', $html);
+            } else {
+                $this->assertStringContainsString('value="magiclink"', $html);
+            }
+            $this->assertStringContainsString('Magic Link', $html);
             $this->assertStringContainsString('value="login"', $html);
             $this->assertStringContainsString('value="anonymous"', $html);
         }
+    }
+
+    public function test_installed_marketplace_provider_can_be_selected_without_activation(): void {
+        global $CFG;
+        $this->resetAfterTest();
+        if (!class_exists('\\auth_magiclink\\local\\licensing\\gate')
+                || !\auth_magiclink\local\licensing\gate::allows()) {
+            $this->markTestSkipped('This optional integration case requires the activation-free Magic Link distribution.');
+        }
+        require_once($CFG->libdir . '/adminlib.php');
+        set_config('version', 2026010100, 'auth_magiclink');
+        set_config('auth', 'manual,magiclink');
+        set_config('allownewaccounts', 1, 'auth_magiclink');
+        $CFG->authpreventaccountcreation = false;
+        $this->assertTrue(\local_supportdesk\local\visitor_access::availability()['ready']);
+        $setting = new \local_supportdesk\local\visitor_mode_setting('local_supportdesk/visitormode',
+            'Access', '', 'login', ['login' => 'Sign-in', 'magiclink' => 'Magic Link']);
+        $this->assertSame('', $setting->write_setting('magiclink'));
+        $this->assertSame('magiclink', $setting->get_setting());
+        $this->assertTrue(\local_supportdesk\local\visitor_access::enabled());
+
+        set_config('allownewaccounts', 0, 'auth_magiclink');
+        $this->assertFalse(\local_supportdesk\local\visitor_access::enabled());
+        $this->assertSame('visitor_newaccountsdisabled',
+            \local_supportdesk\local\visitor_access::availability()['reason']);
+        $this->assertSame('login', $setting->get_setting());
+        $this->assertSame('magiclink', get_config('local_supportdesk', 'visitormode'));
+        $this->assertNotSame('', $setting->write_setting('magiclink'));
+
+        set_config('allownewaccounts', 1, 'auth_magiclink');
+        $CFG->authpreventaccountcreation = true;
+        $this->assertFalse(\local_supportdesk\local\visitor_access::availability()['ready']);
+        $CFG->authpreventaccountcreation = false;
+        set_config('auth', 'manual');
+        $this->assertSame('visitor_authdisabled',
+            \local_supportdesk\local\visitor_access::availability()['reason']);
+        $this->assertFalse(\local_supportdesk\local\visitor_access::enabled());
     }
 }

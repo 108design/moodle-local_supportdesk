@@ -97,6 +97,21 @@ grant microphone permission. Review the recording before submitting it.
 Users can view and reply to their own tickets. Support staff can manage tickets
 across support areas. The same access rules apply to ticket and reply attachments.
 
+## Sign-in through Magic Link
+
+Magic Link Authentication (`auth_magiclink`) is an optional way to verify an email
+address before creating a Moodle account and opening Support Desk. Install it
+separately, then select **Sign in through Magic Link** under **Support Desk access**.
+The option appears as soon as the plugin is installed. Enable Magic Link in Moodle
+authentication and permit account creation in both Magic Link and Moodle before
+enabling this visitor mode. Settings and contextual help explain missing prerequisites
+even when Magic Link is not installed.
+
+The current free distribution needs no activation; older distributions retain their
+own activation requirements. Existing accounts keep their authentication method,
+and the configured MFA policy still applies. Signing in does not automatically
+claim older guest tickets by matching their email address.
+
 ## Tickets without login
 
 This feature is an explicit opt-in and is **disabled by default**. In the plugin

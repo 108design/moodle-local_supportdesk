@@ -56,12 +56,12 @@ if ($hassiteconfig) {
     $visitormodes = ['login' => get_string('visitormode_login', 'local_supportdesk'),
         'anonymous' => get_string('visitormode_anonymous', 'local_supportdesk')];
     $visitordesc = get_string('visitormode_desc', 'local_supportdesk') . \local_supportdesk\local\admin_help::icon('overview');
-    // Magic Link is currently private; a public release with free site activation is planned.
-    // Show this optional mode only when auth_magiclink is installed, enabled and already activated.
     $visitorstatus = \local_supportdesk\local\visitor_access::availability();
-    if ($visitorstatus['activated']) {
+    if ($visitorstatus['installed']) {
         $visitormodes['magiclink'] = get_string('visitormode_magiclink', 'local_supportdesk');
-        if (!$visitorstatus['ready']) {$visitordesc .= ' ' . get_string($visitorstatus['reason'], 'local_supportdesk');}
+    }
+    if (!$visitorstatus['ready']) {
+        $visitordesc .= ' ' . get_string($visitorstatus['reason'], 'local_supportdesk');
     }
     $settings->add(new \local_supportdesk\local\visitor_mode_setting('local_supportdesk/visitormode',
         get_string('visitormode', 'local_supportdesk'), $visitordesc, 'login', $visitormodes));

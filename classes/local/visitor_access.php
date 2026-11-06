@@ -30,8 +30,7 @@ class visitor_access {
     public static function availability(): array {
         global $CFG;
         $installed = (bool)get_config('auth_magiclink', 'version')
-            && class_exists('\\auth_magiclink\\local\\magic_link_service')
-            && class_exists('\\auth_magiclink\\local\\licensing\\gate');
+            && class_exists('\\auth_magiclink\\local\\magic_link_service');
         $activated = false;
         $reason = 'visitor_missing';
         if ($installed) {
@@ -39,7 +38,8 @@ class visitor_access {
             if (is_enabled_auth('magiclink')) {
                 $reason = 'visitor_activationrequired';
                 try {
-                    if (\auth_magiclink\local\licensing\gate::allows()) {
+                    if (!class_exists('\\auth_magiclink\\local\\licensing\\gate')
+                            || \auth_magiclink\local\licensing\gate::allows()) {
                         $activated = true;
                         $newaccounts = get_config('auth_magiclink', 'allownewaccounts');
                         $reason = empty($CFG->authpreventaccountcreation) && ($newaccounts === false || !empty($newaccounts))
@@ -53,7 +53,7 @@ class visitor_access {
         return ['installed' => $installed, 'activated' => $activated, 'ready' => $reason === '', 'reason' => $reason];
     }
 
-    /** Expose integration controls only for installed, enabled and already activated Magic Link. */
+    /** Whether the installed provider is enabled and permits login, including legacy activation rules. */
     public static function is_activated(): bool {
         return static::availability()['activated'];
     }

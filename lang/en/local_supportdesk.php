@@ -310,7 +310,7 @@ $string['paste_image_hint'] = 'Paste screenshots here with Ctrl+V / ⌘V to atta
 // Visitor entry and department notification teams, 2026-10-03.
 $string['visitoraccess'] = 'Visitor access through Magic Link';
 $string['visitoraccess_desc'] = 'Off by default. Visitors verify their email before creating a ticket or opening their tickets. Requires the enabled, available 108design Magic Link plugin (auth_magiclink) and permitted account creation. Standard Moodle login remains available.';
-$string['visitor_missing'] = 'Install 108design Magic Link (auth_magiclink) to make this option available.';
+$string['visitor_missing'] = 'Install the optional Magic Link Authentication plugin (auth_magiclink) to select email-verified visitor access.';
 $string['visitor_authdisabled'] = 'Enable Magic Link in Moodle authentication.';
 $string['visitor_activationrequired'] = 'Magic Link requires an active activation.';
 $string['visitor_newaccountsdisabled'] = 'Allow account creation in Magic Link and Moodle authentication settings.';
@@ -391,7 +391,7 @@ $string['visitormode'] = 'Support Desk access';
 $string['visitormode_login'] = 'Sign-in required';
 $string['visitormode_anonymous'] = 'Guest ticket without sign-in (Turnstile)';
 $string['visitormode_magiclink'] = 'Sign in through Magic Link';
-$string['visitormode_desc'] = 'Sign-in required by default. Alternatively, enable guest tickets with Turnstile. Standard Moodle sign-in remains available. Guest tickets require both Turnstile keys.';
+$string['visitormode_desc'] = 'Sign-in is required by default. Alternatively, choose guest tickets with Turnstile or sign-in through the optional Magic Link Authentication plugin (auth_magiclink). Installed Magic Link is offered in this selector. Enable it in Moodle authentication and allow account creation in both Magic Link and Moodle to use visitor access. Guest tickets require both Turnstile keys.';
 $string['public_entry_help'] = 'Submit your issue without signing in. You will receive support replies by email; viewing the conversation in the ticket system requires sign-in.';
 $string['visitor_login_help'] = 'Already have a Moodle account? Use your usual sign-in method.';
 $string['public_turnstile_notice'] = 'This form uses Cloudflare Turnstile for spam protection. Technical browser data is shared with Cloudflare; your ticket content is not sent for verification.';
@@ -403,7 +403,7 @@ $string['adminhelp'] = 'Administration help';
 $string['adminhelpmore'] = 'More in the help panel';
 $string['adminhelptopics'] = 'Help Topics';
 $string['adminhelp_overview'] = 'Setting up support access';
-$string['adminhelp_overview_article'] = '<p>Choose where support is available and which access method is offered. Check the selected option both while signed in and while signed out.</p><p>Public requests require the corresponding security prerequisites. Complete any missing settings reported on this page before offering access.</p><p>Sign-in is the default. Guest tickets require both Turnstile keys. Voice recording is optional and requires browser microphone permission.</p>';
+$string['adminhelp_overview_article'] = '<p>Choose Support Desk access and check it while signed in and signed out. Sign-in is the default. Guest tickets require both Turnstile keys.</p><p>Magic Link Authentication (auth_magiclink) is an optional plugin for email-verified sign-in and account creation. Once installed, Sign in through Magic Link appears under Support Desk access. Enable Magic Link in Moodle authentication and permit account creation in Magic Link and Moodle. The page reports missing prerequisites. A saved unavailable mode falls back to normal sign-in.</p><p>The Marketplace distribution of Magic Link needs no activation. An older distribution may require its own activation. Magic Link keeps existing authentication methods and applies its account restrictions and Moodle MFA policy. It does not claim older guest tickets by email.</p><p>Voice recording is optional and requires browser microphone permission. Team and mailbox notifications are described under Team and notifications.</p>';
 $string['adminhelp_delivery'] = 'Team and notifications';
 $string['adminhelp_delivery_article'] = '<p>Select the roles available for support work and check the support email address. Team assignment and individual ticket handling take place in support administration.</p><p>An email copy is a notification. Replies sent from an external email application are not automatically imported as ticket replies.</p>';
 

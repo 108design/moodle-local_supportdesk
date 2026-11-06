@@ -30,11 +30,11 @@ class visitor_mode_setting extends \admin_setting_configselect {
     public function get_setting() {
         $mode = visitor_mode::selected();
         // Display the effective standard-login fallback without rewriting stored configuration.
-        return $mode === 'magiclink' && !visitor_access::is_activated() ? 'login' : $mode;
+        return $mode === 'magiclink' && !visitor_access::availability()['ready'] ? 'login' : $mode;
     }
 
     public function write_setting($data) {
-        if ((string)$data === 'magiclink' && !visitor_access::is_activated()) {
+        if ((string)$data === 'magiclink' && !visitor_access::availability()['installed']) {
             return get_string('invalidaccessmode', 'local_supportdesk');
         }
         if ((string)$data === 'magiclink' && !visitor_access::availability()['ready']) {

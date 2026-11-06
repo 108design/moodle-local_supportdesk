@@ -309,7 +309,7 @@ $string['paste_image_hint'] = 'Screenshots hier mit Strg+V / ⌘V als Anhang ein
 // Visitor entry and department notification teams, 2026-10-03.
 $string['visitoraccess'] = 'Besucherzugang per Magic Link';
 $string['visitoraccess_desc'] = 'Standardmäßig aus. Besucher können ihre E-Mail bestätigen und danach ein Ticket erstellen oder ihre Tickets öffnen. Erfordert das aktivierte, nutzbare Plugin 108design Magic Link (auth_magiclink) und erlaubte Kontoerstellung. Bestehende Moodle-Anmeldung bleibt verfügbar.';
-$string['visitor_missing'] = 'Installiere 108design Magic Link (auth_magiclink), um diese Option freizuschalten.';
+$string['visitor_missing'] = 'Installiere das optionale Plugin Magic Link Authentication (auth_magiclink), um den Besucherzugang nach E-Mail-Bestätigung auszuwählen.';
 $string['visitor_authdisabled'] = 'Aktiviere Magic Link in der Moodle-Authentifizierung.';
 $string['visitor_activationrequired'] = 'Magic Link benötigt eine aktive Freischaltung.';
 $string['visitor_newaccountsdisabled'] = 'Erlaube die Kontoerstellung in Magic Link und in den Moodle-Authentifizierungseinstellungen.';
@@ -390,7 +390,7 @@ $string['visitormode'] = 'Zugang zum Support Desk';
 $string['visitormode_login'] = 'Nur nach Anmeldung';
 $string['visitormode_anonymous'] = 'Gastticket ohne Anmeldung (Turnstile)';
 $string['visitormode_magiclink'] = 'Anmeldung per Magic Link';
-$string['visitormode_desc'] = 'Standardmäßig nur nach Anmeldung. Alternativ kannst Du Gasttickets mit Turnstile ermöglichen. Die normale Moodle-Anmeldung bleibt verfügbar. Gasttickets benötigen beide Turnstile-Schlüssel.';
+$string['visitormode_desc'] = 'Standardmäßig ist eine Anmeldung erforderlich. Alternativ kannst Du Gasttickets mit Turnstile oder die Anmeldung über das optionale Plugin Magic Link Authentication (auth_magiclink) wählen. Ist Magic Link installiert, erscheint es direkt in dieser Auswahl. Aktiviere es in der Moodle-Authentifizierung und erlaube die Kontoerstellung in Magic Link und Moodle, um den Besucherzugang zu nutzen. Gasttickets benötigen beide Turnstile-Schlüssel.';
 $string['public_entry_help'] = 'Du kannst Dein Anliegen ohne Anmeldung senden. Antworten des Supports erhältst Du per E-Mail; für den Verlauf im Ticketsystem ist eine Anmeldung erforderlich.';
 $string['visitor_login_help'] = 'Du hast bereits einen Moodle-Zugang? Verwende Deine gewohnte Anmeldung.';
 $string['public_turnstile_notice'] = 'Dieses Formular verwendet Cloudflare Turnstile zum Spam-Schutz. Dabei werden technische Browserdaten an Cloudflare übertragen; Deine Ticketinhalte werden nicht zur Prüfung gesendet.';
@@ -402,7 +402,7 @@ $string['adminhelp'] = 'Hilfe zur Verwaltung';
 $string['adminhelpmore'] = 'Mehr dazu im Hilfepanel';
 $string['adminhelptopics'] = 'Hilfethemen';
 $string['adminhelp_overview'] = 'Support-Zugang einrichten';
-$string['adminhelp_overview_article'] = '<p>Lege fest, wo der Support erreichbar ist und welche Zugangsmethode angeboten wird. Prüfe die gewählte Variante sowohl angemeldet als auch ohne Anmeldung.</p><p>Öffentliche Anfragen benötigen die dafür vorgesehenen Sicherheitsvoraussetzungen. Wenn die Seite auf fehlende Einstellungen hinweist, vervollständige diese, bevor Du den Zugang anbietest.</p><p>Die Anmeldung ist der Standard. Gast-Tickets benötigen beide Turnstile-Schlüssel. Sprachaufnahmen sind optional und benötigen die Mikrofonfreigabe des Browsers.</p>';
+$string['adminhelp_overview_article'] = '<p>Wähle unter Zugang zum Support Desk die gewünschte Zugangsart und prüfe sie angemeldet und abgemeldet. Standardmäßig ist eine Anmeldung erforderlich. Gasttickets benötigen beide Turnstile-Schlüssel.</p><p>Magic Link Authentication (auth_magiclink) ist ein optionales Plugin für Anmeldung und Kontoanlage nach E-Mail-Bestätigung. Nach der Installation erscheint Anmeldung per Magic Link unter Zugang zum Support Desk. Aktiviere Magic Link in der Moodle-Authentifizierung und erlaube die Kontoerstellung in Magic Link und Moodle. Die Seite zeigt fehlende Voraussetzungen. Ist eine gespeicherte Zugangsart nicht nutzbar, greift die normale Anmeldung.</p><p>Die Marketplace-Ausgabe von Magic Link benötigt keine Aktivierung. Eine ältere Ausgabe kann ihre eigene Aktivierung voraussetzen. Magic Link erhält vorhandene Anmeldeverfahren und beachtet seine Kontobeschränkungen sowie Moodles MFA-Regeln. Ältere Gasttickets werden nicht allein anhand der E-Mail-Adresse übernommen.</p><p>Sprachaufnahmen sind optional und benötigen die Mikrofonfreigabe des Browsers. Team- und Postfachbenachrichtigungen erklärt das Hilfethema Team und Benachrichtigungen.</p>';
 $string['adminhelp_delivery'] = 'Team und Benachrichtigungen';
 $string['adminhelp_delivery_article'] = '<p>Wähle die Rollen, die für Support-Aufgaben zur Verfügung stehen sollen, und prüfe die Support-E-Mail-Adresse. Die Zuordnung zu einem Team und die konkrete Bearbeitung erfolgen in der Support-Verwaltung.</p><p>Eine E-Mail-Kopie ist eine Benachrichtigung. Antworten aus einem externen Mailprogramm werden nicht automatisch als Ticketantwort übernommen.</p>';
 
