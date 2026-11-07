@@ -1,5 +1,5 @@
 name: Support Desk
-summary: Free GPL support tickets for Moodle by 108design, with support teams, attachments and optional guest access.
+summary: Support tickets for Moodle by 108design, with teams, attachments and notifications. Optional guest tickets use Cloudflare Turnstile; Magic Link sign-in is optional.
 description: |
   Support Desk manages support requests inside Moodle. Users create private
   tickets, follow their status and reply to the support team. Staff organise
@@ -26,7 +26,6 @@ description: |
   System, with the original authorship and licence notices retained.
 labels:
   - external-account
-  - paid-service
 category: Support
 links:
   docs: https://github.com/108design/moodle-local_supportdesk/blob/main/README.md
