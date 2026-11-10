@@ -320,7 +320,7 @@ $string['visitor_continue'] = 'Mit E-Mail fortfahren';
 $string['visitor_account_hint'] = 'Du brauchst kein Passwort. Falls noch kein Konto besteht, erstellt Moodle nach der E-Mail-Bestätigung ein Konto mit Deinem Vor- und Nachnamen.';
 $string['visitor_standardlogin'] = 'Mit bestehendem Moodle-Zugang anmelden';
 $string['department_team'] = 'Support-Team';
-$string['department_team_help'] = 'Ausgewählte aktive Personen mit der systemweiten Rolle Support erhalten Benachrichtigungen aus diesem Bereich. Ohne Bereichsteam wird die ausdrücklich zuständige Person im Ticket benachrichtigt, sonst die konfigurierte Support-E-Mail als Fallback. Die Zuordnung verändert keine Zugriffsrechte.';
+$string['department_team_help'] = 'Wähle aktive Personen mit der systemweiten Rolle Support. Sie erhalten die Meldungen dieses Bereichs. Ist die Teamtrennung aktiv, können sie auch die Tickets des Bereichs bearbeiten.';
 $string['department_team_empty'] = 'Noch keine auswählbaren Personen. Weise den gewünschten Personen zunächst die Rolle Support auf Systemebene zu.';
 $string['invalidteammember'] = 'Das Team enthält eine Person ohne aktive systemweite Support-Rolle.';
 $string['notify_new'] = 'Neues Support-Ticket #{$a->id}: {$a->title}';
@@ -404,7 +404,7 @@ $string['adminhelptopics'] = 'Hilfethemen';
 $string['adminhelp_overview'] = 'Support-Zugang einrichten';
 $string['adminhelp_overview_article'] = '<p>Wähle unter Zugang zum Support Desk die gewünschte Zugangsart und prüfe sie angemeldet und abgemeldet. Standardmäßig ist eine Anmeldung erforderlich. Gasttickets benötigen beide Turnstile-Schlüssel.</p><p>Magic Link Authentication (auth_magiclink) ist ein optionales Plugin für Anmeldung und Kontoanlage nach E-Mail-Bestätigung. Nach der Installation erscheint Anmeldung per Magic Link unter Zugang zum Support Desk. Aktiviere Magic Link in der Moodle-Authentifizierung und erlaube die Kontoerstellung in Magic Link und Moodle. Die Seite zeigt fehlende Voraussetzungen. Ist eine gespeicherte Zugangsart nicht nutzbar, greift die normale Anmeldung.</p><p>Die Marketplace-Ausgabe von Magic Link benötigt keine Aktivierung. Eine ältere Ausgabe kann ihre eigene Aktivierung voraussetzen. Magic Link erhält vorhandene Anmeldeverfahren und beachtet seine Kontobeschränkungen sowie Moodles MFA-Regeln. Ältere Gasttickets werden nicht allein anhand der E-Mail-Adresse übernommen.</p><p>Sprachaufnahmen sind optional und benötigen die Mikrofonfreigabe des Browsers. Team- und Postfachbenachrichtigungen erklärt das Hilfethema Team und Benachrichtigungen.</p>';
 $string['adminhelp_delivery'] = 'Team und Benachrichtigungen';
-$string['adminhelp_delivery_article'] = '<p>Wähle die Rollen, die für Support-Aufgaben zur Verfügung stehen sollen, und prüfe die Support-E-Mail-Adresse. Die Zuordnung zu einem Team und die konkrete Bearbeitung erfolgen in der Support-Verwaltung.</p><p>Eine E-Mail-Kopie ist eine Benachrichtigung. Antworten aus einem externen Mailprogramm werden nicht automatisch als Ticketantwort übernommen.</p>';
+$string['adminhelp_delivery_article'] = '<p>Ordne die Supporter unter „Support-Bereiche“ ihren Bereichen zu. Aktiviere anschließend „Tickets nach Support-Team einschränken“. Website-Admins sehen alle Tickets und können sie zwischen Bereichen verschieben oder bereichsübergreifend zuweisen. In einem Bereich ohne Team bearbeiten Website-Admins und persönlich zugewiesene Supporter die Tickets.</p><p>Neue Tickets und Antworten der anfragenden Person meldet Support Desk zuerst dem Bereichsteam, sonst der zuständigen Person oder dem Supportpostfach. Wenn Du E-Mail-Kopien für alle Tickets aktivierst, bekommt das konfigurierte Postfach auch Meldungen aus anderen Bereichen. Antworte im Ticket, damit Deine Antwort im Verlauf erscheint.</p>';
 
 $string['subjectissuerequired'] = 'Gib einen Betreff mit höchstens 255 Zeichen ein und beschreibe Dein Anliegen.';
 
@@ -434,13 +434,17 @@ $string['adminhelp_tickets_article'] = '<p>Wähle einen Supportbereich, gib eine
 
 $string['adminhelp_handling'] = 'Support-Team: Tickets bearbeiten';
 
-$string['adminhelp_handling_help'] = 'Ändere Status, Supportbereich und Zuordnung in den Ticketpanels. Interne Notizen sieht das Support-Team. Die Teammitgliedschaft steuert Hinweise und erteilt keine Ticketrechte.';
+$string['adminhelp_handling_help'] = 'In der Ticketverwaltung kannst Du den Status und die zuständige Person ändern. Interne Notizen sehen nur Personen, die das Ticket bearbeiten dürfen.';
 
-$string['adminhelp_handling_article'] = '<p>Öffne ein Ticket, um seinen Status, Supportbereich oder die zuständige Person zu ändern. Nutze interne Notizen für Informationen an das Team und das Antwortfeld für Nachrichten an die anfragende Person. Der Verlauf hält Ticketänderungen fest.</p><p>Die Teams der Supportbereiche bestimmen die Benachrichtigungsempfänger. Berechtigte Teammitglieder mit den Rechten für Spezialistenhinweise und Ticketverwaltung sehen Bildschirmhinweise zu kürzlich erstellten offenen Tickets mit hoher oder dringender Priorität. Ein Hinweis öffnet das Ticket und ändert seinen Status nicht.</p>';
+$string['adminhelp_handling_article'] = '<p>Öffne ein Ticket, um den Status oder die zuständige Person zu ändern. Nutze interne Notizen für die Zusammenarbeit im Support und das Antwortfeld für Nachrichten an die anfragende Person. Der Verlauf hält Änderungen fest. Unter „Weitere Tickets“ stehen nur Anfragen, die Du öffnen darfst.</p><p>Bei aktiver Teamtrennung kannst Du Tickets Deiner Bereiche und persönlich zugewiesene Tickets bearbeiten. Eigene Anfragen außerhalb Deiner Bereiche bleiben in der Kundenansicht zugänglich. Website-Admins verwalten die Teams, verschieben Tickets und können sie außerhalb des zuständigen Teams zuweisen.</p><p>Das Bereichsteam erhält die Benachrichtigungen. Berechtigte Teammitglieder mit Spezialistenhinweisen sehen außerdem Meldungen zu kürzlich erstellten offenen Tickets mit hoher oder dringender Priorität.</p>';
 
 $string['adminhelp_overview_help'] = 'Wähle den Supportzugang und prüfe die Voraussetzungen des gewählten Modus.';
-$string['adminhelp_delivery_help'] = 'Konfiguriere Teamrollen und das Supportpostfach. Die Teammitgliedschaft steuert die Benachrichtigungen.';
+$string['adminhelp_delivery_help'] = 'Richte Support-Teams und das Postfach ein. Mit der Teamtrennung beschränkst Du die Sicht von Supportern auf ihre Bereiche, persönliche Zuweisungen und eigene Anfragen.';
 
 $string['tickethelp'] = 'Support-Desk-Hilfe';
 
 $string['invalidaccessmode'] = 'Wähle eine verfügbare Zugangsart für Support Desk.';
+
+$string['team_tickets'] = 'Teamtickets und eigene Tickets';
+$string['teamvisibility'] = 'Tickets nach Support-Team einschränken';
+$string['teamvisibility_desc'] = 'Supporter sehen Tickets ihrer Bereiche, persönlich zugewiesene und selbst erstellte Tickets. Website-Admins sehen alle Tickets.';

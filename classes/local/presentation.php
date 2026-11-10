@@ -71,7 +71,9 @@ class presentation {
     public static function page(string $template, array $data, array $sidebars = []): void {
         global $PAGE, $OUTPUT;
         if (in_array($template, ['index', 'add_page', 'view'], true)) {
-            $data['contexthelp'] = admin_help::icon('tickets');
+            $data['contexthelp'] = admin_help::icon(access::can_manage() && $template !== 'add_page' ? 'handling' : 'tickets');
+        } else if ($template === 'add_category') {
+            $data['contexthelp'] = admin_help::icon('handling');
         }
         $data['allowvoicenotes'] = (bool)get_config('local_supportdesk', 'allowvoicenotes');
         $fallback = '';
@@ -97,7 +99,7 @@ class presentation {
         if (has_capability('local/supportdesk:addticket', $context)) {
             $tabs[] = new \tabobject('add.php', new \moodle_url('/local/supportdesk/add.php'), get_string('add_ticket', 'local_supportdesk'));
         }
-        if (has_capability('local/supportdesk:addcategory', $context)) {
+        if (access::can_manage_departments()) {
             $tabs[] = new \tabobject('add_category.php', new \moodle_url('/local/supportdesk/add_category.php'), get_string('support_departments', 'local_supportdesk'));
         }
         $current = basename($PAGE->url->get_path());

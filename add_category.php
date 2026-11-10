@@ -29,6 +29,9 @@ global $CFG, $PAGE, $OUTPUT, $DB, $USER;
 require_login();
 \local_supportdesk\local\access::require_enabled();
 require_capability('local/supportdesk:addcategory', context_system::instance());
+if (!\local_supportdesk\local\access::can_manage_departments()) {
+    throw new moodle_exception('nopermissions', 'error', '', get_string('support_departments', 'local_supportdesk'));
+}
 $PAGE->set_url(new moodle_url('/local/supportdesk/add_category.php'));
 $PAGE->set_context(context_system::instance());
 $PAGE->set_title(get_string('add_new_department', 'local_supportdesk'));

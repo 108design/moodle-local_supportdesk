@@ -39,36 +39,29 @@ $customcss = \local_supportdesk\local\presentation::colours();
 $page = max(0, optional_param('page', 0, PARAM_INT));
 $perpage = 20;
 $offset = $page * $perpage;
-$ismanager = has_capability('local/supportdesk:manageticket', $context);
-$isspecialist = has_capability('local/supportdesk:specialist', $context);
 $canmanage = \local_supportdesk\local\access::can_manage();
+$teamview = $canmanage && !\local_supportdesk\local\access::can_manage_all();
 $canaddticket = has_capability('local/supportdesk:addticket', $context);
-$canaddcategory = has_capability('local/supportdesk:addcategory', $context);
+$canaddcategory = \local_supportdesk\local\access::can_manage_departments();
 $userselects1 = "u.firstname, u.lastname, u.firstnamephonetic";
 $userselects2 = "u.lastnamephonetic, u.middlename, u.alternatename";
 
-if ($canmanage) {
-    $totalcount = $DB->count_records('local_supportdesk_tickets');
-    $sql = "SELECT t.*, c.title AS category_title, c.color AS category_color, $userselects1, $userselects2
-            FROM {local_supportdesk_tickets} t
-            LEFT JOIN {local_supportdesk_categories} c ON t.category_id = c.id
-            LEFT JOIN {user} u ON t.userid = u.id
-            ORDER BY t.created_at DESC";
-    $tickets = $DB->get_records_sql($sql, [], $offset, $perpage);
-} else {
-    $totalcount = $DB->count_records_select(
-        'local_supportdesk_tickets',
-        'userid = ? OR assigned_to = ?',
-        [$USER->id, $USER->id]
-    );
-    $sql = "SELECT t.*, c.title AS category_title, c.color AS category_color, $userselects1, $userselects2
-            FROM {local_supportdesk_tickets} t
-            LEFT JOIN {local_supportdesk_categories} c ON t.category_id = c.id
-            LEFT JOIN {user} u ON t.userid = u.id
-            WHERE t.userid = ? OR t.assigned_to = ?
-            ORDER BY t.created_at DESC";
-    $tickets = $DB->get_records_sql($sql, [$USER->id, $USER->id], $offset, $perpage);
-}
+[$visibilitysql, $visibilityparams] = \local_supportdesk\local\access::visibility_sql('t');
+$counts = $DB->get_record_sql("SELECT COUNT(*) AS total,
+                                     COUNT(CASE WHEN t.status = 'closed' THEN 1 END) AS closed,
+                                     COUNT(CASE WHEN t.status <> 'closed' THEN 1 END) AS opened
+                                FROM {local_supportdesk_tickets} t
+                               WHERE $visibilitysql", $visibilityparams);
+$totalcount = (int)$counts->total;
+$totalclosedglobal = (int)$counts->closed;
+$totalopenglobal = (int)$counts->opened;
+$sql = "SELECT t.*, c.title AS category_title, c.color AS category_color, $userselects1, $userselects2
+          FROM {local_supportdesk_tickets} t
+     LEFT JOIN {local_supportdesk_categories} c ON t.category_id = c.id
+     LEFT JOIN {user} u ON t.userid = u.id
+         WHERE $visibilitysql
+      ORDER BY t.created_at DESC, t.id DESC";
+$tickets = $DB->get_records_sql($sql, $visibilityparams, $offset, $perpage);
 
 $hasmyassignment = false;
 $assignedusersids = [];
@@ -88,13 +81,10 @@ if (!empty($assignedusersids)) {
     $assignedusers = $DB->get_records_select('user', "id $inorsql", $inparams, '', $userfields);
 }
 
-[$visibilitysql, $visibilityparams] = $canmanage ? ['1=1', []] : ['(userid = :owner OR assigned_to = :assignee)', ['owner' => $USER->id, 'assignee' => $USER->id]];
-$totalclosedglobal = $DB->count_records_select('local_supportdesk_tickets', $visibilitysql . ' AND status = :closed', $visibilityparams + ['closed' => 'closed']);
-$totalopenglobal = $DB->count_records_select('local_supportdesk_tickets', $visibilitysql . ' AND status <> :closed', $visibilityparams + ['closed' => 'closed']);
 $ticketsdata = [];
 
 foreach ($tickets as $ticket) {
-    $isactionneeded = $ticket->status === 'student reply' && ($canmanage || $ticket->assigned_to == $USER->id);
+    $isactionneeded = $ticket->status === 'student reply' && \local_supportdesk\local\access::can_manage_ticket($ticket);
 
     $creatorname = fullname($ticket);
     $assignedname = '-';
@@ -129,18 +119,22 @@ if ($canmanage) {
     $categories = $DB->get_records('local_supportdesk_categories');
     $catstats = [];
     if (!empty($categories)) {
-        $sqlstats = "SELECT category_id,
-                            SUM(CASE WHEN status = 'closed' THEN 1 ELSE 0 END) AS closed_count,
-                            SUM(CASE WHEN status != 'closed' THEN 1 ELSE 0 END) AS open_count
-                     FROM {local_supportdesk_tickets}
-                     WHERE category_id IS NOT NULL
-                     GROUP BY category_id";
-        $statsrecords = $DB->get_records_sql($sqlstats);
+        $sqlstats = "SELECT t.category_id,
+                            SUM(CASE WHEN t.status = 'closed' THEN 1 ELSE 0 END) AS closed_count,
+                            SUM(CASE WHEN t.status <> 'closed' THEN 1 ELSE 0 END) AS open_count
+                       FROM {local_supportdesk_tickets} t
+                      WHERE $visibilitysql AND t.category_id IS NOT NULL
+                   GROUP BY t.category_id";
+        $statsrecords = $DB->get_records_sql($sqlstats, $visibilityparams);
         foreach ($statsrecords as $stat) {
             $catstats[$stat->category_id] = $stat;
         }
     }
+    $mydepartments = $teamview ? \local_supportdesk\local\department_team::category_ids((int)$USER->id) : [];
     foreach ($categories as $cat) {
+        if ($teamview && !isset($catstats[$cat->id]) && !in_array((int)$cat->id, $mydepartments, true)) {
+            continue;
+        }
         $catopen = isset($catstats[$cat->id]) ? $catstats[$cat->id]->open_count : 0;
         $catclosed = isset($catstats[$cat->id]) ? $catstats[$cat->id]->closed_count : 0;
         $categoriesdata[] = [
@@ -179,7 +173,7 @@ if ($page < $totalpages - 1) {
 $templatedata = [
     'user_name'             => fullname($USER),
     'currentyear'           => date('Y'),
-    'has_manage_capability' => $canmanage,
+    'ticket_list_heading'   => get_string($teamview ? 'team_tickets' : ($canmanage ? 'all_tickets' : 'my_tickets'), 'local_supportdesk'),
     'has_addtick_capability' => $canaddticket,
     'has_addCat_capability' => $canaddcategory,
     'total_tickets'         => $totalcount,

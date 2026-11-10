@@ -321,7 +321,7 @@ $string['visitor_continue'] = 'Continue with email';
 $string['visitor_account_hint'] = 'You do not need a password. If you do not have an account yet, Moodle creates one after email verification using your first and last name.';
 $string['visitor_standardlogin'] = 'Sign in with your Moodle account';
 $string['department_team'] = 'Support team';
-$string['department_team_help'] = 'Selected active users with the system Support role receive notifications for this area. Without a department team, the explicitly assigned person on the ticket is notified, otherwise the configured support email is used as fallback. Membership does not change access permissions.';
+$string['department_team_help'] = 'Choose active users with the system Support role. They receive notifications for this department. When team restrictions are enabled, they can also manage its tickets.';
 $string['department_team_empty'] = 'No eligible people yet. Assign the Support role at system level to the people you want to select.';
 $string['invalidteammember'] = 'The team contains a person without an active system-level Support role.';
 $string['notify_new'] = 'New support ticket #{$a->id}: {$a->title}';
@@ -405,7 +405,7 @@ $string['adminhelptopics'] = 'Help Topics';
 $string['adminhelp_overview'] = 'Setting up support access';
 $string['adminhelp_overview_article'] = '<p>Choose Support Desk access and check it while signed in and signed out. Sign-in is the default. Guest tickets require both Turnstile keys.</p><p>Magic Link Authentication (auth_magiclink) is an optional plugin for email-verified sign-in and account creation. Once installed, Sign in through Magic Link appears under Support Desk access. Enable Magic Link in Moodle authentication and permit account creation in Magic Link and Moodle. The page reports missing prerequisites. A saved unavailable mode falls back to normal sign-in.</p><p>The Marketplace distribution of Magic Link needs no activation. An older distribution may require its own activation. Magic Link keeps existing authentication methods and applies its account restrictions and Moodle MFA policy. It does not claim older guest tickets by email.</p><p>Voice recording is optional and requires browser microphone permission. Team and mailbox notifications are described under Team and notifications.</p>';
 $string['adminhelp_delivery'] = 'Team and notifications';
-$string['adminhelp_delivery_article'] = '<p>Select the roles available for support work and check the support email address. Team assignment and individual ticket handling take place in support administration.</p><p>An email copy is a notification. Replies sent from an external email application are not automatically imported as ticket replies.</p>';
+$string['adminhelp_delivery_article'] = '<p>Assign staff to their teams under Support Departments, then enable Restrict Tickets by Support Team. Site administrators can see every ticket, move tickets between departments and assign them across teams. If a department has no team, site administrators and the staff assigned to individual tickets handle them.</p><p>Support Desk sends new ticket and requester reply notifications to the department team first, then falls back to the assigned staff member or the support mailbox. If you enable copies for all tickets, the configured mailbox also receives notifications from other departments. Reply in the ticket to add your response to the conversation.</p>';
 
 $string['subjectissuerequired'] = 'Enter a subject of up to 255 characters and describe your issue.';
 
@@ -435,13 +435,17 @@ $string['adminhelp_tickets_article'] = '<p>Choose a support area, enter a short 
 
 $string['adminhelp_handling'] = 'Support team: managing tickets';
 
-$string['adminhelp_handling_help'] = 'Manage status, support area and assignment in the ticket panels. Internal notes are visible to support staff. Team membership routes alerts; it does not grant ticket access.';
+$string['adminhelp_handling_help'] = 'Use the ticket management panel to update the status and assignment. Internal notes are visible to staff who can manage the ticket.';
 
-$string['adminhelp_handling_article'] = '<p>Open a ticket to change its status, support area or assigned staff member. Use internal notes for staff-only information and the reply box for messages to the customer. The history records ticket changes.</p><p>Support-area teams determine notification recipients. Eligible team members with the specialist and ticket-management permissions receive on-screen alerts for recent open urgent or high-priority tickets. A notification opens the ticket; it does not change its status.</p>';
+$string['adminhelp_handling_article'] = '<p>Open a ticket to update the status or assignment. Use internal notes to coordinate with other staff and the reply field to write to the requester. The history records changes. Recent tickets only shows requests you can open.</p><p>With team restrictions enabled, you can manage tickets from your departments and tickets assigned to you. Your own requests outside those departments remain available in the requester view. Site administrators manage teams, move tickets between departments and assign tickets across teams.</p><p>The department team receives notifications. Eligible team members with the specialist permission also receive alerts for recent open tickets with high or urgent priority.</p>';
 
 $string['adminhelp_overview_help'] = 'Choose support access and check the prerequisites of the selected mode.';
-$string['adminhelp_delivery_help'] = 'Configure team roles and the support mailbox. Team membership controls notification routing.';
+$string['adminhelp_delivery_help'] = 'Set up support teams and the support mailbox. Team restrictions limit what staff can see to their departments, personal assignments and their own requests.';
 
 $string['tickethelp'] = 'Support Desk help';
 
 $string['invalidaccessmode'] = 'Select an available Support Desk access method.';
+
+$string['team_tickets'] = 'Team and personal tickets';
+$string['teamvisibility'] = 'Restrict Tickets by Support Team';
+$string['teamvisibility_desc'] = 'Support staff see tickets from their departments, tickets assigned to them and tickets they submitted. Site administrators see every ticket.';

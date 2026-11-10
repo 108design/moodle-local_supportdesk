@@ -24,13 +24,13 @@ File documentation for templates/index.mustache.
 
 <div class="supportdesk ats-container">
     <div class="supportdesk-toolbar mb-3">
-        <h2 class="h4 mb-0">{{#has_manage_capability}}{{#str}}all_tickets, local_supportdesk{{/str}}{{/has_manage_capability}}{{^has_manage_capability}}{{#str}}my_tickets, local_supportdesk{{/str}}{{/has_manage_capability}} {{{contexthelp}}}</h2>
+        <h2 class="h4 mb-0">{{ticket_list_heading}} {{{contexthelp}}}</h2>
         <div><label class="sr-only visually-hidden" for="ticketSearch">{{#str}}search_placeholder, local_supportdesk{{/str}}</label><input type="search" id="ticketSearch" class="form-control" placeholder="{{#str}}search_placeholder, local_supportdesk{{/str}}"></div>
     </div>
     <p class="small text-muted">{{#str}}search_page_hint, local_supportdesk{{/str}}</p>
     <div class="table-responsive">
         <table class="table table-striped table-hover" id="ticketsTable">
-            <caption class="sr-only visually-hidden">{{#str}}all_tickets, local_supportdesk{{/str}}</caption>
+            <caption class="sr-only visually-hidden">{{ticket_list_heading}}</caption>
             <thead><tr>
                 <th scope="col">{{#str}}id, local_supportdesk{{/str}}</th><th scope="col">{{#str}}title, local_supportdesk{{/str}}</th>
                 <th scope="col">{{#str}}status, local_supportdesk{{/str}}</th><th scope="col">{{#str}}department_column, local_supportdesk{{/str}}</th><th scope="col">{{#str}}priority, local_supportdesk{{/str}}</th>

@@ -48,12 +48,14 @@ function local_supportdesk_extend_navigation(global_navigation $navigation) {
     $title = get_string('pluginname', 'local_supportdesk');
 
     $pendingcount = 0;
-    $context = \context_system::instance();
-    $canmanage = has_capability('local/supportdesk:manageticket', $context);
+    $canmanage = \local_supportdesk\local\access::can_manage();
 
     try {
         if ($canmanage) {
-            $pendingcount = $DB->count_records('local_supportdesk_tickets', ['status' => 'student reply']);
+            [$visibilitysql, $params] = \local_supportdesk\local\access::visibility_sql('', true);
+            $pendingcount = $DB->count_records_select(
+                'local_supportdesk_tickets', "$visibilitysql AND status = :pendingstatus", $params + ['pendingstatus' => 'student reply']
+            );
         } else {
             $pendingcount = $DB->count_records('local_supportdesk_tickets', [
                 'userid' => $USER->id,

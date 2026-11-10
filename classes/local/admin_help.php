@@ -42,14 +42,16 @@ final class admin_help {
             self::$topics = ['overview', 'delivery'];
         } else {
             $context = \context_system::instance();
+            $managedepartments = $PAGE->url->get_path() === (new \moodle_url('/local/supportdesk/add_category.php'))->get_path()
+                && access::can_manage_departments();
             if (!self::is_ticket_page($PAGE->url) || !isloggedin() || isguestuser()
                     || get_config('local_supportdesk', 'enabled') === '0'
-                    || (!access::can_manage() && !has_any_capability([
+                    || (!$managedepartments && !access::can_manage() && !has_any_capability([
                         'local/supportdesk:viewticket', 'local/supportdesk:addticket'], $context))) {
                 return;
             }
             self::$topics = ['tickets'];
-            if (access::can_manage()) {
+            if (access::can_manage() || $managedepartments) {
                 self::$topics[] = 'handling';
             }
         }
@@ -68,7 +70,7 @@ final class admin_help {
 
     /** Match native ticket routes, including installations below a URL subdirectory. */
     private static function is_ticket_page(\moodle_url $url): bool {
-        foreach (['index.php', 'add.php', 'view.php'] as $page) {
+        foreach (['index.php', 'add.php', 'view.php', 'add_category.php'] as $page) {
             if ($url->get_path() === (new \moodle_url('/local/supportdesk/' . $page))->get_path()) {
                 return true;
             }

@@ -41,17 +41,90 @@ class access {
         return has_capability('local/supportdesk:manageticket', $context, $userid);
     }
 
+    /** Whether the site limits support staff to their departments and assignments. */
+    public static function team_visibility_enabled(): bool {
+        return (bool)get_config('local_supportdesk', 'teamvisibility');
+    }
+
+    /** In team mode, only site administrators have unrestricted access. */
+    public static function can_manage_all(?int $userid = null): bool {
+        return self::can_manage($userid) && (!self::team_visibility_enabled() || is_siteadmin($userid));
+    }
+
+    /** Editing memberships can grant access to all tickets in a department. */
+    public static function can_manage_departments(): bool {
+        return has_capability('local/supportdesk:addcategory', \context_system::instance())
+            && (!self::team_visibility_enabled() || is_siteadmin());
+    }
+
+    /** Ticket ownership alone does not grant access to internal support tools. */
+    public static function can_manage_ticket(\stdClass $ticket, ?int $userid = null): bool {
+        global $USER;
+        $userid = $userid ?? (int)$USER->id;
+        if ($userid <= 0 || isguestuser($userid)) {
+            return false;
+        }
+        if (self::can_manage_all($userid)) {
+            return true;
+        }
+        $assigned = (int)$ticket->assigned_to === $userid;
+        if (!self::team_visibility_enabled()) {
+            return $assigned && has_capability('local/supportdesk:viewticket', \context_system::instance(), $userid);
+        }
+        return self::can_manage($userid)
+            && ($assigned || in_array((int)$ticket->category_id, department_team::category_ids($userid), true));
+    }
+
     public static function can_view(\stdClass $ticket, ?int $userid = null): bool {
         global $USER;
         $userid = $userid ?? (int)$USER->id;
         if ($userid <= 0 || isguestuser($userid)) {
             return false;
         }
-        if (self::can_manage($userid)) {
+        if (self::can_manage_ticket($ticket, $userid)) {
             return true;
         }
         return has_capability('local/supportdesk:viewticket', \context_system::instance(), $userid)
-            && ((int)$ticket->userid === $userid || (int)$ticket->assigned_to === $userid);
+            && (int)$ticket->userid === $userid;
+    }
+
+    /**
+     * Scope ticket queries before pagination, aggregation or limiting results.
+     *
+     * @param string $alias SQL alias of the ticket table, or an empty string
+     * @param bool $staffonly omit requester-only tickets from the staff queue
+     * @return array SQL predicate and named parameters
+     */
+    public static function visibility_sql(string $alias = '', bool $staffonly = false): array {
+        global $DB, $USER;
+        $userid = (int)$USER->id;
+        if ($userid <= 0 || isguestuser($userid)) {
+            return ['1 = 0', []];
+        }
+        if (self::can_manage_all($userid)) {
+            return ['1 = 1', []];
+        }
+
+        $prefix = $alias === '' ? '' : $alias . '.';
+        $canview = has_capability('local/supportdesk:viewticket', \context_system::instance(), $userid);
+        $canmanage = self::can_manage($userid);
+        $parts = [];
+        $params = [];
+        if (!$staffonly && $canview) {
+            $parts[] = $prefix . 'userid = :sdowner';
+            $params['sdowner'] = $userid;
+        }
+        if ($canmanage || (!$staffonly && $canview && !self::team_visibility_enabled())) {
+            $parts[] = $prefix . 'assigned_to = :sdassignee';
+            $params['sdassignee'] = $userid;
+        }
+        $categories = $canmanage ? department_team::category_ids($userid) : [];
+        if ($categories) {
+            [$in, $categoryparams] = $DB->get_in_or_equal($categories, SQL_PARAMS_NAMED, 'sddept');
+            $parts[] = $prefix . 'category_id ' . $in;
+            $params += $categoryparams;
+        }
+        return [$parts ? '(' . implode(' OR ', $parts) . ')' : '1 = 0', $params];
     }
 
     /** Resolve reply attachments to their parent ticket before checking access. */
@@ -83,6 +156,14 @@ class access {
             JOIN {role} r ON r.id = ra.roleid
             WHERE r.shortname $in AND ra.contextid = :contextid AND u.deleted = 0 AND u.suspended = 0", $params);
         return array_filter($users, static fn($user) => self::can_manage((int)$user->id));
+    }
+
+    /** Scoped staff can only assign tickets to staff already in the ticket's department. */
+    public static function ticket_assignees(\stdClass $ticket): array {
+        $users = self::assignable_users();
+        return self::team_visibility_enabled() && !self::can_manage_all()
+            ? array_intersect_key($users, department_team::members((int)$ticket->category_id))
+            : $users;
     }
 
     public static function validate_status(string $status): void {

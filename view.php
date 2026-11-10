@@ -28,6 +28,8 @@ require_once($CFG->libdir . '/filelib.php');
 require_once($CFG->libdir . '/editorlib.php');
 require_once(__DIR__ . '/lib.php');
 
+use local_supportdesk\local\access;
+
 \local_supportdesk\local\visitor_access::require_user(new moodle_url('/local/supportdesk/view.php', ['id' => required_param('id', PARAM_INT)]));
 global $USER, $DB, $PAGE, $OUTPUT, $CFG;
 
@@ -71,8 +73,13 @@ $sql = "SELECT t.*, c.title as category_name, c.color as category_color
         LEFT JOIN {local_supportdesk_categories} c ON t.category_id = c.id
         WHERE t.id = ?";
 $ticketrecord = $DB->get_record_sql($sql, [$id]);
+$canview = $ticketrecord && access::can_view($ticketrecord);
+$hideexistence = access::team_visibility_enabled() && !access::can_manage_all();
 
-if (!$ticketrecord) {
+if (!$ticketrecord || (!$canview && $hideexistence)) {
+    if ($hideexistence) {
+        http_response_code(404);
+    }
     echo $OUTPUT->header();
     echo $OUTPUT->render_from_template('local_supportdesk/error_notfound', [
         'ticketid' => $id,
@@ -82,18 +89,7 @@ if (!$ticketrecord) {
     die();
 }
 
-$ismanager = has_capability('local/supportdesk:manageticket', $context);
-$isspecialist = has_capability('local/supportdesk:specialist', $context);
-$currentuserid = $USER->id;
-$ticketuserid = $ticketrecord->userid;
-$assignedto = $ticketrecord->assigned_to;
-$isassignedtome = (!empty($assignedto) && $assignedto == $currentuserid);
-$isowner = ($ticketuserid == $currentuserid);
-
-$isadminview = ($ismanager || $isassignedtome);
-$showadminpanel = $isadminview;
-
-if (!\local_supportdesk\local\access::can_view($ticketrecord)) {
+if (!$canview) {
     echo $OUTPUT->header();
     echo $OUTPUT->render_from_template('local_supportdesk/error_denied', [
         'home_url' => new moodle_url('/local/supportdesk/index.php'),
@@ -102,7 +98,10 @@ if (!\local_supportdesk\local\access::can_view($ticketrecord)) {
     die();
 }
 
-$canreply = ($isadminview || $isowner);
+$isowner = $ticketrecord->userid == $USER->id;
+$showadminpanel = access::can_manage_ticket($ticketrecord);
+$canmoveticket = $showadminpanel && (!access::team_visibility_enabled() || access::can_manage_all());
+$canreply = $showadminpanel || $isowner;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_sesskey();
@@ -157,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
             $oldstatus = $ticketrecord->status;
-            $newstatus = $isadminview ? 'admin reply' : 'student reply';
+            $newstatus = $showadminpanel ? 'admin reply' : 'student reply';
             $DB->set_field('local_supportdesk_tickets', 'status', $newstatus, ['id' => $id]);
             $a = new stdClass();
             $a->user = fullname($USER);
@@ -184,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($action === 'assign_user' && $showadminpanel) {
         $assignedtoparam = required_param('assigned_to', PARAM_INT);
-        $assignees = \local_supportdesk\local\access::assignable_users();
+        $assignees = access::ticket_assignees($ticketrecord);
         if ($assignedtoparam < 0 || ($assignedtoparam > 0 && !isset($assignees[$assignedtoparam]))) {
             throw new \moodle_exception('invalidassignee', 'local_supportdesk');
         }
@@ -195,11 +194,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $unassignedstr = get_string('unassigned', 'local_supportdesk');
             $logmessage = get_string('log_assigned', 'local_supportdesk', $unassignedstr);
         }
-        $DB->set_field('local_supportdesk_tickets', 'assigned_to', $assignedtoparam, ['id' => $id]);
+        $conditions = ['id' => $id];
+        if (!$canmoveticket) {
+            // Do not grant access based on the old department if the ticket was just moved.
+            $conditions['category_id'] = $ticketrecord->category_id;
+        }
+        $DB->set_field('local_supportdesk_tickets', 'assigned_to', $assignedtoparam, $conditions);
         local_supportdesk_log_action($id, $USER->id, $logmessage, '', $assignedtoparam);
         redirect($PAGE->url);
     }
-    if ($action === 'update_category' && $showadminpanel) {
+    if ($action === 'update_category' && $canmoveticket) {
         $catid = required_param('categoryid', PARAM_INT);
         $category = $DB->get_record('local_supportdesk_categories', ['id' => $catid], 'id, title', MUST_EXIST);
         $DB->set_field('local_supportdesk_tickets', 'category_id', $catid, ['id' => $id]);
@@ -222,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         local_supportdesk_log_action($id, $USER->id, $logmessage, '', '');
         redirect($PAGE->url);
     }
-    if ($action === 'submit_feedback' && !$isadminview && $ticketrecord->userid == $USER->id) {
+    if ($action === 'submit_feedback' && !$showadminpanel && $isowner) {
         $rating = required_param('rating', PARAM_INT);
         if ($ticketrecord->status !== 'closed' || $rating < 1 || $rating > 5) {
             throw new \moodle_exception('invalidfeedback', 'local_supportdesk');
@@ -359,7 +363,7 @@ if ($showadminpanel) {
         }
     }
 
-    $assignees = \local_supportdesk\local\access::assignable_users();
+    $assignees = access::ticket_assignees($ticketrecord);
 
     foreach ($assignees as $assignee) {
         $assignableusers[] = [
@@ -371,10 +375,12 @@ if ($showadminpanel) {
         ];
     }
 
+    [$relatedscope, $relatedparams] = access::visibility_sql();
     $latestselsql = "SELECT * FROM {local_supportdesk_tickets}
-                     WHERE userid = ? AND id != ?
-                     ORDER BY created_at DESC";
-    $recs = $ticketrecord->userid ? $DB->get_records_sql($latestselsql, [$ticketrecord->userid, $id], 0, 5) : [];
+                     WHERE userid = :relatedowner AND id <> :relatedid AND $relatedscope
+                     ORDER BY created_at DESC, id DESC";
+    $relatedparams += ['relatedowner' => $ticketrecord->userid, 'relatedid' => $id];
+    $recs = $ticketrecord->userid ? $DB->get_records_sql($latestselsql, $relatedparams, 0, 5) : [];
     foreach ($recs as $rec) {
         $latesttickets[] = [
             'id' => $rec->id,
@@ -422,7 +428,7 @@ if ($showadminpanel) {
     }
 }
 
-$categories = $DB->get_records('local_supportdesk_categories');
+$categories = $canmoveticket ? $DB->get_records('local_supportdesk_categories') : [];
 $catlist = [];
 foreach ($categories as $cat) {
     $catlist[] = ['id' => $cat->id, 'title' => $cat->title, 'is_selected' => ($cat->id == $ticketrecord->category_id)];
@@ -430,7 +436,7 @@ foreach ($categories as $cat) {
 
 $feedbackrecord = $DB->get_record('local_supportdesk_feedback', ['ticketid' => $id]);
 $isticketclosed = ($ticketrecord->status === 'closed');
-$canrate = ($isticketclosed && !$isadminview && !$feedbackrecord);
+$canrate = ($isticketclosed && !$showadminpanel && !$feedbackrecord && $isowner);
 $ticketowner = $DB->get_record('user', ['id' => $ticketrecord->userid]);
 if (!$ticketowner) {
     $ticketowner = (object)['id' => 0, 'firstname' => get_string('deleteduser', 'local_supportdesk'), 'lastname' => '', 'email' => '', 'picture' => 0, 'imagealt' => '', 'firstnamephonetic' => '', 'lastnamephonetic' => '', 'middlename' => '', 'alternatename' => ''];
@@ -492,6 +498,7 @@ $templatedata = [
     'rating_options' => [['val' => 5], ['val' => 4], ['val' => 3], ['val' => 2], ['val' => 1]],
     'replies' => $repliesdata,
     'has_manage_capability' => $showadminpanel,
+    'can_move_ticket' => $canmoveticket,
     'categories' => $catlist,
     'assignable_users' => $assignableusers,
     'assigned_user_name' => $assigneduser ? fullname($assigneduser) : get_string('unassigned', 'local_supportdesk'),

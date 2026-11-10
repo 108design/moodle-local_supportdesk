@@ -47,6 +47,13 @@ if ($hassiteconfig) {
     ));
 
     $settings->add(new admin_setting_configcheckbox(
+        'local_supportdesk/teamvisibility',
+        get_string('teamvisibility', 'local_supportdesk'),
+        get_string('teamvisibility_desc', 'local_supportdesk') . \local_supportdesk\local\admin_help::icon('delivery'),
+        0
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
         'local_supportdesk/allowvoicenotes',
         get_string('allowvoicenotes', 'local_supportdesk'),
         get_string('allowvoicenotes_desc', 'local_supportdesk') . \local_supportdesk\local\admin_help::icon('overview'),

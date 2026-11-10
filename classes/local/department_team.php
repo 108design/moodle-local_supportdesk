@@ -25,16 +25,22 @@
 namespace local_supportdesk\local;
 defined('MOODLE_INTERNAL') || die();
 
-/** Notification routing only: membership never grants or removes ticket access. */
+/** Membership of active support staff for ticket routing and optional team visibility. */
 class department_team {
-    public static function eligible_users(): array {
+    public static function eligible_users(?int $userid = null): array {
         global $DB;
+        $params = ['role' => 'supportdeskagent', 'contextid' => \context_system::instance()->id, 'nologin' => 'nologin'];
+        $onlyuser = '';
+        if ($userid !== null) {
+            $onlyuser = 'AND u.id = :userid';
+            $params['userid'] = $userid;
+        }
         $users = $DB->get_records_sql("SELECT DISTINCT u.* FROM {user} u
             JOIN {role_assignments} ra ON ra.userid = u.id JOIN {role} r ON r.id = ra.roleid
             WHERE r.shortname = :role AND ra.contextid = :contextid
                 AND u.deleted = 0 AND u.suspended = 0 AND u.confirmed = 1 AND u.auth <> :nologin
-            ORDER BY u.lastname, u.firstname, u.id", ['role' => 'supportdeskagent',
-                'contextid' => \context_system::instance()->id, 'nologin' => 'nologin']);
+                $onlyuser
+            ORDER BY u.lastname, u.firstname, u.id", $params);
         return array_filter($users, static fn($user) => access::can_manage((int)$user->id) && !isguestuser($user));
     }
 
@@ -68,6 +74,16 @@ class department_team {
 
     public static function has_memberships(int $userid): bool {
         global $DB;
-        return isset(self::eligible_users()[$userid]) && $DB->record_exists('local_supportdesk_members', ['userid' => $userid]);
+        return isset(self::eligible_users($userid)[$userid])
+            && $DB->record_exists('local_supportdesk_members', ['userid' => $userid]);
+    }
+
+    /** Department IDs for a single eligible supporter. */
+    public static function category_ids(int $userid): array {
+        global $DB;
+        if (!isset(self::eligible_users($userid)[$userid])) {
+            return [];
+        }
+        return array_map('intval', $DB->get_fieldset_select('local_supportdesk_members', 'categoryid', 'userid = ?', [$userid]));
     }
 }
