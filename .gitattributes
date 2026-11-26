@@ -11,6 +11,7 @@
 "/CHANGELOG.md" -export-ignore -export-subst
 "/LICENSE.md" -export-ignore -export-subst
 "/README.md" -export-ignore -export-subst
+"/TRADEMARKS.md" -export-ignore -export-subst
 "/add.php" -export-ignore -export-subst
 "/add_category.php" -export-ignore -export-subst
 "/amd" -export-ignore -export-subst
