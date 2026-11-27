@@ -104,6 +104,8 @@
 "/lang/ar/local_supportdesk.php" -export-ignore -export-subst
 "/lang/de" -export-ignore -export-subst
 "/lang/de/local_supportdesk.php" -export-ignore -export-subst
+"/lang/de_du" -export-ignore -export-subst
+"/lang/de_du/local_supportdesk.php" -export-ignore -export-subst
 "/lang/en" -export-ignore -export-subst
 "/lang/en/local_supportdesk.php" -export-ignore -export-subst
 "/lang/es" -export-ignore -export-subst
